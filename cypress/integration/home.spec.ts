@@ -39,4 +39,10 @@ describe("Home page", () => {
     cy.get("#addmore").click();
     cy.url().should("contain", "add-user");
   });
+
+  it('should delete all users except admin', () => {
+    
+  });
+
+  
 });
