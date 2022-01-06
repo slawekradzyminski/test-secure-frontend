@@ -3,7 +3,8 @@
 import HomePage from "../../pages/HomePage"
 import LoginPage from "../../pages/LoginPage"
 
-import { getRandomEmail, getRandomString } from "../../util/random"
+import { getRandomString } from "../../util/random"
+import { getUser } from "../../util/userProvider"
 
 const loginPage = new LoginPage()
 const homePage = new HomePage()
@@ -13,18 +14,7 @@ describe('Login page', () => {
 
     beforeEach(() => {
       cy.visit('')
-
-      cy.intercept('POST', '**/users/signin', {
-          statusCode: 200,
-          body: {
-              username: getRandomString(),
-              token: 'fakeToken',
-              firstName,
-              lastName: getRandomString(),
-              email: getRandomEmail(),
-              roles: ['ROLE_CLIENT']
-          },
-      }).as('loginRequest')
+      cy.mockLogin(getUser(firstName))
     })
   
     it('should successfully login', () => {
@@ -38,12 +28,10 @@ describe('Login page', () => {
 
 
     it('should assert loading state', () => {
-        loginPage.login(getRandomString(), getRandomString())
-
         cy.intercept('POST', '**/users/signin', {
             delay: 1000
         })
-        cy.get('.btn-primary').click()
+        loginPage.login(getRandomString(), getRandomString())
         cy.get('.spinner-border').should('be.visible')
         
     })

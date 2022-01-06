@@ -12,6 +12,10 @@ describe("Home page", () => {
     cy.register(username, password, firstName, getRandomString(), getRandomEmail())
   })
 
+  after(() => {
+    cy.deleteUser(username, jwtToken)
+  })
+
   beforeEach(() => {
     cy.login(username, password).then(token => jwtToken = token);
     cy.visit('')
