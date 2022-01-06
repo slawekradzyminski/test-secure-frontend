@@ -10,15 +10,15 @@ Cypress.Commands.add("login", (username, password) => {
   });
 });
 
-Cypress.Commands.add("login", (username, password) => {
+Cypress.Commands.add("deleteUser", (username, jwtToken) => {
   cy.request({
-    method: "POST",
-    url: "http://localhost:4000/users/signin",
-    body: { username, password },
+    method: "DELETE",
+    url: `http://localhost:4000/users/${username}`,
+    headers: {
+      Authorization: `Bearer ${jwtToken}`,
+    },
   }).then((resp) => {
-    expect(resp.status).to.eq(200);
-    localStorage.setItem("user", JSON.stringify(resp.body));
-    return resp.body.token;
+    expect(resp.status).to.eq(204);
   });
 });
 

@@ -20,6 +20,9 @@ describe("Home page", () => {
 
   it("should display users", () => {
     cy.get("ul li").should("have.length.at.least", 1);
+  });
+
+  it("should be able to make backend call with token", () => {
     cy.request({
       url: "http://localhost:4000/users",
       headers: {
