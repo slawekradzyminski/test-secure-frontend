@@ -5,7 +5,7 @@ describe('login page', () => {
     const loginPage = new LoginPage()
 
     beforeEach(() => {
-        cy.visit('http://localhost:8080')
+        cy.visit('/')
     })
 
     it('displays two todo items by default', () => {
