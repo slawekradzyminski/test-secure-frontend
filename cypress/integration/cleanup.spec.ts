@@ -8,7 +8,7 @@ describe('login page', () => {
         cy.visit('/')
     })
 
-    it('displays two todo items by default', () => {
+    it('C2123 User cleanup', () => {
         loginPage.login('admin', 'admin')
 
         cy.get('ul li').each(($row) => {

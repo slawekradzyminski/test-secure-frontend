@@ -8,6 +8,7 @@
 module.exports = (on, config) => {
   require('@cypress/code-coverage/task')(on, config)
   require('@shelex/cypress-allure-plugin/writer')(on, config);
+  require('cypress-testrail-simple/src/plugin')(on, config)
 
   return config
 }

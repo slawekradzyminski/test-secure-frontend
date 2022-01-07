@@ -3,5 +3,6 @@
     "baseUrl": "http://localhost:8080",
     "env": {
         "allure": true
-    }
+    },
+    "video": false
 }

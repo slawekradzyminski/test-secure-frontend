@@ -22,11 +22,11 @@ describe("Home page", () => {
     cy.get('h1').should('contain.text', firstName)
   });
 
-  it("should display users", () => {
+  it("C2124 should display users", () => {
     cy.get("ul li").should("have.length.at.least", 1);
   });
 
-  it("should be able to make backend call with token", () => {
+  it("C2125 should be able to make backend call with token", () => {
     cy.request({
       url: "http://localhost:4000/users",
       headers: {
@@ -37,12 +37,12 @@ describe("Home page", () => {
     });
   });
 
-  it("should logout", () => {
+  it("C2126 should logout", () => {
     cy.get("#logout").click();
     cy.url().should("contain", "login");
   });
 
-  it("should add more users", () => {
+  it("C2127 should add more users", () => {
     cy.get("#addmore").click();
     cy.url().should("contain", "add-user");
   });

@@ -8,7 +8,7 @@ describe('Register page', () => {
       cy.visit('/register')
     })
   
-    it('should successfully login', () => {
+    it('C2130 should successfully register', () => {
         cy.get('[name=username]').type(getRandomString())
         cy.get('[name=password]').type(getRandomString())
         cy.get('[name=firstName]').type(getRandomString())

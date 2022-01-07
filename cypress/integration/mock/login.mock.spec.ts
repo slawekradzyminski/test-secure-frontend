@@ -9,7 +9,7 @@ import { getUser } from "../../util/userProvider"
 const loginPage = new LoginPage()
 const homePage = new HomePage()
 
-describe('Login page', () => {
+describe('Mocked Login page', () => {
     const firstName = getRandomString()
 
     beforeEach(() => {
@@ -17,7 +17,7 @@ describe('Login page', () => {
       cy.mockLogin(getUser(firstName))
     })
   
-    it('should successfully login', () => {
+    it('C2121 should successfully login with mocks', () => {
         const username = getRandomString()
         const password = getRandomString()
         loginPage.login(username, password)
@@ -27,7 +27,7 @@ describe('Login page', () => {
     })
 
 
-    it('should assert loading state', () => {
+    it('C2122 should assert loading state', () => {
         cy.intercept('POST', '**/users/signin', {
             delay: 1000
         })

@@ -20,7 +20,7 @@ describe('Login page', () => {
     cy.visit('')
   })
 
-  it('should successfully login', () => {
+  it('C2118 should successfully login', () => {
     cy.intercept('POST', '**/users/signin',
       (req) => {
         expect(req.body).to.deep.eq({ username, password })
@@ -36,14 +36,14 @@ describe('Login page', () => {
     cy.get('h1').should('contain.text', firstName)
   })
 
-  it('should fail to login', () => {
+  it('C2128 should fail to login', () => {
     cy.get('[name=username]').type('wrong')
     cy.get('[name=password]').type('wrong')
     cy.get('.btn-primary').click()
     cy.get('.alert').should('contain.text', 'Invalid username/password supplied')
   })
 
-  it('should trigger frontend validation', () => {
+  it('C2129 should trigger frontend validation', () => {
     let count = 0
     cy.intercept('POST', '**/users/signin',() => {
       count += 1
