@@ -34,3 +34,7 @@ npm start & ./node_modules/.bin/wait-on http://localhost:8080 && npx cypress run
 npm run
 allure serve
 ```
+
+## testrail
+
+[Installation](https://www.gurock.com/testrail/docs/admin/installation/docker/overview)
