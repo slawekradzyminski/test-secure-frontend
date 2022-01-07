@@ -1,4 +1,7 @@
 {
     "includeShadowDom": true,
-    "baseUrl": "http://localhost:8080"
+    "baseUrl": "http://localhost:8080",
+    "env": {
+        "allure": true
+    }
 }
