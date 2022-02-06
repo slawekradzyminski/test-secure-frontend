@@ -38,3 +38,9 @@ allure serve
 ## testrail
 
 [Installation](https://www.gurock.com/testrail/docs/admin/installation/docker/overview)
+
+## cypress grep
+
+```commandline
+npx cypress run --env grep="C2121; C2122",grepFilterSpecs=true
+```
