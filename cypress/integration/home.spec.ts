@@ -34,9 +34,9 @@ describe('Home page', () => {
     })
 
     it('should edit an user', () => {
-        cy.get('ul li').contains('Gosia Radzyminska').find('.edit').click()
-        cy.get('[name=firstName]').should('have.value', 'Gosia')
-        cy.get('[name=lastName]').should('have.value', 'Radzyminska')
+        cy.get('ul li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
+        cy.get('[name=firstName]').should('have.value', user.firstName)
+        cy.get('[name=lastName]').should('have.value', user.lastName)
         cy.get('[name=username]').should('be.disabled')
         cy.get('[name=roles]').should('be.disabled')
     })
@@ -50,6 +50,14 @@ describe('Home page', () => {
             }
         }).then(resp => {
             expect(resp.status).to.eq(200)
+        })
+    })
+
+    it(`should delete all users except ${user.firstName} ${user.lastName}`, () => {
+        cy.get('ul li').each($row => {
+            if (!$row.text().includes(`${user.firstName} ${user.lastName}`)) {
+                cy.wrap($row).find('.delete').click()
+            }
         })
     })
 
