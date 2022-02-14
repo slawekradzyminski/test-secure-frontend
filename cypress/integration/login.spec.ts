@@ -20,12 +20,17 @@ describe('Login page', () => {
             .should('have.class', 'alert-danger')
     })
 
-    it.only('should validate empty fields', () => {
+    it('should validate empty fields', () => {
         cy.get('.btn-primary').click()
         cy.get('.invalid-feedback').eq(0).should('have.text', 'Required field length is 4 or more')
         cy.get('.invalid-feedback').eq(1).should('have.text', 'Required field length is 4 or more')
         cy.get('[name=username]').should('have.class', 'is-invalid')
         cy.get('[name=password]').should('have.class', 'is-invalid')
+    })
+
+    it('should redirect to register', () => {
+        cy.get('.btn-link').click()
+        cy.url().should('contain', '/register')
     })
 
 })

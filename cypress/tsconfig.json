@@ -1,6 +1,9 @@
 {
     "compilerOptions": {
         "target": "es6",
+        "forceConsistentCasingInFileNames": true,
+        "importHelpers": true,
+        "strict": true,
         "moduleResolution": "node",
         "lib": [
             "es6",
