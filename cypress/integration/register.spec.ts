@@ -20,10 +20,7 @@ describe('Register page', () => {
         cy.get('.btn-primary').click()
         cy.get('.alert').should('contain.text', 'Registration successful')
 
-        cy.get('[name=username]').type(username)
-        cy.get('[name=password]').type(password)
-        cy.get('.btn-primary').click()
-        cy.get('h1').should('contain.text', `Hi ${firstName}`)
+        cy.login(username, password)
     })
 
     it('should fail to register if user already exists', () => {

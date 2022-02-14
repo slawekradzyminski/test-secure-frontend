@@ -1,15 +1,36 @@
 /// <reference types="cypress" />
 
+import { getRandomEmail, getRandomString } from "../util/random"
+
 describe('Login page', () => {
     beforeEach(() => {
         cy.visit('')
     })
 
     it('should successfully login', () => {
-        cy.get('[name=username]').type('admin')
-        cy.get('[name=password]').type('admin')
+        const username = getRandomString()
+        const password = getRandomString()
+        const firstName = getRandomString()
+
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:4000/users/signup',
+            body: {
+                email: getRandomEmail(),
+                firstName: firstName,
+                lastName: getRandomString(),
+                password: password,
+                roles: ["ROLE_CLIENT"],
+                username: username
+            }
+        }).then(resp => {
+            expect(resp.status).to.eq(201)
+        })
+
+        cy.get('[name=username]').type(username)
+        cy.get('[name=password]').type(password)
         cy.get('.btn-primary').click()
-        cy.get('h1').should('contain.text', 'Hi Slawomir')
+        cy.get('h1').should('contain.text', `Hi ${firstName}`)
     })
 
     it('should fail to login', () => {
