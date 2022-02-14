@@ -1,11 +1,22 @@
 /// <reference types="cypress" />
 
+import { getUser } from "../util/userProvider"
+
 describe('Home page', () => {
     let jwtToken: string
+    const user = getUser()
+
+    before(() => {
+        cy.register(user)
+    })
 
     beforeEach(() => {
-        cy.login('admin', 'admin').then(returnedToken => jwtToken = returnedToken)
+        cy.login(user.username, user.password).then(returnedToken => jwtToken = returnedToken)
         cy.visit('')
+    })
+
+    after(() => {
+        cy.deleteUser(user.username, jwtToken)
     })
 
     it('should display at least one user', () => {

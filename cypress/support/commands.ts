@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
 
-import { User } from "../util/userProvider"
-
 Cypress.Commands.add('login', (username, password) => {
     cy.request({
         method: 'POST',
@@ -38,5 +36,17 @@ Cypress.Commands.add('register', (user) => {
     }).then(resp => {
         expect(resp.status).to.eq(201)
     })
+})
+
+Cypress.Commands.add('deleteUser', (username, token) => {
+  cy.request({
+      method: 'DELETE',
+      url: `http://localhost:4000/users/${username}`,
+      headers: {
+        Authorization: `Bearer ${token}`
+    }
+  }).then(resp => {
+      expect(resp.status).to.eq(204)
+  })
 })
 
