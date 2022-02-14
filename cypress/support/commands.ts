@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { User } from "../util/userProvider"
+
 Cypress.Commands.add('login', (username, password) => {
     cy.request({
         method: 'POST',
@@ -21,17 +23,17 @@ Cypress.Commands.add('login', (username, password) => {
       })
 })
 
-Cypress.Commands.add('register', (username, password, firstName, lastName, email) => {
+Cypress.Commands.add('register', (user) => {
     cy.request({
         method: 'POST',
         url: 'http://localhost:4000/users/signup',
         body: {
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            password: password,
-            roles: ["ROLE_CLIENT"],
-            username: username
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            password: user.password,
+            roles: user.roles,
+            username: user.username
         }
     }).then(resp => {
         expect(resp.status).to.eq(201)
