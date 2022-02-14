@@ -1,7 +1,11 @@
 /// <reference types="cypress" />
 
-import { getRandomEmail, getRandomString } from "../util/random"
+import HomePageAssertions from "../assertions/homePageAssertions"
+import LoginPage from "../pages/loginPage"
 import { getUser } from "../util/userProvider"
+
+const loginPage = new LoginPage()
+const homePageAssertions = new HomePageAssertions()
 
 describe('Login page', () => {
     beforeEach(() => {
@@ -10,13 +14,9 @@ describe('Login page', () => {
 
     it('should successfully login', () => {
         const user = getUser()
-
         cy.register(user)
-
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
-        cy.get('h1').should('contain.text', `Hi ${user.firstName}`)
+        loginPage.login(user.username, user.password)
+        homePageAssertions.verifyHeader(user.firstName)
     })
 
     it('should fail to login', () => {
