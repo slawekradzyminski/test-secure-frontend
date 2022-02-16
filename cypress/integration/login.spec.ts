@@ -22,10 +22,11 @@ describe('Login page', () => {
     })
 
     it('should fail to login', () => {
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
-        cy.get('.alert').should('have.text', 'Invalid username/password supplied')
+        loginPage.usernameField().type('wrong')
+        loginPage.passwordField().type('wrong')
+        loginPage.loginButton().click()
+        loginPage.alert()
+            .should('have.text', 'Invalid username/password supplied')
             .should('have.class', 'alert-danger')
     })
 

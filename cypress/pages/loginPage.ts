@@ -1,23 +1,25 @@
+import { createSelector as getElement } from "../util/selector"
+
 export default class LoginPage {
 
-    protected usernameField = '[name=username]'
-    protected passwordField = '[name=password]'
-    protected loginButton = '.btn-primary'
-    protected registerButton = '.btn-link'
-    protected invalidFeedback = '.invalid-feedback'
+    usernameField = getElement("[name=username]")
+    passwordField = getElement('[name=password]')
+    loginButton = getElement('.btn-primary')
+    registerButton = getElement('.btn-primary')
+    invalidFeedback = getElement('.invalid-feedback')
+    alert = getElement('.alert')
 
     login(username: string, password: string) {
-        cy.get(this.usernameField).type(username)
-        cy.get(this.passwordField).type(password)
+        this.usernameField().type(username)
+        this.passwordField().type(password)
         this.clickLogin()
     }
 
     clickRegister() {
-        cy.get(this.registerButton).click()
+        this.registerButton().click()
     }
 
     clickLogin() {
-        cy.get(this.loginButton).click()
+        this.loginButton().click()
     }
-
 }
