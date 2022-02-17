@@ -30,12 +30,12 @@ describe('Login page', () => {
             .should('have.class', 'alert-danger')
     })
 
-    it('should validate empty fields', () => {
+    it('C1211 - should validate empty fields', () => {
         loginPage.clickLogin()
         loginPageAssertions.verifyFrontendValidation()
     })
 
-    it('should redirect to register', () => {
+    it('C1212 - should redirect to register', () => {
         loginPage.clickRegister()
         cy.url().should('contain', '/registerrrrr')
     })

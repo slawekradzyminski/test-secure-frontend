@@ -1,3 +1,12 @@
+## Allure
+npm install -g allure-commandline
+copy-paste z instrukcji https://github.com/Shelex/cypress-allure-plugin
+allure serve
+
+## Cypress grep
+copy-paste z instrukcji https://github.com/cypress-io/cypress-grep
+npx cypress run --env grep="C1211; C1212",grepFilterSpecs=true
+
 ## Local run
 
 ```commandline

@@ -3,7 +3,7 @@
 import { getRandomEmail, getRandomString } from "../util/random"
 import { getUser } from "../util/userProvider"
 
-describe('Home page', () => {
+describe('Edit page', () => {
     let jwtToken: string
     const user = getUser()
 
