@@ -38,19 +38,8 @@ Cypress.Commands.add('register', (user) => {
   })
 })
 
-Cypress.Commands.add('visitWithNoMarketing', (user, url) => {
+Cypress.Commands.add('visitWithUsers', (url) => {
   cy.intercept('GET', '**/users', { fixture: 'users.json' })
-  cy.intercept('POST', '**/users/signin', {
-    statusCode: 200,
-    body: {
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      roles: user.roles,
-      token: "fakeToken",
-      username: user.username
-    }
-  })
   cy.visit(url)
 })
 
