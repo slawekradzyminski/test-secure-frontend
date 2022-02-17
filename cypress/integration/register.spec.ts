@@ -7,7 +7,7 @@ describe('Register page', () => {
         cy.visit('/register')
     })
 
-    it('should successfully register & the login', () => {
+    it('C1 - should successfully register & the login', () => {
         const username = getRandomString()
         const password = getRandomString()
         const firstName = getRandomString()
@@ -23,7 +23,7 @@ describe('Register page', () => {
         cy.login(username, password)
     })
 
-    it('should fail to register if user already exists', () => {
+    it('C2 - should fail to register if user already exists', () => {
         cy.get('[name=username]').type('admin')
         cy.get('[name=password]').type(getRandomString())
         cy.get('[name=firstName]').type(getRandomString())
@@ -35,9 +35,9 @@ describe('Register page', () => {
             .should('have.class', 'alert-danger')
     })
 
-    it('should redirect to login', () => {
+    it('C3 - should redirect to login', () => {
         cy.get('.btn-link').click()
-        cy.url().should('contain', '/login')
+        cy.url().should('contain', '/loginnnn')
     })
 
 })
