@@ -40,4 +40,18 @@ describe('Login page', () => {
         cy.url().should('contain', '/registerrrrr')
     })
 
+    it('should display loading indicator while waiting', () => {
+        cy.intercept('POST', '**/users/signin',
+            (req) => {
+                req.on('response', (res) => {
+                    res.setDelay(1000)
+                })
+            }
+        )
+
+        loginPage.login('admin', 'admin')
+        cy.get('.btn-primary .spinner-border').should('be.visible')
+        cy.get('h1').should('contain.text', 'Slawomir')
+    })
+
 })

@@ -17,11 +17,13 @@ describe('Login page with mocks', () => {
     })
 
     it('should successfully login', () => {
+        const firstName = 'Slawomir'
+
         cy.intercept('POST', '**/users/signin', {
             statusCode: 200,
             body: {
                 email: user.email,
-                firstName: user.firstName,
+                firstName: firstName,
                 lastName: user.lastName,
                 roles: user.roles,
                 token: "fakeToken",
@@ -30,9 +32,11 @@ describe('Login page with mocks', () => {
         })
 
         loginPage.login(user.username, user.password)
-        homePageAssertions.verifyHeader(user.firstName)
+        homePageAssertions.verifyHeader(firstName)
         cy.get('ul li').should('have.length', users.length)
         cy.get('ul li').first().should('contain.text', `${users[0].firstName} ${users[0].lastName}`)
+
+        cy.percySnapshot()
     })
 
     it('should fail to login', () => {
@@ -53,20 +57,6 @@ describe('Login page with mocks', () => {
         loginPage.alert()
             .should('have.text', message)
             .should('have.class', 'alert-danger')
-    })
-
-    it('should display loading indicator while waiting', () => {
-        cy.intercept('POST', '**/users/signin',
-            (req) => {
-                req.on('response', (res) => {
-                    res.setDelay(1000)
-                })
-            }
-        )
-
-        loginPage.login('admin', 'admin')
-        cy.get('.btn-primary .spinner-border').should('be.visible')
-        cy.get('h1').should('contain.text', 'Slawomir')
     })
 
 })

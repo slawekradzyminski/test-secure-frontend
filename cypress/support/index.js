@@ -4,5 +4,6 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 import './commands.ts'
 import '@cypress/code-coverage/support'
-import '@shelex/cypress-allure-plugin';
+import '@shelex/cypress-allure-plugin'
 require('cypress-grep')()
+import '@percy/cypress'
