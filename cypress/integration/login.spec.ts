@@ -22,10 +22,10 @@ describe('Login page', () => {
     })
 
     it('should fail to login', () => {
-        loginPage.usernameField.type('wrong')
-        loginPage.passwordField.type('wrong')
-        loginPage.loginButton.click()
-        loginPage.alert
+        loginPage.usernameField().type('wrong')
+        loginPage.passwordField().type('wrong')
+        loginPage.loginButton().click()
+        loginPage.alert()
             .should('have.text', 'Invalid username/password supplied')
             .should('have.class', 'alert-danger')
     })
