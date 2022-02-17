@@ -37,7 +37,7 @@ describe('Login page', () => {
 
     it('should redirect to register', () => {
         loginPage.clickRegister()
-        cy.url().should('contain', '/register')
+        cy.url().should('contain', '/registerrrrr')
     })
 
 })
