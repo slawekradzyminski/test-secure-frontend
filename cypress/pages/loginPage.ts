@@ -1,4 +1,4 @@
-import { createSelector as getElement } from "../util/selector"
+import {  getElement } from "../util/selector"
 
 export default class LoginPage {
 
