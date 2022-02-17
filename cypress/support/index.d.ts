@@ -6,6 +6,7 @@ declare global {
             login(username: string, password: string): Promise<string>;
             register(user: User): void;
             deleteUser(username: string, token: string): void;
+            visitWithNoMarketing(user: User, url: string): void;
         }
     }
 }
