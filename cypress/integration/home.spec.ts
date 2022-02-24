@@ -4,6 +4,7 @@ import { getUser } from "../util/user"
 
 describe('Home page', () => {
     const user = getUser()
+    let token: string
 
     before(() => {
         cy.register(user)
@@ -14,7 +15,7 @@ describe('Home page', () => {
     // })
 
     beforeEach(() => {
-        cy.login(user.username, user.password)
+        cy.login(user.username, user.password).then(returnedToken => token = returnedToken)
         cy.visit('http://localhost:8080')
     })
 
