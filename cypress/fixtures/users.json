@@ -1,0 +1,63 @@
+[
+    {
+      "id": 1,
+      "username": "admin",
+      "email": "admin@email.com",
+      "roles": [
+        "ROLE_ADMIN",
+        "ROLE_CLIENT"
+      ],
+      "firstName": "Slawomir",
+      "lastName": "Radzyminski"
+    },
+    {
+      "id": 3,
+      "username": "janek",
+      "email": "janek@ocado.com",
+      "roles": [
+        "ROLE_CLIENT"
+      ],
+      "firstName": "Janek",
+      "lastName": "Kowalski"
+    },
+    {
+      "id": 4,
+      "username": "adminfsdfdsf",
+      "email": "bobo@bobo.com",
+      "roles": [
+        "ROLE_CLIENT"
+      ],
+      "firstName": "fdsfdfdsf",
+      "lastName": "fsfdsfdsfds"
+    },
+    {
+      "id": 5,
+      "username": "68yiam",
+      "email": "958hgd@jlabs.com",
+      "roles": [
+        "ROLE_ADMIN"
+      ],
+      "firstName": "j8re5",
+      "lastName": "i3j5dd"
+    },
+    {
+      "id": 6,
+      "username": "w17fow",
+      "email": "c7i63@jlabs.com",
+      "roles": [
+        "ROLE_ADMIN"
+      ],
+      "firstName": "2t8sy",
+      "lastName": "pi8snp"
+    },
+    {
+      "id": 7,
+      "username": "w780or",
+      "email": "yzfizf@jlabs.com",
+      "roles": [
+        "ROLE_ADMIN"
+      ],
+      "firstName": "mg07xv",
+      "lastName": "ti27dr"
+    }
+  ]
