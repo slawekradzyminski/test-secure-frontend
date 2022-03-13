@@ -28,7 +28,7 @@ describe("Home page", () => {
 
   it("C2125 should be able to make backend call with token", () => {
     cy.request({
-      url: "http://localhost:4000/users",
+      url: "http://localhost:4001/users",
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },

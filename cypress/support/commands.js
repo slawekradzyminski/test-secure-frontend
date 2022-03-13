@@ -1,7 +1,7 @@
 Cypress.Commands.add("login", (username, password) => {
   cy.request({
     method: "POST",
-    url: "http://localhost:4000/users/signin",
+    url: "http://localhost:4001/users/signin",
     body: { username, password },
   }).then((resp) => {
     expect(resp.status).to.eq(200);
@@ -13,7 +13,7 @@ Cypress.Commands.add("login", (username, password) => {
 Cypress.Commands.add("deleteUser", (username, jwtToken) => {
   cy.request({
     method: "DELETE",
-    url: `http://localhost:4000/users/${username}`,
+    url: `http://localhost:4001/users/${username}`,
     headers: {
       Authorization: `Bearer ${jwtToken}`,
     },
@@ -27,7 +27,7 @@ Cypress.Commands.add(
   (username, password, firstName, lastName, email) => {
     cy.request({
       method: "POST",
-      url: "http://localhost:4000/users/signup",
+      url: "http://localhost:4001/users/signup",
       body: {
         username,
         password,

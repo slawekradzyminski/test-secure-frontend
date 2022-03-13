@@ -1,6 +1,7 @@
 {
+    "projectId": "slawek",
     "includeShadowDom": true,
-    "baseUrl": "http://localhost:8080",
+    "baseUrl": "http://localhost:8081",
     "env": {
         "allure": true
     },
