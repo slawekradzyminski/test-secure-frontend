@@ -9,11 +9,13 @@ test.describe('login page', () => {
         await page.close()
     })
   
-    test('should successfully login', async ({ page }) => {
+    test.only('should successfully login', async ({ page }) => {
         await page.type('[name=password]', 'admin')
         await page.type('[name=username]', 'admin')
         await page.click('.btn-primary')
         await expect(page.locator('h1')).toContainText('Slawomir')
+        const storage = await page.context().storageState()
+        console.log(JSON.stringify(storage))
     })
 
     test('should fail to login', async ({ page }) => {

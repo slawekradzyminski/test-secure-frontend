@@ -2,8 +2,11 @@ import { test, expect } from '@playwright/test'
 import { login } from './common/apiActions'
 
 test.describe('home page', () => {
-    test.beforeEach(async ({ page }) => {
-        await login(page)
+    test.beforeEach(async ({ page, request }) => {
+        const response = await login(request)
+        console.log(response)
+        await page.goto('http://localhost:8081')
+        localStorage.setItem('user', response);
     })
 
     test.afterEach(async ({ page }) => {
