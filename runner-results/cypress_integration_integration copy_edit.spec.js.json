@@ -1,0 +1,10 @@
+{
+  "suites": 1,
+  "tests": 2,
+  "passes": 2,
+  "pending": 0,
+  "failures": 0,
+  "start": "2022-04-21T11:03:24.898Z",
+  "duration": 6607,
+  "file": "cypress/integration/integration copy/edit.spec.js"
+}
