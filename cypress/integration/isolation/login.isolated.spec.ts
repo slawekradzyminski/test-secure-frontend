@@ -29,15 +29,28 @@ describe('login page', () => {
         cy.get('h1').should('contain.text', user.firstName)
     })
 
-    // it('should fail to login', () => {
-    //     cy.get('[name=username]').type('wrong')
-    //     cy.get('[name=password]').type('wrong')
-    //     cy.get('.btn-primary').click()
+    it('should fail to login', () => {
+        const message = "Invalid username/password supplied"
 
-    //     cy.get('.alert')
-    //         .should('contain.text', 'Invalid username/password')
-    //         .should('have.class', 'alert-danger')
-    // })
+        cy.intercept('POST', '**/users/signin', {
+            statusCode: 422,
+            body: {
+                error: "Unprocessable Entity",
+                message: message,
+                path: "/users/signin",
+                status: 422,
+                timestamp: "2022-05-12T13:28:20.286+00:00"
+            }
+        })
+
+        cy.get('[name=username]').type('wrong')
+        cy.get('[name=password]').type('wrong')
+        cy.get('.btn-primary').click()
+
+        cy.get('.alert')
+            .should('contain.text', message)
+            .should('have.class', 'alert-danger')
+    })
 
 
 })
