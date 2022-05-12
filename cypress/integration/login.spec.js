@@ -12,20 +12,7 @@ describe('login page', () => {
         const password = faker.random.alphaNumeric(6)
         const firstName = faker.name.firstName()
 
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signup',
-            body: {
-                firstName: firstName,
-                lastName: faker.name.lastName(),
-                username: username,
-                password: password,
-                email: faker.internet.email(),
-                roles: ["ROLE_CLIENT"]
-            }
-        }).then(resp => {
-            expect(resp.status).to.eq(201)
-        })
+        cy.register(firstName, faker.name.lastName(), username, password, faker.internet.email())
 
         cy.get('[name=username]').type(username)
         cy.get('[name=password]').type(password)
