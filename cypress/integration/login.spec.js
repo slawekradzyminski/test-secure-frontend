@@ -30,11 +30,11 @@ describe('login page', () => {
         cy.get('h2').should('contain.text', 'Register')
     })
 
-    it.only('should trigger frontend validation', () => {
+    it('should trigger frontend validation', () => {
         cy.get('.btn-primary').click()
         cy.get('.invalid-feedback').should('have.length', 2)
         cy.get('.invalid-feedback').eq(0).should('have.text', 'Required field length is 4 or more')
-        cy.get('.invalid-feedback').eq(1).should('have.text', 'Required field length')
+        cy.get('.invalid-feedback').eq(1).should('have.text', 'Required field length is 4 or more')
         cy.get('[name=username]').should('have.class', 'is-invalid')
         cy.get('[name=password]').should('have.class', 'is-invalid')
     })
