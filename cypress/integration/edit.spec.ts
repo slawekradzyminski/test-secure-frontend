@@ -27,7 +27,7 @@ describe('home page', () => {
         cy.get('[name=roles]').should('have.value', user.roles.join(','))
     })
 
-    it.only('should edit an user', () => {
+    it('should edit an user', () => {
         const newUser = getRandomUser()
 
         cy.get('ul li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
