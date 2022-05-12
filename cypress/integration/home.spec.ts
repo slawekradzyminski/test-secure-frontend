@@ -1,13 +1,12 @@
 /// <reference types="cypress" />
 
-import { faker } from '@faker-js/faker';
+import { getRandomUser } from '../util/user';
 
 describe('home page', () => {
     beforeEach(() => {
-        const username = faker.internet.userName()
-        const password = faker.random.alphaNumeric(7)
-        cy.register(faker.name.firstName(), faker.name.lastName(), username, password, faker.internet.email())
-        cy.login(username, password)
+        const user = getRandomUser()
+        cy.register(user)
+        cy.login(user.username, user.password)
         cy.visit('http://localhost:8081')
     })
 

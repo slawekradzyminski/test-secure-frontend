@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { faker } from '@faker-js/faker';
+import { getRandomUser } from '../util/user';
 
 describe('login page', () => {
     beforeEach(() => {
@@ -8,17 +8,14 @@ describe('login page', () => {
     })
 
     it('should successfully login', () => {
-        const username = faker.internet.userName()
-        const password = faker.random.alphaNumeric(6)
-        const firstName = faker.name.firstName()
+        const user = getRandomUser()
+        cy.register(user)
 
-        cy.register(firstName, faker.name.lastName(), username, password, faker.internet.email())
-
-        cy.get('[name=username]').type(username)
-        cy.get('[name=password]').type(password)
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
         cy.get('.btn-primary').click()
 
-        cy.get('h1').should('contain.text', firstName)
+        cy.get('h1').should('contain.text', user.firstName)
     })
 
     it('should fail to login', () => {
