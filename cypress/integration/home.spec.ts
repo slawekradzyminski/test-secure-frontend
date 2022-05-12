@@ -1,27 +1,20 @@
 /// <reference types="cypress" />
 
-import { getRandomUser } from '../util/user';
+import { getRandomUser, User } from '../util/user';
 
 describe('home page', () => {
     let token: string
-    const user = getRandomUser()
+    let user: User
 
     beforeEach(() => {
+        user = getRandomUser()
         cy.register(user)
         cy.login(user.username, user.password).then(jwtToken => token = jwtToken)
         cy.visit('http://localhost:8081')
     })
 
     afterEach(() => {
-        cy.request({
-            method: 'DELETE',
-            url: `http://localhost:4001/users/${user.username}`,
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(resp => {
-            expect(resp.status).to.eq(204)
-        })
+        cy.deleteUser(user.username, token)
     })
 
     it('should display list of users', () => {
@@ -38,5 +31,13 @@ describe('home page', () => {
     it('should succesfully click add more user and check page after it', () => {
         cy.get('#addmore').click();
         cy.url().should('eq', 'http://localhost:8081/add-user')
+    })
+
+    it('should delete all users except myself', () => {
+        cy.get('ul li').each($row => {
+            if (!$row.text().includes(`${user.firstName} ${user.lastName}`)) {
+                cy.wrap($row).find('.delete').click()
+            }
+        })
     })
 })
