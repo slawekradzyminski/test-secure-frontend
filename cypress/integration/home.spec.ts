@@ -40,4 +40,14 @@ describe('home page', () => {
             }
         })
     })
+
+    it('should not delete user if confirmation cancelled', () => {
+        Cypress.on('window:confirm', confirmationText => {
+            expect(confirmationText).to.eq('Are you sure you wish to delete this item?')
+            return false
+        })
+
+        cy.get('ul li').contains(`${user.firstName} ${user.lastName}`).find('.delete').click()
+        cy.get('ul li').contains(`${user.firstName} ${user.lastName}`).should('be.visible')
+    })
 })
