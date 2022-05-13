@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import { isTypedArray } from 'cypress/types/lodash';
 import { getRandomUser } from '../../util/user';
 
 describe('login page', () => {
