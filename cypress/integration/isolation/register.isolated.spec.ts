@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { Roles } from '../../util/roles';
 import { getRandomUser } from '../../util/user';
 
 describe('login page', () => {
@@ -15,7 +16,7 @@ describe('login page', () => {
             body: {
                 token: 'fakeToken'
             }
-        })
+        }).as('registerRequest')
 
         cy.get('[name=firstName]').type(user.firstName)
         cy.get('[name=lastName]').type(user.lastName)
@@ -28,6 +29,14 @@ describe('login page', () => {
         cy.get('.alert')
             .should('have.text', 'Registration successful')
             .should('have.class', 'alert-success')
+        cy.wait('@registerRequest').its('request.body').should('deep.equal', {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            password: user.password,
+            email: user.email,
+            roles: [Roles.ROLE_CLIENT]
+        })
     })
 
     it('should fail to login', () => {
