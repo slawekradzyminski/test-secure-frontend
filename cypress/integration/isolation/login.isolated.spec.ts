@@ -9,7 +9,7 @@ describe('login page', () => {
         cy.viewport('iphone-xr')
     })
 
-    it.only('should successfully login', () => {
+    it('should successfully login', () => {
         const user = getRandomUser()
 
         cy.intercept('POST', '**/users/signin', {
