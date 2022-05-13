@@ -3,8 +3,17 @@
 import { Roles } from "../../util/roles"
 import users from "../../fixtures/users.json"
 
+const getRandomUser = () => {
+    let rand = Math.random() * users.length;
+    if (rand === users.length) {
+        rand = users.length - 1
+    }
+    rand = Math.floor(rand)
+    return rand
+}
+
 describe('home page with mocks', () => {
-    const editedUser = users[0]
+    const editedUser = users[getRandomUser()]
 
     beforeEach(() => {
         const user = {
@@ -26,3 +35,5 @@ describe('home page with mocks', () => {
     })
 
 })
+
+
