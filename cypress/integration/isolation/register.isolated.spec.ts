@@ -58,4 +58,20 @@ describe('login page', () => {
             .should('have.class', 'alert-danger')
     })
 
+    it('should display loading indicator', () => {
+        const user = getRandomUser()
+        cy.intercept('POST', '**/users/signup', {
+            delay: 2000
+        })
+
+        cy.get('[name=firstName]').type(user.firstName)
+        cy.get('[name=lastName]').type(user.lastName)
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
+        cy.get('[name=email]').type(user.email)
+        cy.get('.btn-primary').click()
+
+        cy.get('.btn-primary .spinner-border').should('be.visible')
+    })
+
 })
