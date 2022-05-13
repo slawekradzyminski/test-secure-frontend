@@ -31,6 +31,7 @@ describe('home page with mocks', () => {
         // given
         const lastUser = users[users.length - 1]
         cy.intercept('DELETE', `**/users/${lastUser.username}`, { statusCode: 204}).as('deleteRequest')
+        cy.percySnapshot('beforeDeletion')
 
         // when
         cy.get('ul li').contains(`${lastUser.firstName}`).find('.delete').click()
@@ -39,6 +40,7 @@ describe('home page with mocks', () => {
         cy.wait('@deleteRequest')
         cy.get('ul li').contains(`${lastUser.firstName}`).should('not.exist')
         cy.get('ul li').should('have.length', users.length - 1)
+        cy.percySnapshot('afterDeletion')
     })
 
 
