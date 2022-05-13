@@ -23,8 +23,22 @@ describe('home page with mocks', () => {
 
         // Alternatywnie to samo co wyzej w petli for
         cy.get('ul li').each(($el, index) => {
-        cy.wrap($el).should('contain.text', `${users[index].firstName} ${users[index].lastName}`)
+            cy.wrap($el).should('contain.text', `${users[index].firstName} ${users[index].lastName}`)
         })
+    })
+
+    it('should delete user', () => {
+        // given
+        const lastUser = users[users.length - 1]
+        cy.intercept('DELETE', `**/users/${lastUser.username}`, { statusCode: 204 }).as('deleteRequest')
+
+        // when
+        cy.get('ul li').contains(`${lastUser.firstName}`).find('.delete').click()
+
+        // then
+        cy.wait('@deleteRequest')
+        cy.get('ul li').contains(`${lastUser.firstName}`).should('not.exist')
+        cy.get('ul li').should('have.length', users.length - 1)
     })
 
 

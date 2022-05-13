@@ -53,5 +53,13 @@ describe('login page', () => {
         cy.get('.btn-primary .spinner-border').should('be.visible')
     })
 
+    it('should open register page', () => {
+        // when
+        loginPage.clickRegister()
+
+        // then
+        cy.get('h2').should('have.text', 'Register')
+        cy.url().should('contain', '/register')
+    })
 
 })

@@ -6,4 +6,8 @@ export default class LoginPage {
         cy.get('.btn-primary').click()
     }
 
+    clickRegister() {
+        cy.get('.btn-link').click()
+    }
+
 }
