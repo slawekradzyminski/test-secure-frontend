@@ -10,19 +10,7 @@ describe('login page', () => {
 
     it('should successfully login', () => {
         const user = getRandomUser()
-
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 200,
-            body: {
-                firstName: user.firstName,
-                lastName: user.lastName,
-                username: user.username,
-                token: 'fakeJwtToken',
-                email: user.email,
-                roles: user.roles
-            }
-        }).as('loginRequest')
-
+        cy.mockSuccessfulLogin(user)
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
         cy.get('[name=username]').type(user.username)
@@ -38,17 +26,7 @@ describe('login page', () => {
 
     it('should fail to login', () => {
         const message = "Invalid username/password supplied"
-
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 422,
-            body: {
-                error: "Unprocessable Entity",
-                message: message,
-                path: "/users/signin",
-                status: 422,
-                timestamp: "2022-05-12T13:28:20.286+00:00"
-            }
-        })
+        cy.mockFailedLogin(message)
 
         cy.get('[name=username]').type('wrong')
         cy.get('[name=password]').type('wrong')
@@ -60,9 +38,7 @@ describe('login page', () => {
     })
 
     it('should display loading indicator', () => {
-        cy.intercept('POST', '**/users/signin', {
-            delay: 2000
-        })
+        cy.mockLoginDelay()        
 
         cy.get('[name=username]').type('wrong')
         cy.get('[name=password]').type('wrong')
