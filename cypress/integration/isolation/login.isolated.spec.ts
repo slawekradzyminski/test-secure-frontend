@@ -1,6 +1,11 @@
 /// <reference types="cypress" />
 
+import AlertValidator from '../../pages/AlertValidator';
+import LoginPage from '../../pages/LoginPage';
 import { getRandomUser } from '../../util/user';
+
+const loginPage = new LoginPage()
+const alertValidator = new AlertValidator()
 
 describe('login page', () => {
     beforeEach(() => {
@@ -9,14 +14,15 @@ describe('login page', () => {
     })
 
     it('should successfully login', () => {
+        // given
         const user = getRandomUser()
         cy.mockSuccessfulLogin(user)
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        // when
+        loginPage.attemptLogin(user.username, user.password)
 
+        // then
         cy.get('h1').should('contain.text', user.firstName)
         cy.wait('@loginRequest').its('request.body').should('deep.equal', {
             username: user.username,
@@ -25,25 +31,25 @@ describe('login page', () => {
     })
 
     it('should fail to login', () => {
+        // given
         const message = "Invalid username/password supplied"
         cy.mockFailedLogin(message)
 
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
+        // when
+        loginPage.attemptLogin('wrong', 'wrong')
 
-        cy.get('.alert')
-            .should('contain.text', message)
-            .should('have.class', 'alert-danger')
+        // then
+        alertValidator.verifyFailure(message)
     })
 
     it('should display loading indicator', () => {
+        // given
         cy.mockLoginDelay()        
 
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
+        // when
+        loginPage.attemptLogin('wrong', 'wrong')
 
+        // then
         cy.get('.btn-primary .spinner-border').should('be.visible')
     })
 
