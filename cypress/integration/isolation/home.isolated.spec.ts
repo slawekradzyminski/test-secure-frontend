@@ -30,7 +30,7 @@ describe('home page with mocks', () => {
     it('should delete user', () => {
         // given
         const lastUser = users[users.length - 1]
-        cy.intercept('DELETE', `**/users/${lastUser.username}`, { statusCode: 204 }).as('deleteRequest')
+        cy.intercept('DELETE', `**/users/${lastUser.username}`, { statusCode: 204}).as('deleteRequest')
 
         // when
         cy.get('ul li').contains(`${lastUser.firstName}`).find('.delete').click()
