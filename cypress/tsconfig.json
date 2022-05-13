@@ -5,6 +5,8 @@
         "importHelpers": true,
         "strict": true,
         "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
         "lib": [
             "es6",
             "dom"
