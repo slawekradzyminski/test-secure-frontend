@@ -3,7 +3,7 @@
 import { Roles } from '../../util/roles';
 import { getRandomUser } from '../../util/user';
 
-describe('login page', () => {
+describe('register page with mocks', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081/register')
     })
@@ -11,12 +11,7 @@ describe('login page', () => {
     it('should successfully register', () => {
         const user = getRandomUser()
 
-        cy.intercept('POST', '**/users/signup', {
-            statusCode: 201,
-            body: {
-                token: 'fakeToken'
-            }
-        }).as('registerRequest')
+        cy.mockSuccessfulRegister()
 
         cy.get('[name=firstName]').type(user.firstName)
         cy.get('[name=lastName]').type(user.lastName)
@@ -39,20 +34,11 @@ describe('login page', () => {
         })
     })
 
-    it('should fail to login', () => {
+    it('should fail to register', () => {
         const message = "Username is already in use"
         const user = getRandomUser()
 
-        cy.intercept('POST', '**/users/signup', {
-            statusCode: 422,
-            body: {
-                error: "Unprocessable Entity",
-                message: message,
-                path: "/users/signup",
-                status: 422,
-                timestamp: "2022-05-13T06:06:58.055+00:00"
-            }
-        })
+        cy.mockFailedRegister(message)
 
         cy.get('[name=firstName]').type(user.firstName)
         cy.get('[name=lastName]').type(user.lastName)
@@ -69,9 +55,7 @@ describe('login page', () => {
 
     it('should display loading indicator', () => {
         const user = getRandomUser()
-        cy.intercept('POST', '**/users/signup', {
-            delay: 2000
-        })
+        cy.loadingIndicatorRegister()
 
         cy.get('[name=firstName]').type(user.firstName)
         cy.get('[name=lastName]').type(user.lastName)

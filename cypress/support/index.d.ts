@@ -12,6 +12,11 @@ declare global {
             mockSuccessfulLogin(user: User): void;
             mockFailedLogin(message: string): void;
             mockLoginDelay(): void;
+
+            // registerMocks.ts
+            mockSuccessfulRegister(): void;
+            mockFailedRegister(message: string): void;
+            loadingIndicatorRegister(): void;
         }
     }
 }
