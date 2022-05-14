@@ -23,9 +23,11 @@ describe('register page', () => {
     })
 
     it('should fail to register', () => {
-        const user = getRandomUser()
+        const existingUser = getRandomUser()
+        cy.register(existingUser)
 
-        cy.get('[name=username]').type('admin')
+        const user = getRandomUser()
+        cy.get('[name=username]').type(existingUser.username)
         cy.get('[name=firstName]').type(user.firstName)
         cy.get('[name=lastName]').type(user.lastName)
         cy.get('[name=password]').type(user.password)

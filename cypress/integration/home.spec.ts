@@ -1,8 +1,14 @@
 /// <reference types="cypress" />
 
+import { getRandomUser } from "../util/user"
+
 describe('home page', () => {
+    let token: string
+
     beforeEach(() => {
-        cy.login('admin', 'admin')
+        const user = getRandomUser()
+        cy.register(user)
+        cy.login(user.username, user.password).then(jwtToken => token = jwtToken)
         cy.visit('')
     })
 

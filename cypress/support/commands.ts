@@ -28,5 +28,6 @@ Cypress.Commands.add('register', (user: User) => {
         }).then(resp => {
             expect(resp.status).to.eq(200)
             localStorage.setItem('user', JSON.stringify(resp.body))
+            return resp.body.token
         })
  })
