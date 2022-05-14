@@ -27,7 +27,6 @@ describe('login page', () => {
             expect(resp.status).to.eq(201)
         })
 
-
         cy.get('[name=username]').type(username)
         cy.get('[name=password]').type(password)
         cy.get('.btn-primary').click()
