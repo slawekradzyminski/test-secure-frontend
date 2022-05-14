@@ -12,9 +12,9 @@ export type User = {
 
 export const getRandomUser = (): User => {
     return {
-        username: faker.internet.userName(),
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        username: faker.internet.userName() + faker.random.alpha(1),
+        firstName: faker.name.firstName() + faker.random.alpha(1),
+        lastName: faker.name.lastName() + faker.random.alpha(1),
         email: faker.internet.email(),
         password: faker.internet.password(),
         roles: [Roles.ROLE_ADMIN, Roles.ROLE_CLIENT]
