@@ -17,6 +17,6 @@ export const getRandomUser = (): User => {
         lastName: faker.name.lastName(),
         email: faker.internet.email(),
         password: faker.internet.password(),
-        roles: [Roles.ROLE_CLIENT]
+        roles: [Roles.ROLE_ADMIN]
     }
 }
