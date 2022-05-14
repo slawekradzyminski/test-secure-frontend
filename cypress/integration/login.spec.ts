@@ -1,37 +1,36 @@
 /// <reference types="cypress" />
 
-import { faker } from '@faker-js/faker';
+import { getRandomUser } from "../util/user"
+
 
 describe('login page', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081')
     })
 
-    it.only('should successfully login', () => {
-        const username = faker.internet.userName()
-        const password = faker.internet.password()
-        const firstName = faker.name.firstName()
+    it('should successfully login', () => {
+        const user = getRandomUser()
 
         cy.request({
             method: 'POST',
             url: 'http://localhost:4001/users/signup',
             body: {
-                firstName: firstName,
-                lastName: faker.name.lastName(),
-                username: username,
-                password: password,
-                email: faker.internet.email(),
-                roles: ["ROLE_CLIENT"]
+                firstName: user.firstName,
+                lastName: user.lastName,
+                username: user.username,
+                password: user.password,
+                email: user.email,
+                roles: user.roles
             }
         }).then(resp => {
             expect(resp.status).to.eq(201)
         })
 
-        cy.get('[name=username]').type(username)
-        cy.get('[name=password]').type(password)
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
         cy.get('.btn-primary').click()
 
-        cy.get('h1').should('contain.text', firstName)
+        cy.get('h1').should('contain.text', user.firstName)
     })
 
     it('should fail to login', () => {
