@@ -3,6 +3,8 @@ import { User } from "../util/user"
 
 const loginUrl = '**/users/signin'
 
+export const loginRequest = 'loginRequest'
+
 export const mockLoginDelay = () => {
     cy.intercept(Method.POST, loginUrl, {
         delay: 2000
@@ -33,5 +35,5 @@ export const mockLoginSuccess = (user: User) => {
             token: 'fakeJwtToken',
             username: user.username
         }
-    })
+    }).as(loginRequest)
 }

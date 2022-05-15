@@ -1,8 +1,9 @@
 /// <reference types="cypress" />
 
 import AlertsValidator from "../../components/AlertsValidator"
-import { mockLoginDelay, mockLoginFailure, mockLoginSuccess } from "../../mocks/loginMocks"
+import { loginRequest, mockLoginDelay, mockLoginFailure, mockLoginSuccess } from "../../mocks/loginMocks"
 import LoginPage from "../../pages/LoginPage"
+import { getAliasedRequest } from "../../util/alias"
 import { getRandomUser } from "../../util/user"
 
 const loginPage = new LoginPage()
@@ -23,6 +24,10 @@ describe('login page', () => {
 
         // then
         cy.get('h1').should('contain.text', user.firstName)
+        cy.wait(getAliasedRequest(loginRequest)).its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password
+        })
     })
 
     it('should fail to login', () => {
