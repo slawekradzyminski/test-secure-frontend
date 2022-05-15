@@ -4,6 +4,9 @@ import { Method } from "../../util/httpMethods"
 import { Roles } from "../../util/roles"
 import users from "../../fixtures/users.json"
 import { getAliasedRequest } from "../../util/alias"
+import HomePage from "../../pages/HomePage"
+
+const homePage = new HomePage()
 
 describe('home page', () => {
 
@@ -28,7 +31,7 @@ describe('home page', () => {
         cy.intercept(Method.DELETE, `**/users/${users[0].username}`, { statusCode: 500 }).as(deleteRequest)
 
         // then
-        cy.get('ul li').contains(`${users[0].firstName} ${users[0].lastName}`).find('.delete').click()
+        homePage.attemptDelete(users[0].firstName, users[0].lastName)
 
         // then
         cy.wait(getAliasedRequest(deleteRequest))

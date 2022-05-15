@@ -5,10 +5,21 @@ import { mockRegisterDelay, mockRegisterFailure, mockRegisterNetworkError, mockR
 import RegisterPage from '../../pages/RegisterPage';
 import { getAliasedRequest } from '../../util/alias';
 import { Roles } from '../../util/roles';
-import { getRandomUser } from '../../util/user';
+import { getRandomUser, User } from '../../util/user';
 
 const registerPage = new RegisterPage()
 const alertsValidator = new AlertsValidator()
+
+const verifyRegisterRequestBody = (user: User) => {
+    cy.wait(getAliasedRequest(registerRequest)).its('request.body').should('deep.equal', {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        password: user.password,
+        email: user.email,
+        roles: [Roles.ROLE_CLIENT]
+    })
+}
 
 describe('register page with mocks', () => {
     beforeEach(() => {
@@ -25,14 +36,7 @@ describe('register page with mocks', () => {
 
         // then
         alertsValidator.verifySuccess('Registration successful')
-        cy.wait(getAliasedRequest(registerRequest)).its('request.body').should('deep.equal', {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            username: user.username,
-            password: user.password,
-            email: user.email,
-            roles: [Roles.ROLE_CLIENT]
-        })
+        verifyRegisterRequestBody(user)
     })
 
     it('should fail to register', () => {
