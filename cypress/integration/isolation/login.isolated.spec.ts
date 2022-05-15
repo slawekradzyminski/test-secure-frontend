@@ -1,7 +1,9 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/LoginPage"
 import { getRandomUser } from "../../util/user"
 
+const loginPage = new LoginPage()
 
 describe('login page', () => {
     beforeEach(() => {
@@ -23,9 +25,7 @@ describe('login page', () => {
             }
         })
 
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin(user.username, user.password)
 
         cy.get('h1').should('contain.text', user.firstName)
     })
@@ -44,9 +44,7 @@ describe('login page', () => {
             }
         })
 
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin('wrong', 'wrong')
 
         cy.get('.alert')
             .should('have.text', message)
@@ -59,9 +57,7 @@ describe('login page', () => {
             delay: 2000
         })
 
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin('username', 'password')
     })
 
 })
