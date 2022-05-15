@@ -54,4 +54,14 @@ describe('login page', () => {
 
     })
 
+    it('should show loading indicator', () => {
+        cy.intercept('POST', '**/users/signin', {
+            delay: 2000
+        })
+
+        cy.get('[name=username]').type('wrong')
+        cy.get('[name=password]').type('wrong')
+        cy.get('.btn-primary').click()
+    })
+
 })
