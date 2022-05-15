@@ -1,5 +1,5 @@
 {
-    "baseUrl": "http://localhost:8081",
+    "baseUrl": "http://assecopreprod1.asseco.com",
     "video": false,
     "videoCompression": false
 }
