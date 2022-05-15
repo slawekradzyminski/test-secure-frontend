@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { mockRegisterDelay, mockRegisterFailure, mockRegisterNetworkError, mockRegisterSuccess } from '../../mocks/registerMocks';
 import { getRandomUser } from '../../util/user';
 
 describe('register page with mocks', () => {
@@ -10,12 +11,7 @@ describe('register page with mocks', () => {
     it('should successfully register', () => {
         const user = getRandomUser()
 
-        cy.intercept('POST', '**/users/signup', {
-            statusCode: 201,
-            body: {
-                token: 'fakeJwtToken'
-            }
-        })
+       mockRegisterSuccess()
 
         cy.get('[name=username]').type(user.username)
         cy.get('[name=firstName]').type(user.firstName)
@@ -32,16 +28,7 @@ describe('register page with mocks', () => {
     it('should fail to register', () => {
         const message = "Username is already in use"
 
-        cy.intercept('POST', '**/users/signup', {
-            statusCode: 422,
-            body: {
-                error: "Unprocessable Entity",
-                message: message,
-                path: "/users/signup",
-                status: 422,
-                timestamp: "2022-05-15T06:26:29.700+00:00"
-            }
-        })
+        mockRegisterFailure(message)
 
         const user = getRandomUser()
         cy.get('[name=username]').type(user.username)
@@ -57,9 +44,7 @@ describe('register page with mocks', () => {
     })
 
     it('should not crash when there is network error', () => {
-        cy.intercept('POST', '**/users/signup', {
-            forceNetworkError: true
-        })
+        mockRegisterNetworkError()
 
         const user = getRandomUser()
         cy.get('[name=username]').type(user.username)
@@ -73,9 +58,7 @@ describe('register page with mocks', () => {
     })
 
     it('should show loading indicater after clicking register', () => {
-        cy.intercept('POST', '**/users/signup', {
-            delay: 2000
-        })
+        mockRegisterDelay()
 
         const user = getRandomUser()
         cy.get('[name=username]').type(user.username)

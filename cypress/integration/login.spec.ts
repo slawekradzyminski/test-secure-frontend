@@ -1,7 +1,9 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../pages/LoginPage"
 import { getRandomUser } from "../util/user"
 
+const loginPage = new LoginPage()
 
 describe('login page', () => {
     beforeEach(() => {
@@ -9,13 +11,14 @@ describe('login page', () => {
     })
 
     it('should successfully login', () => {
+        // given
         const user = getRandomUser()
         cy.register(user)
 
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        // when
+        loginPage.attemptLogin(user.username, user.password)
 
+        // then
         cy.get('h1').should('contain.text', user.firstName)
     })
 
