@@ -1,8 +1,10 @@
 /// <reference types="cypress" />
 
 import AlertsValidator from '../../components/AlertsValidator';
-import { mockRegisterDelay, mockRegisterFailure, mockRegisterNetworkError, mockRegisterSuccess } from '../../mocks/registerMocks';
+import { mockRegisterDelay, mockRegisterFailure, mockRegisterNetworkError, mockRegisterSuccess, registerRequest } from '../../mocks/registerMocks';
 import RegisterPage from '../../pages/RegisterPage';
+import { getAliasedRequest } from '../../util/alias';
+import { Roles } from '../../util/roles';
 import { getRandomUser } from '../../util/user';
 
 const registerPage = new RegisterPage()
@@ -23,6 +25,14 @@ describe('register page with mocks', () => {
 
         // then
         alertsValidator.verifySuccess('Registration successful')
+        cy.wait(getAliasedRequest(registerRequest)).its('request.body').should('deep.equal', {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            password: user.password,
+            email: user.email,
+            roles: [Roles.ROLE_CLIENT]
+        })
     })
 
     it('should fail to register', () => {

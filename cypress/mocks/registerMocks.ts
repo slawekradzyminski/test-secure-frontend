@@ -2,6 +2,8 @@ import { Method } from "../util/httpMethods"
 
 const registerUrl = '**/users/signup'
 
+export const registerRequest = 'registerRequest'
+
 export const mockRegisterDelay = () => {
     cy.intercept(Method.POST, registerUrl, {
         delay: 2000
@@ -33,5 +35,5 @@ export const mockRegisterSuccess = () => {
         body: {
             token: 'fakeJwtToken'
         }
-    })
+    }).as(registerRequest)
 }
