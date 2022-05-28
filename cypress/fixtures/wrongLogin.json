@@ -1,0 +1,7 @@
+{
+    "error" : "Unprocessable Entity",
+    "message" : "Invalid username/password supplied",
+    "path": "/users/signin",
+    "status": 422,
+    "timestamp": "2022-05-28T09:33:21.847+00:00"
+}
