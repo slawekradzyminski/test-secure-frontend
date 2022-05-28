@@ -18,7 +18,7 @@ describe('example to-do app', () => {
         cy.get('.btn-primary .spinner-border').should('be.visible')
     })
 
-    it('should successfully login', () => {
+    it.only('should successfully login', () => {
         const user = getRandomUser()
 
         cy.intercept('POST', '**/users/signin', {
@@ -31,11 +31,15 @@ describe('example to-do app', () => {
                 token: "fakeToken",
                 username: user.username
             }
-        })
+        }).as('loginRequest')
 
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
         cy.login(user)
+        cy.wait('@loginRequest').its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password,
+        })
         cy.get('h1').should('contain.text', user.firstName)
     })
 
