@@ -1,55 +1,79 @@
 /// <reference types="cypress" />
 
-import { getRandomUser } from "../util/user"
+import AlertsValidator from "../components/AlertsValidator"
+import RegisterPage from "../pages/RegisterPage"
+import { getAlias } from "../util/requestUtil"
+import { Roles } from "../util/roles"
+import { getRandomUser, User } from "../util/user"
+
+const registerPage = new RegisterPage()
+const alertsValidator = new AlertsValidator()
+const registerRequest = 'registerRequest'
+
+const mockSuccessfulRegister = () => {
+    cy.intercept('POST', '**/users/signup', {
+        statusCode: 201,
+        body: {
+            token: 'fakeToken'
+        }
+    }).as(registerRequest)
+}
+
+const mockFailedRegister = (errorMessage: string) => {
+    cy.intercept('POST', '**/users/signup', {
+        statusCode: 422,
+        body: {
+            error: "Unprocessable Entity",
+            message: errorMessage,
+            path: "/users/signup",
+            status: 422,
+            timestamp: "2022-05-28T12:13:53.758+00:00"
+        }
+    })
+}
+
+const verifyRequestBody = (user: User) => {
+    cy.wait(getAlias(registerRequest)).its('request.body').should('deep.equal', {
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+        roles: [Roles.ROLE_CLIENT]
+    })
+}
 
 describe('register', () => {
+    let user: User
+
     beforeEach(() => {
         cy.visit('http://localhost:8081/register')
+        user = getRandomUser()
     })
 
     it('should successfully register', () => {
-        const user = getRandomUser()
-        cy.intercept('POST', '**/users/signup', {
-            statusCode: 201,
-            body: {
-                token: 'fakeToken'
-            }
-        })
+        // given
+        mockSuccessfulRegister()
 
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('[name=firstName]').type(user.firstName)
-        cy.get('[name=lastName]').type(user.lastName)
-        cy.get('[name=email]').type(user.email)
-        cy.get('.btn-primary').click()
+        // when
+        registerPage.attemptRegister(user)
 
-        cy.get('.alert').should('contain.text', 'successful')
-            .and('have.class', 'alert-success')
+        // then
+        verifyRequestBody(user)
+        alertsValidator.checkSuccess('successful')
     })
 
 
     it('should fail to register register', () => {
-        const user = getRandomUser()
-        cy.intercept('POST', '**/users/signup', {
-            statusCode: 422,
-            body: {
-                error: "Unprocessable Entity",
-                message: "Username is already in use",
-                path: "/users/signup",
-                status: 422,
-                timestamp: "2022-05-28T12:13:53.758+00:00"
-            }
-        })
+        // given
+        const errorMessage = "Username is already in use"
+        mockFailedRegister(errorMessage)
 
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('[name=firstName]').type(user.firstName)
-        cy.get('[name=lastName]').type(user.lastName)
-        cy.get('[name=email]').type(user.email)
-        cy.get('.btn-primary').click()
+        // when
+        registerPage.attemptRegister(user)
 
-        cy.get('.alert').should('contain.text', 'Username is already in use')
-            .and('have.class', 'alert-danger')
+        // then
+        alertsValidator.checkFailure(errorMessage)
     })
 
 })

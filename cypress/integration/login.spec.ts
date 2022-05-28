@@ -18,7 +18,7 @@ describe('example to-do app', () => {
         cy.get('.btn-primary .spinner-border').should('be.visible')
     })
 
-    it.only('should successfully login', () => {
+    it('should successfully login', () => {
         const user = getRandomUser()
 
         cy.intercept('POST', '**/users/signin', {

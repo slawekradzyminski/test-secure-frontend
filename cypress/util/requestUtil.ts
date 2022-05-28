@@ -1,0 +1,1 @@
+export const getAlias = (alias: string) => `@${alias}` 
