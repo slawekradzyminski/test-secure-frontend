@@ -13,9 +13,7 @@ describe('example to-do app', () => {
             delay: 2000
         })
 
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        cy.login(user)
 
         cy.get('.btn-primary .spinner-border').should('be.visible')
     })
@@ -37,14 +35,11 @@ describe('example to-do app', () => {
 
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
-
+        cy.login(user)
         cy.get('h1').should('contain.text', user.firstName)
     })
 
-    it.only('should successfully login from mobile', () => {
+    it('should successfully login from mobile', () => {
         const user = getRandomUser()
         cy.viewport('iphone-8')
 
@@ -62,10 +57,8 @@ describe('example to-do app', () => {
         })
 
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
+        cy.login(user)
 
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
 
         cy.get('h1').should('contain.text', user.firstName)
     })
@@ -76,10 +69,7 @@ describe('example to-do app', () => {
             statusCode: 422,
             fixture: 'wrongLogin.json'
         })
-
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        cy.login(user)
 
         cy.get('.alert').should('contain.text', 'Invalid username/password')
             .and('have.class', 'alert-danger')
