@@ -26,7 +26,7 @@ function EditUserComponent() {
         dispatch(userActions.update(user));
     };
 
-    if (firstName === null) {
+    if (username === null) {
         return (
             <div className="col-lg-8 offset-lg-2">
                 <h2>Something is no yes...</h2>
@@ -38,7 +38,7 @@ function EditUserComponent() {
     return (
         <div className="col-lg-8 offset-lg-2">
             <h2>Edit user</h2>
-            {firstName &&
+            {username &&
             <form name="form" onSubmit={saveUser}>
                 <Input name="firstName" value={firstName} submitted={submitted}
                        handleChange={getHandleChange(setFirstName)}/>
