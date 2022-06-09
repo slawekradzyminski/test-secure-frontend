@@ -1,5 +1,7 @@
+import { MountOptions } from "cypress/react";
+
   declare namespace Cypress {
     interface Chainable {
-      mount(component: React.Component, path: string, options: object): void;
+      mount(component: React.ReactNode, path: string, options?: MountOptions): void;
   }
 }
