@@ -34,7 +34,7 @@ describe('login page', () => {
         cy.get('h2').should('contain.text', 'Register')
     })
 
-    it.only('should open edit user', () => {
+    it('should open edit user', () => {
         cy.get('ul li').contains(firstName).find('.edit').click()
         cy.get('h2').should('have.text', 'Edit user')
     })
