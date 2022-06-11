@@ -18,9 +18,12 @@ describe('register page', () => {
     })
  
     it('should not successfully register', () => {
+        const existingUsername = getRandomString()
+        cy.register(existingUsername, getRandomString(), getRandomString(), getRandomString(), getRandomEmail())
+
         cy.get('[name=firstName]').type(getRandomString())
         cy.get('[name=lastName]').type(getRandomString())
-        cy.get('[name=username]').type('admin')
+        cy.get('[name=username]').type(existingUsername)
         cy.get('[name=password]').type(getRandomString())
         cy.get('[name=email]').type(getRandomEmail())
         cy.get('.btn-primary').click()

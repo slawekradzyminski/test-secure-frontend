@@ -1,7 +1,13 @@
 /// <reference types="cypress" />
+
+import { getRandomEmail, getRandomString } from "../util/random"
+
 describe('login page', () => {
     beforeEach(() => {
-        cy.login('admin', 'admin')
+        const username = getRandomString()
+        const password = getRandomString()
+        cy.register(username, password, getRandomString(), getRandomString(), getRandomEmail())
+        cy.login(username, password)
         cy.visit('http://localhost:8081')
     })
  
