@@ -9,6 +9,7 @@ Cypress.Commands.add('login', (username, password) => {
     }).then(response => {
         expect(response.status).to.eq(200)
         localStorage.setItem('user', JSON.stringify(response.body))
+        return response.body.token
     })
 })
 
@@ -26,5 +27,17 @@ Cypress.Commands.add('register', (user) => {
         }
     }).then(response => {
         expect(response.status).to.eq(201)
+    })
+})
+
+Cypress.Commands.add('delete', (username, token) => {
+    cy.request({
+        method: 'DELETE',
+        url: `http://localhost:4001/users/${username}`,
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    }).then(response => {
+        expect(response.status).to.eq(204)
     })
 })
