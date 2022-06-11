@@ -1,7 +1,9 @@
 /// <reference types="cypress" />
 
-import { getRandomEmail, getRandomString } from "../util/random"
+import LoginPage from "../pages/LoginPage"
 import { getRandomUser } from "../util/user"
+
+const loginPage = new LoginPage()
 
 describe('login page', () => {
     beforeEach(() => {
@@ -9,35 +11,42 @@ describe('login page', () => {
     })
 
     it('should successfully login', () => {
+        // given
         const user = getRandomUser()
-
         cy.register(user)
 
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        // when
+        loginPage.attemptLogin(user.username, user.password)
 
+        // then
         cy.get('h1').should('contain.text', user.firstName)
     })
 
     it('should open register page', () => {
-        cy.get('.btn-link').click()
+        // when
+        loginPage.clickRegister()
+
+        // then
         cy.get('h2').should('contain.text', 'Register')
     })
 
     it('should fail to login', () => {
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
-
+        // when
+        loginPage.attemptLogin('wrong', 'wrong')
+        
+        // then
         cy.get('.alert').should('contain.text', 'Invalid username/password')
     })
 
     it('should trigger frontend validation', () => {
-        cy.get('.btn-primary').click()
+        // when
+        loginPage.clickLogin()
 
+        // then
         cy.get('.invalid-feedback').eq(0).should('contain.text', 'Required field length')
         cy.get('.invalid-feedback').eq(1).should('contain.text', 'Required field length')
+        cy.get('[name=username]').should('have.class', 'is-invalid')
+        cy.get('[name=password]').should('have.class', 'is-invalid')
     })
 
 })

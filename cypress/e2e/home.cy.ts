@@ -56,7 +56,6 @@ describe('login page', () => {
         cy.get('ul li').contains(`${newUser.firstName} ${newUser.lastName}`).should('not.exist')
     })
 
-
     it('should not delete user', () => {
         Cypress.on('window:confirm', confirmationText => {
             expect(confirmationText).to.eq('Are you sure you wish to delete this item?')
