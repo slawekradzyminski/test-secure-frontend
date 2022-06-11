@@ -1,20 +1,16 @@
 /// <reference types="cypress" />
 
-import { getRandomEmail, getRandomString } from "../util/random"
+import { getRandomUser } from "../util/user"
 
 describe('login page', () => {
-    const username = getRandomString()
-    const password = getRandomString()
-    const firstName = getRandomString()
-    const lastName = getRandomString()
-    const email = getRandomEmail()
+    const user = getRandomUser()
 
     before(() => {
-        cy.register(username, password, firstName, lastName, email)
+        cy.register(user)
     })
 
     beforeEach(() => {
-        cy.login(username, password)
+        cy.login(user.username, user.password)
         cy.visit('http://localhost:8081')
     })
  
@@ -35,7 +31,7 @@ describe('login page', () => {
     })
 
     it('should open edit user', () => {
-        cy.get('ul li').contains(firstName).find('.edit').click()
+        cy.get('ul li').contains(user.firstName).find('.edit').click()
         cy.get('h2').should('have.text', 'Edit user')
     })
 })

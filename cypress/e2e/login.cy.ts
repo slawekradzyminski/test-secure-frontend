@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { getRandomEmail, getRandomString } from "../util/random"
+import { getRandomUser } from "../util/user"
 
 describe('login page', () => {
     beforeEach(() => {
@@ -8,17 +9,15 @@ describe('login page', () => {
     })
 
     it('should successfully login', () => {
-        const username = getRandomString()
-        const password = getRandomString()
-        const firstName = getRandomString()
+        const user = getRandomUser()
 
-        cy.register(username, password, firstName, getRandomString(), getRandomEmail())
+        cy.register(user)
 
-        cy.get('[name=username]').type(username)
-        cy.get('[name=password]').type(password)
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
         cy.get('.btn-primary').click()
 
-        cy.get('h1').should('contain.text', firstName)
+        cy.get('h1').should('contain.text', user.firstName)
     })
 
     it('should open register page', () => {
