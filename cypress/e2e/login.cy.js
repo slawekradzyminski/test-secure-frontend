@@ -1,15 +1,37 @@
 /// <reference types="cypress" />
+
+import { getRandomEmail, getRandomString } from "../util/random"
+
 describe('login page', () => {
     beforeEach(() => {
-      cy.visit('http://localhost:8081')
+        cy.visit('http://localhost:8081')
     })
-  
+
     it('should successfully login', () => {
-        cy.get('[name=username]').type('admin')
-        cy.get('[name=password]').type('admin')
+        const username = getRandomString()
+        const password = getRandomString()
+        const firstName = getRandomString()
+
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:4001/users/signup',
+            body: {
+                email: getRandomEmail(),
+                firstName: firstName,
+                lastName: getRandomString(),
+                password: password,
+                roles: ["ROLE_CLIENT"],
+                username: username
+            }
+        }).then(response => {
+            expect(response.status).to.eq(201)
+        })
+
+        cy.get('[name=username]').type(username)
+        cy.get('[name=password]').type(password)
         cy.get('.btn-primary').click()
 
-        cy.get('h1').should('contain.text', 'Slawomir')
+        cy.get('h1').should('contain.text', firstName)
     })
 
     it('should open register page', () => {
@@ -31,6 +53,5 @@ describe('login page', () => {
         cy.get('.invalid-feedback').eq(0).should('contain.text', 'Required field length')
         cy.get('.invalid-feedback').eq(1).should('contain.text', 'Required field length')
     })
-  
-  })
-  
+
+})
