@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import users from '../../fixtures/users.json'
-import { mockSuccesfulDeleteUser, mockUnsuccesfulDeleteUser, succesfulDeleteUser } from '../../mocks/deleUserMocks'
+import { mockDelayedDeleteResponse, mockSuccesfulDeleteUser, mockUnsuccesfulDeleteUser, succesfulDeleteUser } from '../../mocks/deleUserMocks'
 import { mockUsers } from '../../mocks/getAllUsersMocks'
 import { getAliasedRequest } from '../../util/alias'
 
@@ -34,7 +34,7 @@ describe('login page', () => {
         cy.get('ul li').contains(`${user.firstName} ${user.lastName}`).should('not.exist')
     })
 
-    it.only('should not delete user', () => {
+    it('should not delete user', () => {
         //given
         const user = users[1]
         mockUnsuccesfulDeleteUser(user.username)
@@ -45,5 +45,17 @@ describe('login page', () => {
         //then
         cy.get('ul li').contains(`${user.firstName} ${user.lastName}`).should('contain.text', 'ERROR: Internal Server Error')
         cy.get('ul li').contains(`${user.firstName} ${user.lastName}`).should('exist')
+    })
+
+    it('should display loader when deleting', () => {
+        //given
+        const user = users[1]
+        mockDelayedDeleteResponse(user.username)
+
+        //when
+        cy.get('ul li').contains(`${user.firstName} ${user.lastName}`).find('.delete').click()
+
+        //then
+        cy.get('ul li').contains(`${user.firstName} ${user.lastName}`).should('contain.text', 'Deleting...')        
     })
 })

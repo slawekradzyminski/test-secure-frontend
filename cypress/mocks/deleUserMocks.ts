@@ -13,3 +13,9 @@ export const mockUnsuccesfulDeleteUser = (username: string) => {
         statusCode: 500
      }).as(unsuccesfulDeleteUser)
 }
+
+export const mockDelayedDeleteResponse = (username: string) => {
+    cy.intercept('DELETE', `**/users/${username}`, { 
+        delay: 30000
+    })
+}
