@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import { contains } from 'cypress/types/jquery'
 import users from '../../fixtures/users.json'
 import { mockSuccesfulDeleteUser, mockUnsuccesfulDeleteUser, succesfulDeleteUser } from '../../mocks/deleUserMocks'
 import { mockUsers } from '../../mocks/getAllUsersMocks'
