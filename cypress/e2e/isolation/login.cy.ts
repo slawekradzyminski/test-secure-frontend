@@ -41,7 +41,7 @@ describe('login page in isolation', () => {
         cy.get('.alert').should('contain.text', message)
     })
 
-    it.only('should fail to login', () => {
+    it('should fail to login', () => {
         // given
         mockDelayedLoginResponse()
 
