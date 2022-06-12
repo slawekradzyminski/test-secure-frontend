@@ -3,7 +3,6 @@
 import { loginRequestAlias, mockDelayedLoginResponse, mockFailedLogin, mockSuccessfulLogin } from "../../mocks/loginMocks"
 import LoginPage from "../../pages/LoginPage"
 import { getAliasedRequest } from "../../util/alias"
-import { HttpMethod } from "../../util/httpMethods"
 import { getRandomUser } from "../../util/user"
 
 const loginPage = new LoginPage()
@@ -11,6 +10,7 @@ const loginPage = new LoginPage()
 describe('login page in isolation', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081')
+        cy.viewport(390, 844)
     })
 
     it('should successfully login', () => {
@@ -41,7 +41,7 @@ describe('login page in isolation', () => {
         cy.get('.alert').should('contain.text', message)
     })
 
-    it.only('should fail to login', () => {
+    it('should fail to login', () => {
         // given
         mockDelayedLoginResponse()
 

@@ -4,7 +4,6 @@
 import { mockFailedRegister, mockRegister, registerRequestAlias } from "../../mocks/registerMocks"
 import RegisterPage from "../../pages/RegisterPage"
 import { getAliasedRequest } from "../../util/alias"
-import { getRandomString, getRandomEmail } from "../../util/random"
 import { Roles } from "../../util/roles"
 import { getRandomUser } from "../../util/user"
 
