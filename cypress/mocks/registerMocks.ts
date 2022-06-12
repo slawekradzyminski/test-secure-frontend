@@ -24,3 +24,9 @@ export const mockFailedRegister = () => {
         }
     }).as(registerRequestAlias)
 }
+
+export const mockDelayedRegisterResponse = () => {
+    cy.intercept(HttpMethod.POST, registerUrl, {
+        delay: 2000
+    })
+}

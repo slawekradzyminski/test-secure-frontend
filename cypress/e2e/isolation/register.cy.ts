@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-import { mockFailedRegister, mockRegister, registerRequestAlias } from "../../mocks/registerMocks"
+import { mockDelayedRegisterResponse, mockFailedRegister, mockRegister, registerRequestAlias } from "../../mocks/registerMocks"
 import RegisterPage from "../../pages/RegisterPage"
 import { getAliasedRequest } from "../../util/alias"
 import { getRandomString, getRandomEmail } from "../../util/random"
@@ -46,6 +46,16 @@ describe('register page', () => {
         //then
         cy.get('.alert').should('contain.text', 'Username is already in use')
     })
- 
+    it('should attempt to register', () => {
+        // given
+        mockDelayedRegisterResponse()
+        const user = getRandomUser()
+
+        // when
+        registerPage.attemptRegister(user)
+
+        // then
+        cy.get('.btn-primary .spinner-border').should('be.visible')
+    })
 })
   
