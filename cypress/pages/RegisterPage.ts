@@ -1,7 +1,6 @@
-import { getRandomUser, User } from "../util/user";
+import { User } from "../util/user";
 
 export default class RegisterPage {
-
 
     attemptRegister(user: User) {
         cy.get('[name=firstName]').type(user.firstName)
@@ -10,8 +9,6 @@ export default class RegisterPage {
         cy.get('[name=password]').type(user.password)
         cy.get('[name=email]').type(user.email)
         this.clickRegister()
-
-
     }
 
     clickRegister() {
