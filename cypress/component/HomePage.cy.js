@@ -11,7 +11,6 @@ describe('HomePage', () => {
     cy.intercept('GET', '**/users', {fixture: 'users.json'})
   })
 
-
   it('display all users', () => {
     cy.mount(<HomePage/>, '/')
     cy.get('ul li').should('have.length', 3)
