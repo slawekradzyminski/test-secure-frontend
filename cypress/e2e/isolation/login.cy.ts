@@ -1,8 +1,9 @@
 /// <reference types="cypress" />
 
-import { loginRequestAlias, mockFailedLogin, mockSuccessfulLogin } from "../../mocks/loginMocks"
+import { loginRequestAlias, mockDelayedLoginResponse, mockFailedLogin, mockSuccessfulLogin } from "../../mocks/loginMocks"
 import LoginPage from "../../pages/LoginPage"
 import { getAliasedRequest } from "../../util/alias"
+import { HttpMethod } from "../../util/httpMethods"
 import { getRandomUser } from "../../util/user"
 
 const loginPage = new LoginPage()
@@ -38,6 +39,17 @@ describe('login page in isolation', () => {
 
         // then
         cy.get('.alert').should('contain.text', message)
+    })
+
+    it.only('should fail to login', () => {
+        // given
+        mockDelayedLoginResponse()
+
+        // when
+        loginPage.attemptLogin('wrong', 'wrong')
+
+        // then
+        cy.get('.btn-primary .spinner-border').should('be.visible')
     })
 
 })

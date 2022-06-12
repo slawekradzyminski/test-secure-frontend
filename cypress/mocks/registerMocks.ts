@@ -1,5 +1,4 @@
 import { HttpMethod } from "../util/httpMethods";
-import { User } from "../util/user";
 
 const registerUrl = '**/users/signup'
 export const registerRequestAlias = 'registerRequest'

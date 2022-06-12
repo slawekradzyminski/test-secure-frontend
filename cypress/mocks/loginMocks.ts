@@ -30,3 +30,9 @@ export const mockFailedLogin = (message: string) => {
         }
     })
 }
+
+export const mockDelayedLoginResponse = () => {
+    cy.intercept(HttpMethod.POST, loginUrl, {
+        delay: 2000
+    })
+}

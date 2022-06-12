@@ -35,7 +35,7 @@ describe('register page', () => {
         })
     })
  
-    it.only('should not successfully register', () => {
+    it('should not successfully register', () => {
         //given
         mockFailedRegister()        
         const user = getRandomUser()
@@ -47,20 +47,5 @@ describe('register page', () => {
         cy.get('.alert').should('contain.text', 'Username is already in use')
     })
  
-    it('should cancel', () => {
-        cy.get('.btn-link').click()
-        cy.url().should('contain', '/login')
-        cy.get('h2').should('contain.text', 'Login')
-    })
- 
-    it('should validate username', () => {
-        cy.get('[name=firstName]').type(getRandomString())
-        cy.get('[name=lastName]').type(getRandomString())        
-        cy.get('[name=password]').type(getRandomString())
-        cy.get('[name=email]').type(getRandomEmail())
-        cy.get('.btn-primary').click()
-        cy.get('.invalid-feedback').should('contain.text', 'Required field length is 4 or more')
-        cy.get('[name=username]').should('have.class', 'is-invalid')
-    })
 })
   
