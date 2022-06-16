@@ -7,6 +7,14 @@ npm start
 
 ## Docker local run
 
+Change in package.json localhost to 0.0.0.0
+
+```commandline
+"start": "webpack-dev-server --host 0.0.0.0 --open --port 8081"
+```
+
+Build docker image
+
 ```commandline
 docker build --tag=frontend:latest .
 docker run -p8081:8081 frontend:latest
