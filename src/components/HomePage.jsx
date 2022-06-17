@@ -23,6 +23,12 @@ function HomePage() {
         history.push('/edit-user');
     }
 
+    const emailUser = (user) => {
+        localStorage.setItem("userToEdit", JSON.stringify(user));
+        dispatch(userActions.saveEditDetails(user));
+        history.push('/email');
+    }
+
     const displayDeleteSection = user => {
         const displayLoading = () => <em> - Deleting...</em>
         const displayDeleteError = () => <span className="text-danger"> - ERROR: {user.deleteError}</span>
@@ -41,6 +47,7 @@ function HomePage() {
                     {`${user.firstName} ${user.lastName}`}
                     {isAdmin && displayDeleteSection(user)}
                     {<span> - <a onClick={() => editUser(user)} className="text-primary edit">Edit</a></span>}
+                    {<span> - <a onClick={() => emailUser(user)} className="text-primary email">Email</a></span>}
                 </li>
             )}
         </ul>;

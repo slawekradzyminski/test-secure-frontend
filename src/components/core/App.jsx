@@ -9,6 +9,7 @@ import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 import { EditUserComponent } from "../EditUserComponent";
+import { EmailComponent } from '../EmailComponent';
 
 function  App() {
     const alert = useSelector(state => state.alert);
@@ -33,6 +34,7 @@ function  App() {
                             <Route path="/login" component={LoginPage} />
                             <Route path="/register" component={RegisterPage} />
                             <PrivateRoute exact path="/edit-user" component={EditUserComponent} />
+                            <PrivateRoute exact path="/email" component={EmailComponent} />
                             <PrivateRoute exact path="/add-user" component={RegisterPage} />
                             <Redirect from="*" to="/" />
                         </Switch>

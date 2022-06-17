@@ -2,6 +2,7 @@ import { userConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from './';
 import { history } from '../_helpers';
+import { sendEmail } from '../_services/email.service';
 
 export const userActions = {
     login,
@@ -10,7 +11,8 @@ export const userActions = {
     saveEditDetails,
     update,
     getAll,
-    delete: _delete
+    delete: _delete,
+    handleEmail
 };
 
 function login(username, password, from) {
@@ -108,6 +110,20 @@ function update(user) {
     function request(user) { return { type: userConstants.UPDATE_USER_REQUEST, user } }
     function success(user) { return { type: userConstants.UPDATE_USER_SUCCESS, user } }
     function failure(error) { return { type: userConstants.UPDATE_USER_FAILURE, error } }
+}
+
+function handleEmail(email) {
+    return dispatch => {
+        sendEmail(email)
+            .then(
+                () => {
+                    dispatch(alertActions.success('Email was scheduled to be send'));
+                },
+                error => {
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
 }
 
 function _delete(username) {
