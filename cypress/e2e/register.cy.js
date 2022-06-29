@@ -16,6 +16,12 @@ describe('register page', () => {
         cy.get('.btn-primary').click()
 
         cy.get('.alert').should('contain.text', 'Registration successful')
+        cy.url().should('contain', '/login')
+    })
+
+    it('should be login page', () => {
+        cy.get('.btn-link').click()
+        cy.url().should('contain', '/login')
     })
 
 })
