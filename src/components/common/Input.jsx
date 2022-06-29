@@ -11,7 +11,7 @@ const Input = props => {
         <>
             <div className="form-group">
                 <label>{capitalizeAndAddSpace(props.name)}</label>
-                <input type={props.type} name={props.name} value={props.value} onChange={props.handleChange}
+                <input type={props.type} name={props.name} value={props.value} onChange={props.handleChange} data-id={props.name}
                        className={'form-control' + optionalValidationError()} />
                 {optionalValidationError() &&
                 <div className="invalid-feedback">Required field length is 4 or more</div>
