@@ -8,11 +8,11 @@ describe('register page', () => {
     })
 
     it('should successfully register', () => {
-        cy.get('[data-id=firstName]').type(getRandomString())
-        cy.get('[data-id=lastName]').type(getRandomString())
-        cy.get('[data-id=username]').type(getRandomString())
-        cy.get('[data-id=password]').type(getRandomString())
-        cy.get('[data-id=email]').type(getRandomEmail())
+        cy.getById('firstName').type(getRandomString())
+        cy.getById('lastName').type(getRandomString())
+        cy.getById('username').type(getRandomString())
+        cy.getById('password').type(getRandomString())
+        cy.getById('email').type(getRandomEmail())
         cy.get('.btn-primary').click()
 
         cy.get('.alert').should('contain.text', 'Registration successful')
