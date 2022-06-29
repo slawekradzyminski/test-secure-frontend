@@ -27,7 +27,7 @@ describe('login page', () => {
         cy.url().should('contain', '/register')
     })
 
-    it.only('empty fields should trigger frontend validation', () => {
+    it('empty fields should trigger frontend validation', () => {
         cy.get('.btn-primary').click()
         cy.get('.invalid-feedback').should('have.length', 2)
         cy.get('.invalid-feedback').eq(0).should('have.text', 'Required field length is 4 or more')
