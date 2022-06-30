@@ -6,6 +6,7 @@ declare global {
             getById(id: string): Chainable<JQuery<Element>>
             login(username: string, password: string): Promise<string>
             register(user: User): void
+            deleteUser(user: User, token: string): void
         }
     }
 }

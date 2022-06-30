@@ -36,7 +36,7 @@ function EmailComponent() {
 
     return (
         <div className="col-lg-8 offset-lg-2">
-            <h2>Edit user</h2>
+            <h2>Send email</h2>
             {to &&
             <form name="form" onSubmit={sendEmail}>
                 <DisabledInput name="email" value={to}/>

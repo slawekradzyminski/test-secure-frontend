@@ -17,15 +17,7 @@ describe('login page', () => {
     })
 
     after(() => {
-        cy.request({
-            method: 'DELETE',
-            url: `http://localhost:4001/users/${user.username}`,
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(resp => {
-            expect(resp.status).to.eq(204)
-        })
+        cy.deleteUser(user, token)
     })
 
     it('should display at least one user', () => {
@@ -40,6 +32,18 @@ describe('login page', () => {
     it('should redirect to adduser page', () => {
         cy.get('#addmore').click()
         cy.url().should('contain', '/add-user')
+    })
+
+    it('should open edit page', () => {
+        cy.get('ul li').contains(user.firstName).find('.edit').click()
+        cy.get('h2').should('contain.text', 'Edit user')
+        cy.url().should('contain', 'edit-user')
+    })
+
+    it('should open mail page', () => {
+        cy.get('ul li').contains(user.firstName).find('.email').click()
+        cy.get('h2').should('contain.text', 'Send email')
+        cy.url().should('contain', 'email')
     })
 
 })
