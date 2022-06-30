@@ -3,7 +3,15 @@ Cypress.Commands.add('getById', id => {
 })
 
 Cypress.Commands.add('login', (username, password) => {
-    cy.getById('username').type(username)
-    cy.getById('password').type(password)
-    cy.get('.btn-primary').click()
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:4001/users/signin',
+        body: {
+          username: username,
+          password: password,
+        },
+      }).then(resp => {
+        expect(resp.status).to.eq(200)
+        localStorage.setItem('user', JSON.stringify(resp.body))
+    })
 })
