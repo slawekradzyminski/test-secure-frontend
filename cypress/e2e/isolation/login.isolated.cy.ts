@@ -32,5 +32,7 @@ describe('login page is isolation', () => {
         cy.get('h1').should('contain.text', user.firstName)
     })
 
+    
+
 
 })
