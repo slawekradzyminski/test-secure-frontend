@@ -7,7 +7,7 @@ describe('login page', () => {
         cy.visit('http://localhost:8081')
     })
 
-    it.only('should successfully login', () => {
+    it('should successfully login', () => {
         const username = getRandomString()
         const password = getRandomString()
         const firstName = getRandomString()

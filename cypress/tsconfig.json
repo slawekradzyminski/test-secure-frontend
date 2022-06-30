@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "forceConsistentCasingInFileNames": true,
+        "importHelpers": true,
+        "strict": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "lib": [
+            "es6",
+            "dom"
+        ],
+        "types": [
+            "cypress"
+        ]
+    },
+    "include": [
+        "**/*.ts",
+        "../node_modules/cypress",
+    ]
+}
