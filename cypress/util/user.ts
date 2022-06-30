@@ -17,6 +17,6 @@ export const getRandomUser = (): User => {
         firstName: getRandomString(),
         lastName: getRandomString(),
         email: getRandomEmail(),
-        roles: [Roles.ROLE_CLIENT]
+        roles: [Roles.ROLE_CLIENT, Roles.ROLE_ADMIN]
     }
 }
