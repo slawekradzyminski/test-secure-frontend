@@ -1,5 +1,19 @@
+import { Roles } from "../util/roles"
+
 Cypress.Commands.add('getById', id => {
     return cy.get(`[data-id=${id}]`)
+})
+
+Cypress.Commands.add('setUserInLocalStorage', () => {
+    const localStorageEntry = {
+        email: "client@email.com",
+        firstName: "Gosia",
+        lastName: "Radzyminska",
+        roles: [Roles.ROLE_ADMIN, Roles.ROLE_CLIENT],
+        token: "fakeToken",
+        username: "client"
+    }
+    localStorage.setItem('user', JSON.stringify(localStorageEntry))
 })
 
 Cypress.Commands.add('login', (username, password) => {

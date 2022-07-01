@@ -7,6 +7,7 @@ declare global {
             login(username: string, password: string): Promise<string>
             register(user: User): void
             deleteUser(user: User, token: string): void
+            setUserInLocalStorage(): void
         }
     }
 }

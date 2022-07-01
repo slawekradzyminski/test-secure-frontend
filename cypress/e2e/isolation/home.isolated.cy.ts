@@ -6,15 +6,7 @@ import users from "../../fixtures/users.json"
 describe('home page in isolation', () => {
 
     beforeEach(() => {
-        const localStorageEntry = {
-            email: "client@email.com",
-            firstName: "Gosia",
-            lastName: "Radzyminska",
-            roles: [Roles.ROLE_ADMIN, Roles.ROLE_CLIENT],
-            token: "fakeToken",
-            username: "client"
-        }
-        localStorage.setItem('user', JSON.stringify(localStorageEntry))
+        cy.setUserInLocalStorage()
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
         cy.visit('http://localhost:8081')
     })
