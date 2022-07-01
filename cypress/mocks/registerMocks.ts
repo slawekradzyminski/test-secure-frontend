@@ -4,7 +4,7 @@ export const mockSuccesfulRegister = () => {
         body: {
             token: "fakeToken"
         }
-    })
+    }).as('registerRequest')
 }
 
 export const mockUserAlreadyExists = () => {

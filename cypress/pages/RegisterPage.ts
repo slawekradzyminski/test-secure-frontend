@@ -1,4 +1,5 @@
 import { getRandomEmail, getRandomString } from "../util/random"
+import { User } from "../util/user"
 
 export default class RegisterPage {
 
@@ -10,6 +11,15 @@ export default class RegisterPage {
         cy.getById('username').type(username)
         cy.getById('password').type(getRandomString())
         cy.getById('email').type(getRandomEmail())
+        cy.get('.btn-primary').click()
+    }
+
+    attemptRegisterUser(user: User) {
+        cy.getById(this.firstName).type(user.firstName)
+        cy.getById('lastName').type(user.lastName)
+        cy.getById('username').type(user.username)
+        cy.getById('password').type(user.password)
+        cy.getById('email').type(user.email)
         cy.get('.btn-primary').click()
     }
 
