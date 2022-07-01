@@ -13,3 +13,16 @@ export const mockSuccessfulLogin = (user: User) => {
         }
     })
 }
+
+export const mockFailedLogin = () => {
+    cy.intercept('POST', '**/users/signin', {
+        statusCode: 422,
+        body: {
+            error: "Unprocessable Entity",
+            message: "Invalid username/password supplied",
+            path: "/users/signin",
+            status: 422,
+            timestamp: "2022-06-30T13:48:09.648+00:00"
+        }
+    })
+}

@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { mockSuccessfulLogin } from "../../mocks/loginMocks"
+import { mockFailedLogin, mockSuccessfulLogin } from "../../mocks/loginMocks"
 import LoginPage from "../../pages/LoginPage"
 import { getRandomUser } from "../../util/user"
 
@@ -26,16 +26,7 @@ describe('login page is isolation', () => {
 
     it('should fail to login', () => {
         // given
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 422,
-            body: {
-                error: "Unprocessable Entity",
-                message: "Invalid username/password supplied",
-                path: "/users/signin",
-                status: 422,
-                timestamp: "2022-06-30T13:48:09.648+00:00"
-            }
-        })
+        mockFailedLogin()
  
         // when
         loginPage.attemptLogin('wrong', 'wrong')
@@ -47,9 +38,7 @@ describe('login page is isolation', () => {
 
     it('should show loading indicator', () => {
         // given
-        cy.intercept('POST', '**/users/signin', {
-            delay: 2000
-        })
+        cy.intercept('POST', '**/users/signin', { delay: 2000 })
  
         // when
         loginPage.attemptLogin('wrong', 'wrong')
