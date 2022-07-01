@@ -23,6 +23,8 @@ describe('login page is isolation', () => {
             }
         })
 
+        cy.intercept('GET', '**/users', { fixture: 'users.json' })
+
         // when
         cy.getById('username').type(user.username)
         cy.getById('password').type(user.password)
@@ -55,7 +57,7 @@ describe('login page is isolation', () => {
             .and('have.class', 'alert-danger')
     })
 
-    it('should handle network error', () => {
+    it('should show loading indicator', () => {
         // given
         cy.intercept('POST', '**/users/signin', {
             delay: 2000
