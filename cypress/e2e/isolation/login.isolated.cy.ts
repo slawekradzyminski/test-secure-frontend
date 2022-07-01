@@ -1,6 +1,10 @@
 /// <reference types="cypress" />
 
+import { mockSuccessfulLogin } from "../../mocks/loginMocks"
+import LoginPage from "../../pages/LoginPage"
 import { getRandomUser } from "../../util/user"
+
+const loginPage = new LoginPage()
 
 describe('login page is isolation', () => {
     beforeEach(() => {
@@ -10,25 +14,11 @@ describe('login page is isolation', () => {
     it('should successfully login', () => {
         // given
         const user = getRandomUser()
-
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 200,
-            body: {
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                roles: user.roles,
-                token: "fakeToken",
-                username: user.username
-            }
-        })
-
+        mockSuccessfulLogin(user)
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
         // when
-        cy.getById('username').type(user.username)
-        cy.getById('password').type(user.password)
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin(user.username, user.password)
 
         // then
         cy.get('h1').should('contain.text', user.firstName)
@@ -48,9 +38,7 @@ describe('login page is isolation', () => {
         })
  
         // when
-        cy.getById('username').type('wrong')
-        cy.getById('password').type('wrong')
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin('wrong', 'wrong')
 
         // then
         cy.get('.alert').should('contain.text', 'Invalid username/password')
@@ -64,9 +52,7 @@ describe('login page is isolation', () => {
         })
  
         // when
-        cy.getById('username').type('wrong')
-        cy.getById('password').type('wrong')
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin('wrong', 'wrong')
 
         // then
         cy.get('.btn-primary .spinner-border').should('be.visible')
