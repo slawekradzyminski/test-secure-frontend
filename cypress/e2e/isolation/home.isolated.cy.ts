@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import { Roles } from "../../util/roles"
 import users from "../../fixtures/users.json"
 
 describe('home page in isolation', () => {

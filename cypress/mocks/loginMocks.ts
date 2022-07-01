@@ -11,7 +11,7 @@ export const mockSuccessfulLogin = (user: User) => {
             token: "fakeToken",
             username: user.username
         }
-    })
+    }).as('loginRequest')
 }
 
 export const mockFailedLogin = () => {

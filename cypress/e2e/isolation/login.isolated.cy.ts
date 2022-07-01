@@ -11,7 +11,7 @@ describe('login page is isolation', () => {
         cy.visit('http://localhost:8081')
     })
 
-    it('should successfully login', () => {
+    it.only('should successfully login', () => {
         // given
         const user = getRandomUser()
         mockSuccessfulLogin(user)
@@ -22,6 +22,10 @@ describe('login page is isolation', () => {
 
         // then
         cy.get('h1').should('contain.text', user.firstName)
+        cy.wait('@loginRequest').its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password
+        })
     })
 
     it('should fail to login', () => {
