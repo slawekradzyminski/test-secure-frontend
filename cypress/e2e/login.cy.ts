@@ -8,8 +8,8 @@ describe('example to-do app', () => {
     })
 
     it('should successfully login', () => {
+        // given
         const user = getRandomUser()
-
         cy.intercept('POST', '**/users/signin', {
             statusCode: 200,
             body: {
@@ -20,13 +20,20 @@ describe('example to-do app', () => {
                 "token": "fakeCypressJwtToken",
                 "email": user.email
             }
-        })
+        }).as('loginRequest')
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
-        cy.get('[name=username]').type('admin')
-        cy.get('[name=password]').type('admin')
+        // when
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
         cy.get('.btn-primary').click()
+
+        // then
         cy.get('h1').should('contain.text', user.firstName)
+        cy.wait('@loginRequest').its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password
+        })
     })
 
 })
