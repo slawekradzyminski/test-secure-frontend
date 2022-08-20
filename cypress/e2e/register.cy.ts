@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { Roles } from "../util/roles"
 import { getRandomUser } from "../util/userProvider"
 
 describe('example to-do app', () => {
@@ -15,7 +16,7 @@ describe('example to-do app', () => {
             body: {
                 "token": "fakeCypressJwtToken",
             }
-        })
+        }).as('registerRequest')
 
         // when
         cy.get('[name=username]').type(user.username)
@@ -27,6 +28,15 @@ describe('example to-do app', () => {
 
         // then
         cy.get('.alert-success').should('contain.text', 'success')
+        cy.wait('@registerRequest').its('request.body').should('deep.equal', {
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "username": user.username,
+            "password": user.password,
+            "roles": [Roles.ROLE_CLIENT],
+            "email": user.email
+        })
+
     })
 
 })
