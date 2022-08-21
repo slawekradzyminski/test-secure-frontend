@@ -8,7 +8,7 @@ describe('example to-do app', () => {
         cy.visit('http://localhost:8081')
     })
 
-    it.only('should successfully login', () => {
+    it('should successfully login', () => {
         // given
         const user = getRandomUser()
         cy.intercept('POST', '**/users/signin', {
