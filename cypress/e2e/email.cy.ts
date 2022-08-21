@@ -34,8 +34,11 @@ describe('example to-do app', () => {
 
             const allSubjects = mailhogResponse.items
                 .map(item => item.Content.Headers.Subject)
-            expect(allSubjects).to.be.an('array').that.includes(emailSubject);
+            expect(JSON.stringify(allSubjects)).to.contain(emailSubject)
 
+            const allBodies = mailhogResponse.items
+            .map(item => item.Content.Body)
+            expect(JSON.stringify(allBodies)).to.contain(emailBody)
         })
     })
 
