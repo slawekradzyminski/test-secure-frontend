@@ -45,7 +45,7 @@ describe('example to-do app', () => {
                     .map(item => item.Content.Body)
                     .flat()
 
-                return allSubjects.includes("Fake string") && allBodies.includes("Fake string")
+                return allSubjects.includes(emailSubject) && allBodies.includes(emailBody)
             },
             {
                 log: true,
