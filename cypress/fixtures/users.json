@@ -1,0 +1,121 @@
+[
+    {
+        "id": 1,
+        "username": "admin",
+        "email": "admin@email.com",
+        "roles": [
+            "ROLE_ADMIN",
+            "ROLE_CLIENT"
+        ],
+        "firstName": "Slawomir",
+        "lastName": "Radzyminski"
+    },
+    {
+        "id": 2,
+        "username": "client",
+        "email": "client@email.com",
+        "roles": [
+            "ROLE_CLIENT"
+        ],
+        "firstName": "Gosia",
+        "lastName": "Radzyminska"
+    },
+    {
+        "id": 3,
+        "username": "okqyua",
+        "email": "7v94g@cantest.it",
+        "roles": [
+            "ROLE_ADMIN",
+            "ROLE_CLIENT"
+        ],
+        "firstName": "ked17",
+        "lastName": "a49xr"
+    },
+    {
+        "id": 4,
+        "username": "fwvezm",
+        "email": "726wd@cantest.it",
+        "roles": [
+            "ROLE_ADMIN",
+            "ROLE_CLIENT"
+        ],
+        "firstName": "6t5t4h",
+        "lastName": "rlmuiq"
+    },
+    {
+        "id": 5,
+        "username": "fox0z4",
+        "email": "un2sqt@cantest.it",
+        "roles": [
+            "ROLE_ADMIN",
+            "ROLE_CLIENT"
+        ],
+        "firstName": "88wjve",
+        "lastName": "u4ex19p"
+    },
+    {
+        "id": 7,
+        "username": "adminczxczxc",
+        "email": "cxzcxzc@ocado.com",
+        "roles": [
+            "ROLE_CLIENT"
+        ],
+        "firstName": "czxcxzc",
+        "lastName": "zxcxzc"
+    },
+    {
+        "id": 8,
+        "username": "c056q4",
+        "email": "03tbxjt@cantest.it",
+        "roles": [
+            "ROLE_ADMIN",
+            "ROLE_CLIENT"
+        ],
+        "firstName": "d3iaf",
+        "lastName": "gva238"
+    },
+    {
+        "id": 10,
+        "username": "1n823f",
+        "email": "tbp4nn@cantest.it",
+        "roles": [
+            "ROLE_ADMIN",
+            "ROLE_CLIENT"
+        ],
+        "firstName": "i5cmyp",
+        "lastName": "lc41hy"
+    },
+    {
+        "id": 11,
+        "username": "1fp3jq",
+        "email": "xkldh@cantest.it",
+        "roles": [
+            "ROLE_ADMIN",
+            "ROLE_CLIENT"
+        ],
+        "firstName": "wbqvus",
+        "lastName": "2axzlh"
+    },
+    {
+        "id": 12,
+        "username": "go0leu",
+        "email": "hlw1cq@cantest.it",
+        "roles": [
+            "ROLE_ADMIN",
+            "ROLE_CLIENT"
+        ],
+        "firstName": "8ztgb",
+        "lastName": "5ok4gc"
+    },
+    {
+        "id": 13,
+        "username": "nkhgei",
+        "email": "rfp7y@cantest.it",
+        "roles": [
+            "ROLE_ADMIN",
+            "ROLE_CLIENT"
+        ],
+        "firstName": "mz4d2",
+        "lastName": "vt1ypc"
+    }
+]
