@@ -19,7 +19,7 @@ describe('Login tests', () => {
                 roles: testUser.roles,
                 token: 'fakeToken'
             }
-        })
+        }).as('loginRequest')
 
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
     })
@@ -30,5 +30,9 @@ describe('Login tests', () => {
         cy.get('.btn-primary').click()
 
         cy.get('h1').should('contain.text', testUser.firstName)
+        cy.wait('@loginRequest').its('request.body').should('deep.equal', {
+            password: testUser.password,
+            username: testUser.username
+        })
     })
 })
