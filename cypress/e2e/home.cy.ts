@@ -41,4 +41,13 @@ describe('Home page tests', () => {
             }
         })
     })
+
+    it.only('should cancel to delete an user', () => {
+        Cypress.on('window:confirm', confirmationText => {
+            expect(confirmationText).to.eq('Are you sure you wish to delete this item?')
+            return false
+        })
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.delete').click();
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).should('be.visible')
+    })
 })
