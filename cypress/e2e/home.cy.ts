@@ -5,12 +5,25 @@ import { getRandomUser, User } from "../util/userProvider"
 describe('Home page tests', () => {
 
     let user: User
+    let token: string
 
     beforeEach(() => {
         user = getRandomUser()
         cy.register(user)
-        cy.login(user.username, user.password)
+        cy.login(user.username, user.password).then(returnedToken => token = returnedToken)
         cy.visit('http://localhost:8081')
+    })
+
+    afterEach(() => {
+        cy.request({
+            method: 'DELETE',
+            url: `http://localhost:4001/users/${user.username}`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(resp => {
+            expect(resp.status).to.eq(204)
+        })
     })
 
     it('should display at least one user', () => {
@@ -29,7 +42,7 @@ describe('Home page tests', () => {
         cy.url().should('contain', 'add-user')
     })
 
-    it.only('should delete all users except me', () => {
+    it('should delete all users except me', () => {
         cy.get('li').each($el => {
             if (!$el.text().includes(`${user.firstName} ${user.lastName}`)) {
                 cy.wrap($el).find('.delete').click()
