@@ -7,28 +7,17 @@ describe('Login page tests', () => {
       cy.visit('http://localhost:8081/')
     })
   
-    it.only('should successfully login', () => {
+    it('should successfully login', () => {
+      // given
       const user = getRandomUser()
+      cy.register(user)
 
-      cy.request({
-        method: 'POST',
-        url: 'http://localhost:4001/users/signup', 
-        body: {
-          username: user.username,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          password: user.password,
-          email: user.email,
-          roles: user.roles
-        },
-      }).then(resp => {
-        expect(resp.status).to.eq(201)
-      })
-
+      // when
       cy.get('input[name=username]').type(user.username)
       cy.get('input[name=password]').type(user.password)
       cy.get('.btn-primary').click()
 
+      // then
       cy.get('h1').should('contain.text', user.firstName)
     })
 
