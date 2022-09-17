@@ -23,7 +23,7 @@ describe('Login page tests', () => {
 
   it('should fail to login', () => {
     cy.get('input[name=username]').type('admin')
-    cy.get('input[name=password]').type('wrongPassword')
+    cy.get('input[name=password]').type('wrongPassword12345')
     cy.get('.btn-primary').click()
 
     cy.get('.alert-danger').should('have.text', 'Invalid username/password supplied')
