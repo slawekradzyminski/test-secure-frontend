@@ -17,4 +17,15 @@ describe('Register page tests', () => {
 
         cy.get('.alert-success').should('contain.text', 'Registration successful')
     })
+
+    it.only('should trigger frontend validation', () => {
+        cy.get('.btn-primary').click()
+
+        cy.get('.invalid-feedback').should('have.length', 5)
+        cy.get('.invalid-feedback').each(el => {
+            expect(el.text()).to.eq('Required field length is 4 or more')
+            // cy.wrap(el).should('have.text', 'Required field length is 4 or more')
+        })
+        cy.get('input.is-invalid').should('have.length', 5)
+      })
 })
