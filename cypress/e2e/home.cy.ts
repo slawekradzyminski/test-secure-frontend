@@ -28,4 +28,12 @@ describe('Home page tests', () => {
         cy.get('#addmore').click()
         cy.url().should('contain', 'add-user')
     })
+
+    it.only('should delete all users except me', () => {
+        cy.get('li').each($el => {
+            if (!$el.text().includes(`${user.firstName} ${user.lastName}`)) {
+                cy.wrap($el).find('.delete').click()
+            }
+        })
+    })
 })
