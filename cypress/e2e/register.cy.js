@@ -18,7 +18,7 @@ describe('Register page tests', () => {
         cy.get('.alert-success').should('contain.text', 'Registration successful')
     })
 
-    it.only('should trigger frontend validation', () => {
+    it('should trigger frontend validation', () => {
         cy.get('.btn-primary').click()
 
         cy.get('.invalid-feedback').should('have.length', 5)
