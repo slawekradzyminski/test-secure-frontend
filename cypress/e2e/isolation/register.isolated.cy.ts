@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import RegisterPage from "../../pages/RegisterPage"
-import { stubSuccessfulRegister, stubFailedRegister, stubDelay } from "../../stubs/registryStubs"
+import MockRegister from "../../stubs/MockRegister"
 import { getRandomUser } from "../../util/userProvider"
 
 describe('Register page isolated tests', () => {
@@ -13,7 +13,7 @@ describe('Register page isolated tests', () => {
 
     it('should successfully register', () => {
         // given
-        stubSuccessfulRegister()
+        MockRegister.mockSuccessfulRegister()
 
         // when
         registerPage.attemptRegister(getRandomUser())
@@ -25,7 +25,7 @@ describe('Register page isolated tests', () => {
     it('should show user already in use error message', () => {
         // given
         const message = "Username is already in use"
-        stubFailedRegister(message)
+        MockRegister.mockFailedRegister(message)
 
         // when
         registerPage.attemptRegister(getRandomUser())
@@ -36,7 +36,7 @@ describe('Register page isolated tests', () => {
 
     it('should display loading indicator', () => {
         // given
-       stubDelay()
+        MockRegister.mockDelayedRegister()
 
         // when
         registerPage.attemptRegister(getRandomUser())
