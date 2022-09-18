@@ -1,9 +1,12 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../../pages/LoginPage"
 import { getRandomString } from "../../util/random"
 import { getRandomUser } from "../../util/userProvider"
 
 describe('Login page isolated tests', () => {
+    const loginPage = new LoginPage()
+
     beforeEach(() => {
         cy.visit('http://localhost:8081')
     })
@@ -25,9 +28,7 @@ describe('Login page isolated tests', () => {
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
         // when
-        cy.get('input[name=username]').type(user.username)
-        cy.get('input[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin(user.username, user.password)
 
         // then
         cy.get('h1').should('contain.text', user.firstName)
@@ -49,9 +50,7 @@ describe('Login page isolated tests', () => {
         })
 
         // when
-        cy.get('input[name=username]').type(getRandomString())
-        cy.get('input[name=password]').type(getRandomString())
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin(getRandomString(), getRandomString())
 
         // then
         cy.get('.alert-danger').should('have.text', message)
@@ -60,15 +59,12 @@ describe('Login page isolated tests', () => {
     it('should display loading indicator', () => {
         // given
         cy.viewport(390, 844)
-
         cy.intercept('POST', '**/users/signin', {
             delay: 1000
         })
 
         // when
-        cy.get('input[name=username]').type(getRandomString())
-        cy.get('input[name=password]').type(getRandomString())
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin(getRandomString(), getRandomString())
 
         // then
         cy.get('.btn-primary .spinner-border').should('be.visible')
