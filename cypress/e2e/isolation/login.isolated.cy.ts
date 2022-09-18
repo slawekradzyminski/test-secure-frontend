@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
 import LoginPage from "../../pages/LoginPage"
+import MockGetUsers from "../../stubs/MockGetUsers"
+import MockLogin from "../../stubs/MockLogin"
 import { getRandomString } from "../../util/random"
 import { getRandomUser } from "../../util/userProvider"
 
@@ -14,19 +16,9 @@ describe('Login page isolated tests', () => {
     it('should successfully login', () => {
         // given
         const user = getRandomUser()
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 200,
-            body: {
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                token: 'fakeToken',
-                roles: user.roles
-            }
-        })
-        cy.intercept('GET', '**/users', { fixture: 'users.json' })
-
+        MockLogin.mockSuccessfulLogin(user)
+        MockGetUsers.mockUsers()
+        
         // when
         loginPage.attemptLogin(user.username, user.password)
 
@@ -37,17 +29,7 @@ describe('Login page isolated tests', () => {
     it('should fail to login', () => {
         // given
         const message = "Invalid username/password supplied"
-
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 422,
-            body: {
-                error: "Unprocessable Entity",
-                message: message,
-                path: "/users/signin",
-                status: 422,
-                timestamp: "2022-09-18T08:16:48.746+00:00"
-            }
-        })
+        MockLogin.mockFailedLogin(message)
 
         // when
         loginPage.attemptLogin(getRandomString(), getRandomString())
@@ -59,9 +41,7 @@ describe('Login page isolated tests', () => {
     it('should display loading indicator', () => {
         // given
         cy.viewport(390, 844)
-        cy.intercept('POST', '**/users/signin', {
-            delay: 1000
-        })
+        MockLogin.mockDelayedLogin()
 
         // when
         loginPage.attemptLogin(getRandomString(), getRandomString())
