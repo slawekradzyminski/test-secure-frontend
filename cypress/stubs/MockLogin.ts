@@ -3,7 +3,7 @@ import { User } from "../util/userProvider";
 
 export default class MockLogin {
 
-    private static url = '/users/signin'
+    private static url = 'users/signin'
 
     static mockSuccessfulLogin(user: User) {
         cy.intercept('POST', `**/${this.url}`, {
@@ -16,7 +16,7 @@ export default class MockLogin {
                 token: 'fakeToken',
                 roles: user.roles
             }
-        })
+        }).as('loginRequest')
     }
 
     static mockFailedLogin(message: string) {
