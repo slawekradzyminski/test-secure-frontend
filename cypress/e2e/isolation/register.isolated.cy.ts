@@ -49,4 +49,22 @@ describe('Register page isolated tests', () => {
         cy.get('.alert-danger').should('have.text', message)
     })
 
+    it('should display loading indicator', () => {
+        // given
+        cy.intercept('POST', '**/users/signup', {
+            delay: 1000
+        })
+
+        // when
+        cy.get('[name=firstName]').type(getRandomString())
+        cy.get('[name=lastName]').type(getRandomString())
+        cy.get('[name=username]').type(getRandomString())
+        cy.get('[name=password]').type(getRandomString())
+        cy.get('[name=email]').type(getRandomEmail())
+        cy.get('.btn-primary').click()
+
+        // then
+        cy.get('.btn-primary .spinner-border').should('be.visible')
+    })
+
 })
