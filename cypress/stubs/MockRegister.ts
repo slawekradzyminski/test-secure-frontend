@@ -8,7 +8,7 @@ export default class MockRegister {
             body: {
                 token: 'fakeToken'
             }
-        })
+        }).as('registerRequest')
     }
 
     static mockFailedRegister(message: string) {

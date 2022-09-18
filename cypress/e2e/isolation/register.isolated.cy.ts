@@ -2,7 +2,8 @@
 
 import RegisterPage from "../../pages/RegisterPage"
 import MockRegister from "../../stubs/MockRegister"
-import { getRandomUser } from "../../util/userProvider"
+import { Roles } from "../../util/roles"
+import { getRandomUser, User } from "../../util/userProvider"
 
 describe('Register page isolated tests', () => {
     const registerPage = new RegisterPage()
@@ -13,13 +14,15 @@ describe('Register page isolated tests', () => {
 
     it('should successfully register', () => {
         // given
+        const user = getRandomUser()
         MockRegister.mockSuccessfulRegister()
 
         // when
-        registerPage.attemptRegister(getRandomUser())
+        registerPage.attemptRegister(user)
 
         // then
         cy.get('.alert-success').should('contain.text', 'Registration successful')
+        verifyRegisterRequest(user)
     })
 
     it('should show user already in use error message', () => {
@@ -54,3 +57,14 @@ describe('Register page isolated tests', () => {
     })
 
 })
+
+const verifyRegisterRequest = (user: User) => {
+    cy.wait('@registerRequest').its('request.body').should('deep.equal', {
+        username: user.username,
+        password: user.password,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        roles: [Roles.ROLE_CLIENT]
+    })
+}

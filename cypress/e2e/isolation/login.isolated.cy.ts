@@ -13,7 +13,7 @@ describe('Login page isolated tests', () => {
         cy.visit('http://localhost:8081')
     })
 
-    it.only('should successfully login', () => {
+    it('should successfully login', () => {
         // given
         const user = getRandomUser()
         MockLogin.mockSuccessfulLogin(user)
