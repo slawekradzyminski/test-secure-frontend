@@ -57,4 +57,21 @@ describe('Login page isolated tests', () => {
         cy.get('.alert-danger').should('have.text', message)
     })
 
+    it('should display loading indicator', () => {
+        // given
+        cy.viewport(390, 844)
+
+        cy.intercept('POST', '**/users/signin', {
+            delay: 1000
+        })
+
+        // when
+        cy.get('input[name=username]').type(getRandomString())
+        cy.get('input[name=password]').type(getRandomString())
+        cy.get('.btn-primary').click()
+
+        // then
+        cy.get('.btn-primary .spinner-border').should('be.visible')
+    })
+
 })
