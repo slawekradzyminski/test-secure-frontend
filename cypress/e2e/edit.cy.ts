@@ -28,4 +28,34 @@ describe('Edit page tests', () => {
         cy.get('[name=roles]').should('have.value', user.roles.join())
     })
 
+    it.only('should edit an user', () => {
+        // given
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
+        const newUser = getRandomUser()
+
+        // when
+        cy.get('[name=firstName]').clear().type(newUser.firstName)
+        cy.get('[name=lastName]').clear().type(newUser.lastName)
+        cy.get('[name=email]').clear().type(newUser.email)
+        cy.get('.btn-primary').click()
+
+        // then
+        cy.get('.alert-success').should('have.text', 'Updating user successful')
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).should('not.exist')
+        cy.get('li').contains(`${newUser.firstName} ${newUser.lastName}`).should('be.visible')
+
+        cy.request({
+            method: 'GET',
+            url: `http://localhost:4001/users/${user.username}`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(resp => {
+            expect(resp.status).to.eq(200)
+            expect(resp.body.firstName).to.eq(newUser.firstName)
+            expect(resp.body.lastName).to.eq(newUser.lastName)
+            expect(resp.body.email).to.eq(newUser.email)
+        })
+    })
+
 })
