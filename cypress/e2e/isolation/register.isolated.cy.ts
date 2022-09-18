@@ -1,70 +1,56 @@
 /// <reference types="cypress" />
 
-import { getRandomEmail, getRandomString } from "../../util/random"
+import RegisterPage from "../../pages/RegisterPage"
+import { stubSuccessfulRegister, stubFailedRegister, stubDelay } from "../../stubs/registryStubs"
+import { getRandomUser } from "../../util/userProvider"
 
 describe('Register page isolated tests', () => {
+    const registerPage = new RegisterPage()
+
     beforeEach(() => {
         cy.visit('http://localhost:8081/register')
     })
 
     it('should successfully register', () => {
-        cy.intercept('POST', '**/users/signup', {
-            statusCode: 201,
-            body: {
-                token: 'fakeToken'
-            }
-        })
+        // given
+        stubSuccessfulRegister()
 
-        cy.get('[name=firstName]').type(getRandomString())
-        cy.get('[name=lastName]').type(getRandomString())
-        cy.get('[name=username]').type(getRandomString())
-        cy.get('[name=password]').type(getRandomString())
-        cy.get('[name=email]').type(getRandomEmail())
-        cy.get('.btn-primary').click()
+        // when
+        registerPage.attemptRegister(getRandomUser())
 
+        // then
         cy.get('.alert-success').should('contain.text', 'Registration successful')
     })
 
     it('should show user already in use error message', () => {
+        // given
         const message = "Username is already in use"
+        stubFailedRegister(message)
 
-        cy.intercept('POST', '**/users/signup', {
-            statusCode: 422,
-            body: {
-                error: "Unprocessable Entity",
-                message: message,
-                path: "/users/signup",
-                status: 422,
-                timestamp: "2022-09-18T08:16:48.746+00:00"
-            }
-        })
+        // when
+        registerPage.attemptRegister(getRandomUser())
 
-        cy.get('[name=firstName]').type(getRandomString())
-        cy.get('[name=lastName]').type(getRandomString())
-        cy.get('[name=username]').type(getRandomString())
-        cy.get('[name=password]').type(getRandomString())
-        cy.get('[name=email]').type(getRandomEmail())
-        cy.get('.btn-primary').click()
-
+        // then
         cy.get('.alert-danger').should('have.text', message)
     })
 
     it('should display loading indicator', () => {
         // given
-        cy.intercept('POST', '**/users/signup', {
-            delay: 1000
-        })
+       stubDelay()
 
         // when
-        cy.get('[name=firstName]').type(getRandomString())
-        cy.get('[name=lastName]').type(getRandomString())
-        cy.get('[name=username]').type(getRandomString())
-        cy.get('[name=password]').type(getRandomString())
-        cy.get('[name=email]').type(getRandomEmail())
-        cy.get('.btn-primary').click()
+        registerPage.attemptRegister(getRandomUser())
 
         // then
         cy.get('.btn-primary .spinner-border').should('be.visible')
+    })
+
+    it('should open login page after clicking cancel', () => {
+        // when
+        registerPage.clickCancel()
+
+        // then
+        cy.url().should('contain', '/login')
     })
 
 })
