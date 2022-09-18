@@ -32,7 +32,7 @@ describe('Register page isolated tests', () => {
             statusCode: 422,
             body: {
                 error: "Unprocessable Entity",
-                message: "Username is already in use",
+                message: message,
                 path: "/users/signup",
                 status: 422,
                 timestamp: "2022-09-18T08:16:48.746+00:00"

@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { getRandomString } from "../../util/random"
 import { getRandomUser } from "../../util/userProvider"
 
 describe('Login page isolated tests', () => {
@@ -32,7 +33,28 @@ describe('Login page isolated tests', () => {
         cy.get('h1').should('contain.text', user.firstName)
     })
 
-    // it('should show user already in use error message', () => {
-    // })
+    it('should fail to login', () => {
+        // given
+        const message = "Invalid username/password supplied"
+
+        cy.intercept('POST', '**/users/signin', {
+            statusCode: 422,
+            body: {
+                error: "Unprocessable Entity",
+                message: message,
+                path: "/users/signin",
+                status: 422,
+                timestamp: "2022-09-18T08:16:48.746+00:00"
+            }
+        })
+
+        // when
+        cy.get('input[name=username]').type(getRandomString())
+        cy.get('input[name=password]').type(getRandomString())
+        cy.get('.btn-primary').click()
+
+        // then
+        cy.get('.alert-danger').should('have.text', message)
+    })
 
 })
