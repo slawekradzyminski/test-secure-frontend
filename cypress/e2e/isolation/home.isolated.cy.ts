@@ -17,4 +17,29 @@ describe('Home page isolated tests', () => {
             expect($el.text()).to.contain(`${users[i].firstName} ${users[i].lastName}`)
         })
     })
+
+    it('should successfully delete an user', () => {
+        // given
+        const user = users[0]
+        cy.intercept('DELETE', `**/users/${user.username}`, { statusCode: 204 }).as('deleteRequest')
+
+        // when
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.delete').click()
+
+        // then
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).should('not.exist')
+        cy.wait('@deleteRequest')
+    })
+
+    it.only('should display error message on failed delete', () => {
+        // given
+        const user = users[0]
+        cy.intercept('DELETE', `**/users/${user.username}`, { statusCode: 500 }).as('deleteRequest')
+
+        // when
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.delete').click()
+
+        // then
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).should('be.visible').and('contain.text', 'Internal Server Error')
+    })
 })
