@@ -25,4 +25,28 @@ describe('Register page tests', () => {
         cy.get('.alert-success').should('contain.text', 'Registration successful')
     })
 
+    it('should show user already in use error message', () => {
+        const message = "Username is already in use"
+
+        cy.intercept('POST', '**/users/signup', {
+            statusCode: 422,
+            body: {
+                error: "Unprocessable Entity",
+                message: "Username is already in use",
+                path: "/users/signup",
+                status: 422,
+                timestamp: "2022-09-18T08:16:48.746+00:00"
+            }
+        })
+
+        cy.get('[name=firstName]').type(getRandomString())
+        cy.get('[name=lastName]').type(getRandomString())
+        cy.get('[name=username]').type(getRandomString())
+        cy.get('[name=password]').type(getRandomString())
+        cy.get('[name=email]').type(getRandomEmail())
+        cy.get('.btn-primary').click()
+
+        cy.get('.alert-danger').should('have.text', message)
+    })
+
 })
