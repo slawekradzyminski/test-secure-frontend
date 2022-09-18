@@ -2,7 +2,7 @@
 
 import { getRandomEmail, getRandomString } from "../../util/random"
 
-describe('Register page tests', () => {
+describe('Register page isolated tests', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081/register')
     })
