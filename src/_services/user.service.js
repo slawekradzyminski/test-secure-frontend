@@ -1,5 +1,6 @@
 import config from 'config';
 import { authHeader } from '../_helpers';
+import Cookies from 'js-cookie'
 
 export const handleResponse = (response) => {
     return response.text().then(text => {
@@ -37,12 +38,12 @@ function login(username, password) {
         .then(handleResponse)
         .then(user => {
             localStorage.setItem('user', JSON.stringify(user));
+            Cookies.set('token', user.token)
             return user;
         });
 }
 
 function logout() {
-    // remove user from local storage to log user out
     localStorage.removeItem('user');
 }
 

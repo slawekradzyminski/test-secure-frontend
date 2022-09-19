@@ -1,19 +1,31 @@
-import React, {useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import {history} from '../_helpers';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { history } from '../_helpers';
+import Cookies from 'js-cookie'
 
-import {userActions} from '../_actions';
+import { userActions } from '../_actions';
 
 function HomePage() {
     const users = useSelector(state => state.users);
     const user = useSelector(state => state.authentication.user);
     const isAdmin = user.roles.includes('ROLE_ADMIN')
     const dispatch = useDispatch();
+    const tokenCookie = 'token'
 
     useEffect(() => {
         dispatch(userActions.getAll());
     }, []);
+
+    useEffect(() => {
+        readCookie()
+    }, []);
+
+    const readCookie = () => {
+        if (!Cookies.get(tokenCookie)) {
+            history.push('/login');
+        }
+    }
 
     const handleDeleteUser = username => dispatch(userActions.delete(username))
 
@@ -62,7 +74,7 @@ function HomePage() {
             {users.error && <span className="text-danger">ERROR: {users.error}</span>}
             {users.items && displayUsers()}
             <p>
-                <Link id="logout" to="/login">Logout</Link>
+                <Link id="logout" to="/login" onClick={() => Cookies.remove('token')}>Logout</Link>
             </p>
             <p>
                 <Link id="addmore" to="/add-user">Add more users</Link>
@@ -71,4 +83,4 @@ function HomePage() {
     );
 }
 
-export {HomePage};
+export { HomePage };
