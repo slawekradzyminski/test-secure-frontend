@@ -15,7 +15,7 @@ describe('Register page tests', () => {
             body: {
                 token: "fakeToken",
             }
-        })
+        }).as('registerResponse')
 
         cy.get('[name=username]').type(user.username)
         cy.get('[name=password]').type(user.password)
@@ -24,6 +24,7 @@ describe('Register page tests', () => {
         cy.get('[name=email]').type(user.email)
         cy.get('.btn-primary').click()
 
+        cy.wait("@registerResponse").its('request.body.email').should('eq',  user.email)
         cy.get('.alert-success').should('contain.text', 'successful')
     })
 

@@ -20,7 +20,7 @@ describe('Login page tests', () => {
                 token: "fakeToken",
                 username: user.username
             }
-        })
+        }).as('loginRequest')
 
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
@@ -29,6 +29,10 @@ describe('Login page tests', () => {
         cy.get('.btn-primary').click()
 
         cy.get('h1').should('contain.text', user.firstName)
+        cy.wait('@loginRequest').its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password
+        })
     })
 
     it('Should fail to login', () => {
