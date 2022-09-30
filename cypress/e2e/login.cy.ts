@@ -2,12 +2,12 @@
 
 import { getRandomUser } from "../domain/user"
 
-describe('example to-do app', () => {
+describe('Login page tests', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081')
     })
 
-    it('should successfully login', () => {
+    it('Should successfully login', () => {
         const user = getRandomUser()
 
         cy.intercept('POST', '**/users/signin', {
@@ -29,6 +29,30 @@ describe('example to-do app', () => {
         cy.get('.btn-primary').click()
 
         cy.get('h1').should('contain.text', user.firstName)
+    })
+
+    it('Should fail to login', () => {
+        const user = getRandomUser()
+        const message = "Invalid username/password supplied"
+
+        cy.intercept('POST', '**/users/signin', {
+            statusCode: 422,
+            body: {
+                error: "Unprocessable Entity",
+                message: message,
+                path: "/users/signin",
+                status: 422,
+                timestamp: "2022-09-30T10:18:46.474+00:00"
+            }
+        })
+
+        cy.intercept('GET', '**/users', { fixture: 'users.json' })
+
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
+        cy.get('.btn-primary').click()
+
+        cy.get('.alert-danger').should('have.text', message)
     })
 
 
