@@ -1,6 +1,11 @@
 /// <reference types="cypress" />
 
 import { getRandomUser } from "../domain/user"
+import GetAllUsersMocks from "../mocks/GetAllUsersMocks"
+import LoginMocks from "../mocks/LoginMocks"
+import LoginPage from "../pages/LoginPage"
+
+const loginPage = new LoginPage()
 
 describe('Login page tests', () => {
     beforeEach(() => {
@@ -8,26 +13,15 @@ describe('Login page tests', () => {
     })
 
     it('Should successfully login', () => {
+        // given
         const user = getRandomUser()
+        LoginMocks.mockSuccessfulLogin(user)
+        GetAllUsersMocks.mockUsers()
 
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 200,
-            body: {
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                roles: user.roles,
-                token: "fakeToken",
-                username: user.username
-            }
-        }).as('loginRequest')
+        // when
+        loginPage.attemptLogin(user.username, user.password)
 
-        cy.intercept('GET', '**/users', { fixture: 'users.json' })
-
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
-
+        // then
         cy.get('h1').should('contain.text', user.firstName)
         cy.wait('@loginRequest').its('request.body').should('deep.equal', {
             username: user.username,
@@ -36,27 +30,24 @@ describe('Login page tests', () => {
     })
 
     it('Should fail to login', () => {
+        // given
         const user = getRandomUser()
         const message = "Invalid username/password supplied"
+        LoginMocks.mockFailedLogin(message)
 
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 422,
-            body: {
-                error: "Unprocessable Entity",
-                message: message,
-                path: "/users/signin",
-                status: 422,
-                timestamp: "2022-09-30T10:18:46.474+00:00"
-            }
-        })
+        // when
+        loginPage.attemptLogin(user.username, user.password)
 
-        cy.intercept('GET', '**/users', { fixture: 'users.json' })
-
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
-
+        // then
         cy.get('.alert-danger').should('have.text', message)
+    })
+
+    it('Should trigger frontend validation', () => {
+        // when
+        loginPage.clickLogin()
+
+        // then
+        cy.get('.invalid-feedback').should('have.length', 2)
     })
 
 
