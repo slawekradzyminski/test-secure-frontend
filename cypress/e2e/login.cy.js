@@ -28,7 +28,6 @@ describe('Login page tests', () => {
         cy.url().should('contain', '/register')
     })
 
-
     it('should trigger frontend validation', () => {
         cy.get('.btn-primary').click()
 
