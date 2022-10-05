@@ -21,7 +21,7 @@ describe('Home page tests', () => {
         // cy.deleteUser(user.username, token)
     })
 
-    it.only('should display at least one user', () => {
+    it('should display at least one user', () => {
         cy.get('li').should('have.length.at.least', 1)
     })
 
