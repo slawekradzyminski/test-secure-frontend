@@ -29,7 +29,7 @@ describe('Edit page tests', () => {
         cy.get('[name=roles]').should('have.value', user.roles.join(','))
     })
 
-    it.only('should edit user', () => {
+    it('should edit user', () => {
         const newUser = getRandomUser()
         cy.get('[name=firstName]').clear().type(newUser.firstName)
         cy.get('[name=lastName]').clear().type(newUser.lastName)
