@@ -32,4 +32,12 @@ describe('Home page tests', () => {
         cy.get('h2').should('contain.text', 'Edit')
     })
 
+    it('should delete all users except the active one', () => {
+        cy.get('li').each(($el) => {
+            if (!$el.text().includes(`${user.firstName} ${user.lastName}`)) {
+                cy.wrap($el).find('.delete').click()
+            }
+        })
+    })
+
 })
