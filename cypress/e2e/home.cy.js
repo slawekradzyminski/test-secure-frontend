@@ -24,7 +24,7 @@ describe('Home page tests', () => {
             cy.setCookie('token', resp.body.token)
         })
 
-        cy.visit('http://localhost:8081')
+        cy.visit('')
         cy.getCookie('token').its('value').should('not.be.empty')
     })
 

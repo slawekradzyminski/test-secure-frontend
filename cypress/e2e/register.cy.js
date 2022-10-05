@@ -5,7 +5,8 @@ import { getRandomEmail, getRandomString } from "../util/random"
 describe('Register page tests', () => {
 
     beforeEach(() => {
-        cy.visit('http://localhost:8081/register')
+        cy.visit('/register')
+        cy.viewport(428, 928)
     })
 
     it('should successfully register', () => {

@@ -2,7 +2,7 @@
 
 describe('Login page tests', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8081')
+        cy.visit('')
     })
 
     it('should successfully login', () => {
