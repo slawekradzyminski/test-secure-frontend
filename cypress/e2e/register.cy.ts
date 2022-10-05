@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { getRandomUser } from "../domain/user"
 import { getRandomEmail, getRandomString } from "../util/random"
 
 describe('Register page tests', () => {
@@ -22,9 +23,12 @@ describe('Register page tests', () => {
     })
 
     it('should fail to register if user exists', () => {
+        const user = getRandomUser()
+        cy.register(user)
+
         cy.get('[name=firstName]').type(getRandomString());
         cy.get('[name=lastName]').type(getRandomString());
-        cy.get('[name=username]').type('admin');
+        cy.get('[name=username]').type(user.username);
         cy.get('[name=password]').type(getRandomString());
         cy.get('[name=email]').type(getRandomEmail());
   
