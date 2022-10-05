@@ -23,17 +23,19 @@ describe('Register page tests', () => {
     })
 
     it('should fail to register if user exists', () => {
+        // given
         const user = getRandomUser()
         cy.register(user)
 
+        // when
         cy.get('[name=firstName]').type(getRandomString());
         cy.get('[name=lastName]').type(getRandomString());
         cy.get('[name=username]').type(user.username);
         cy.get('[name=password]').type(getRandomString());
         cy.get('[name=email]').type(getRandomEmail());
-  
         cy.get('.btn-primary').click()
   
+        // then
         cy.get('.alert-danger').should('have.text', 'Username is already in use') 
     })
 

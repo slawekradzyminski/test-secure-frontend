@@ -27,4 +27,9 @@ describe('Home page tests', () => {
         cy.url().should('contain', '/add-user')
     })
 
+    it('should open edit user', () => {
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
+        cy.get('h2').should('contain.text', 'Edit')
+    })
+
 })
