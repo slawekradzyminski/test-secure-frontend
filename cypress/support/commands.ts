@@ -14,8 +14,8 @@ Cypress.Commands.add('login', (username, password) => {
         expect(resp.status).to.eq(200)
         // 3.
         localStorage.setItem('user', JSON.stringify(resp.body))
-        // 4.
-        cy.setCookie('token', resp.body.token)
+        // 4. Ciastko musimy ustawić w then() po wykonaniu tej funkcji
+        return resp.body.token
     })
 })
 

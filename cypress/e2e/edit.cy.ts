@@ -26,6 +26,7 @@ describe('Edit page tests', () => {
         cy.get('[name=firstName]').clear().type(newUser.firstName)
         cy.get('[name=lastName]').clear().type(newUser.lastName)
         cy.get('[name=email]').clear().type(newUser.email)
+        cy.get('[name=email]').clear().type(newUser.email)
         cy.get('.btn-primary').click()
 
         cy.get('li').contains(`${newUser.firstName} ${newUser.lastName}`).should('exist')

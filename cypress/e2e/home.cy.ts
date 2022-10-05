@@ -4,16 +4,24 @@ import { getRandomUser, User } from "../domain/user"
 
 describe('Home page tests', () => {
     let user: User
+    let token: string
 
     beforeEach(() => {
         user = getRandomUser()
         cy.register(user)
-        cy.login(user.username, user.password)
+        cy.login(user.username, user.password).then((returnedToken) => {
+            cy.setCookie('token', returnedToken)
+            token = returnedToken
+        })
         cy.visit('')
         cy.getCookie('token').its('value').should('not.be.empty')
     })
 
-    it('should display at least one user', () => {
+    afterEach(() => {
+        // cy.deleteUser(user.username, token)
+    })
+
+    it.only('should display at least one user', () => {
         cy.get('li').should('have.length.at.least', 1)
     })
 
