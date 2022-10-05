@@ -7,12 +7,7 @@ describe('Home page tests', () => {
 
     beforeEach(() => {
         user = getRandomUser()
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signup',
-            body: user
-        }).then((resp) => expect(resp.status).to.eq(201))
-
+        cy.register(user)
         cy.login(user.username, user.password)
         cy.visit('')
         cy.getCookie('token').its('value').should('not.be.empty')
