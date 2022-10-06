@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 import { getRandomUser } from "../../domain/user"
 
 describe('Login page tests in isolation', () => {
