@@ -22,15 +22,48 @@ describe('Login page tests in isolation', () => {
                 token: 'fakeToken'
             }
         })
-        
+
         // 2 - lista uzytkowników
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
-        
+
         cy.get('form input[name="username"]').type(user.username);
         cy.get('form input[name="password"]').type(user.password);
         cy.get('.btn-primary').click();
 
         cy.get('h1').should('contain.text', user.firstName)
+    })
+
+    it('should fail to login and display alert', () => {
+        const message = "Invalid username/password supplied"
+
+        cy.intercept('POST', '**/users/signin', {
+            statusCode: 422,
+            body: {
+                error: "Unprocessable Entity",
+                message: message,
+                path: "/users/signin",
+                status: 422,
+                timestamp: "2022-10-06T09:17:32.444+00:00"
+            }
+        })
+
+        cy.get('form input[name="username"]').type('admin');
+        cy.get('form input[name="password"]').type('wrongPassword');
+        cy.get('.btn-primary').click();
+
+        cy.get('.alert-danger').should('have.text', message)
+    })
+
+    it('should show loading indicator', () => {
+        cy.intercept('POST', '**/users/signin', {
+            delay: 1000
+        })
+
+        cy.get('form input[name="username"]').type('admin');
+        cy.get('form input[name="password"]').type('wrongPassword');
+        cy.get('.btn-primary').click();
+
+        cy.get('.btn-primary .spinner-border').should('be.visible')
     })
 
 })
