@@ -1,4 +1,4 @@
-/// <reference types="cypress" />
+import users from '../../fixtures/users.json'
 
 describe('Home page tests in isolation', () => {
     beforeEach(() => {
@@ -6,7 +6,11 @@ describe('Home page tests in isolation', () => {
     })
 
     it('should display all users', () => {
-        cy.get('li').should('have.length', 2)
+        cy.get('li').should('have.length', users.length)
+        cy.get('li').each(($el, i) => {
+            // expect($el.text()).to.contain(`${users[i].firstName} ${users[i].lastName}`)
+            cy.wrap($el).should('contain.text', `${users[i].firstName} ${users[i].lastName}`)
+        })
     })
 
 })
