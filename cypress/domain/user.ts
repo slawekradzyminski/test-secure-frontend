@@ -7,7 +7,8 @@ export type User = {
     lastName: string,
     email: string,
     password: string,
-    roles: Roles[]
+    roles: Roles[],
+    phoneNumber?: string | null
 }
 
 export const getRandomUser = (): User => {
