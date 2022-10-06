@@ -1,3 +1,5 @@
+import { getRandomUser } from "../domain/user"
+
 Cypress.Commands.add('login', (username, password) => {
     // 1. Mam wysłać request na /users/signin z poprawnymi danymi logowania
     // 2. Oczekuję odpowiedzi http 200 bo to znaczy ze logowanie się udało
@@ -35,4 +37,21 @@ Cypress.Commands.add('deleteUser', (username, token) => {
             Authorization: `Bearer ${token}`
         }
     }).then((resp) => expect(resp.status).to.eq(204))
+})
+
+Cypress.Commands.add('visitHomePageAsLoggedInUser', () => {
+    const user = getRandomUser()
+    const fakeToken = 'fakeToken'
+    const fakeLocalStorageEntry = {
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        roles: user.roles,
+        token: fakeToken
+    }
+    localStorage.setItem('user', JSON.stringify(fakeLocalStorageEntry))
+    cy.setCookie('token', fakeToken)
+    cy.intercept('GET', '**/users', { fixture: 'users.json' })
+    cy.visit('')
 })
