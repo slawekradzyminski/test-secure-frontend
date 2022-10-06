@@ -1,3 +1,5 @@
+import { Alert } from "../../components/Alert"
+import { RegisterPage } from "../../pages/RegisterPage"
 import { getRandomString, getRandomEmail } from "../../util/random"
 
 describe('Register page tests in isolation', () => {
@@ -15,14 +17,14 @@ describe('Register page tests in isolation', () => {
             }
         })
 
-        cy.get('[name=username]').type(getRandomString())
-        cy.get('[name=firstName]').type(getRandomString())
-        cy.get('[name=lastName]').type(getRandomString())
-        cy.get('[name=email]').type(getRandomEmail())
-        cy.get('[name=password]').type(getRandomString())
-        cy.get('.btn-primary').click();
+        RegisterPage.selectors.getUsernameInput().type(getRandomString())
+        RegisterPage.selectors.getPasswordInput().type(getRandomString())
+        RegisterPage.selectors.getFirstNameInput().type(getRandomString())
+        RegisterPage.selectors.getEmailInput().type(getRandomEmail())
+        RegisterPage.selectors.getLastNameInput().type(getRandomString())
+        RegisterPage.selectors.getRegisterButton().click();
 
-        cy.get('.alert-success').should('have.text', 'Registration successful')
+        Alert.getAlertSuccess().should('have.text', 'Registration successful')
         cy.url().should('contain', '/login')
     })
 
