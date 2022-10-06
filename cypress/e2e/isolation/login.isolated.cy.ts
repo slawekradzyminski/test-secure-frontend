@@ -29,9 +29,7 @@ describe('Login page tests in isolation', () => {
         // 2 - lista uzytkowników
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
-        LoginPage.getUsernameInput().type(user.username);
-        LoginPage.getPasswordInput().type(user.password);
-        LoginPage.getLoginButton().click()
+        LoginPage.attemptLogin(user.username, user.password)
 
         HomePage.getTitle().should('contain.text', user.firstName)
     })
@@ -50,9 +48,7 @@ describe('Login page tests in isolation', () => {
             }
         })
 
-        LoginPage.getUsernameInput().type('admin');
-        LoginPage.getPasswordInput().type('wrongPassword');
-        LoginPage.getLoginButton().click()
+        LoginPage.attemptLogin('admin', 'wrongPassword')
 
         Alert.getAlertFailed().should('have.text', message)
     })
@@ -62,11 +58,8 @@ describe('Login page tests in isolation', () => {
             delay: 2000
         })
 
-        LoginPage.getUsernameInput().type('admin');
-        LoginPage.getPasswordInput().type('wrongPassword');
-        LoginPage.getLoginButton().click()
-
-        LoginPage.getSpinner().should('be.visible')
+        LoginPage.attemptLogin('admin', 'wrongPassword')
+        LoginPage.selectors.getSpinner().should('be.visible')
     })
 
 })
