@@ -19,6 +19,7 @@ describe('Email tests', () => {
    afterEach(() => {
        cy.deleteUser(user.username, token)
    })
+   
    it('should successfully send mail', () => {
        cy.get('[name=subject]').type(getRandomString())
        cy.get('[name=message]').type(getRandomString())
