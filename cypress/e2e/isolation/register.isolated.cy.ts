@@ -24,4 +24,26 @@ describe('Register page tests in isolation', () => {
         cy.url().should('contain', '/login')
     })
 
+    it('should fail to register if user exists', () => {
+        // given
+        const message = 'Username is already in use'
+        const user = getRandomUser()
+        cy.intercept('POST', '**/users/signup', {
+            statusCode: 422,
+            body: {
+                error: "Unprocessable Entity",
+                message: message,
+                path: "/users/signup",
+                status: 422,
+                timestamp: "2022-10-06T09:17:32.444+00:00"
+            }
+        })
+
+        // when
+        RegisterPage.attemptRegister(user)
+  
+        // then
+        Alert.getAlertFailed().should('have.text', message) 
+    })
+
 })
