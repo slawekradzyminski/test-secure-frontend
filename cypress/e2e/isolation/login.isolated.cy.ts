@@ -1,4 +1,7 @@
+import { Alert } from "../../components/Alert"
 import { getRandomUser } from "../../domain/user"
+import { HomePage } from "../../pages/HomePage"
+import { LoginPage } from "../../pages/LoginPage"
 
 describe('Login page tests in isolation', () => {
     beforeEach(() => {
@@ -26,11 +29,11 @@ describe('Login page tests in isolation', () => {
         // 2 - lista uzytkowników
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
-        cy.get('form input[name="username"]').type(user.username);
-        cy.get('form input[name="password"]').type(user.password);
-        cy.get('.btn-primary').click();
+        LoginPage.getUsernameInput().type(user.username);
+        LoginPage.getPasswordInput().type(user.password);
+        LoginPage.getLoginButton().click()
 
-        cy.get('h1').should('contain.text', user.firstName)
+        HomePage.getTitle().should('contain.text', user.firstName)
     })
 
     it('should fail to login and display alert', () => {
@@ -47,23 +50,23 @@ describe('Login page tests in isolation', () => {
             }
         })
 
-        cy.get('form input[name="username"]').type('admin');
-        cy.get('form input[name="password"]').type('wrongPassword');
-        cy.get('.btn-primary').click();
+        LoginPage.getUsernameInput().type('admin');
+        LoginPage.getPasswordInput().type('wrongPassword');
+        LoginPage.getLoginButton().click()
 
-        cy.get('.alert-danger').should('have.text', message)
+        Alert.getAlertFailed().should('have.text', message)
     })
 
     it('should show loading indicator', () => {
         cy.intercept('POST', '**/users/signin', {
-            delay: 1000
+            delay: 2000
         })
 
-        cy.get('form input[name="username"]').type('admin');
-        cy.get('form input[name="password"]').type('wrongPassword');
-        cy.get('.btn-primary').click();
+        LoginPage.getUsernameInput().type('admin');
+        LoginPage.getPasswordInput().type('wrongPassword');
+        LoginPage.getLoginButton().click()
 
-        cy.get('.btn-primary .spinner-border').should('be.visible')
+        LoginPage.getSpinner().should('be.visible')
     })
 
 })
