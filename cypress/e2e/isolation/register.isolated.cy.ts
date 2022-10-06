@@ -1,4 +1,5 @@
 import { Alert } from "../../components/Alert"
+import { getRandomUser } from "../../domain/user"
 import { RegisterPage } from "../../pages/RegisterPage"
 import { getRandomString, getRandomEmail } from "../../util/random"
 
@@ -9,7 +10,7 @@ describe('Register page tests in isolation', () => {
     })
 
     it('should successfully register', () => {
-
+        const user = getRandomUser()
         cy.intercept('POST', '**/users/signup', {
             statusCode: 201,
             body: {
@@ -17,12 +18,7 @@ describe('Register page tests in isolation', () => {
             }
         })
 
-        RegisterPage.selectors.getUsernameInput().type(getRandomString())
-        RegisterPage.selectors.getPasswordInput().type(getRandomString())
-        RegisterPage.selectors.getFirstNameInput().type(getRandomString())
-        RegisterPage.selectors.getEmailInput().type(getRandomEmail())
-        RegisterPage.selectors.getLastNameInput().type(getRandomString())
-        RegisterPage.selectors.getRegisterButton().click();
+        RegisterPage.attemptRegister(user)
 
         Alert.getAlertSuccess().should('have.text', 'Registration successful')
         cy.url().should('contain', '/login')

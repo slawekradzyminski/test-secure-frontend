@@ -1,3 +1,5 @@
+import { User } from "../domain/user";
+
 export const RegisterPage = {
 
     selectors: {
@@ -8,5 +10,14 @@ export const RegisterPage = {
         getEmailInput: () => cy.get('form input[name="email"]'),
         getRegisterButton: () => cy.get('.btn-primary'),
     },
+
+    attemptRegister: (user: User) => {
+        RegisterPage.selectors.getUsernameInput().type(user.username)
+        RegisterPage.selectors.getPasswordInput().type(user.password)
+        RegisterPage.selectors.getFirstNameInput().type(user.firstName)
+        RegisterPage.selectors.getEmailInput().type(user.email)
+        RegisterPage.selectors.getLastNameInput().type(user.lastName)
+        RegisterPage.selectors.getRegisterButton().click();
+    }
     
 }
