@@ -1,7 +1,7 @@
-import { Alert } from "../../components/Alert"
+import { alert } from "../../components/Alert"
 import { getRandomUser } from "../../domain/user"
-import { HomePage } from "../../pages/HomePage"
-import { LoginPage } from "../../pages/LoginPage"
+import { homePage } from "../../pages/HomePage"
+import { loginPage } from "../../pages/LoginPage"
 
 describe('Login page tests in isolation', () => {
     beforeEach(() => {
@@ -29,9 +29,9 @@ describe('Login page tests in isolation', () => {
         // 2 - lista uzytkowników
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
-        LoginPage.attemptLogin(user.username, user.password)
+        loginPage.attemptLogin(user.username, user.password)
 
-        HomePage.getTitle().should('contain.text', user.firstName)
+        homePage.getTitle().should('contain.text', user.firstName)
     })
 
     it('should fail to login and display alert', () => {
@@ -48,9 +48,9 @@ describe('Login page tests in isolation', () => {
             }
         })
 
-        LoginPage.attemptLogin('admin', 'wrongPassword')
+        loginPage.attemptLogin('admin', 'wrongPassword')
 
-        Alert.getAlertFailed().should('have.text', message)
+        alert.getAlertFailed().should('have.text', message)
     })
 
     it('should show loading indicator', () => {
@@ -58,8 +58,8 @@ describe('Login page tests in isolation', () => {
             delay: 2000
         })
 
-        LoginPage.attemptLogin('admin', 'wrongPassword')
-        LoginPage.selectors.getSpinner().should('be.visible')
+        loginPage.attemptLogin('admin', 'wrongPassword')
+        loginPage.selectors.getSpinner().should('be.visible')
     })
 
 })

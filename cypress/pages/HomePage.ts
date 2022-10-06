@@ -1,4 +1,4 @@
-export const HomePage = {
+export const homePage = {
 
     getTitle: () => cy.get('h1')
 

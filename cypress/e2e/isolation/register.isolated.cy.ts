@@ -1,6 +1,6 @@
-import { Alert } from "../../components/Alert"
+import { alert } from "../../components/Alert"
 import { getRandomUser } from "../../domain/user"
-import { RegisterPage } from "../../pages/RegisterPage"
+import { registerPage } from "../../pages/RegisterPage"
 import { getRandomString, getRandomEmail } from "../../util/random"
 
 describe('Register page tests in isolation', () => {
@@ -18,9 +18,9 @@ describe('Register page tests in isolation', () => {
             }
         })
 
-        RegisterPage.attemptRegister(user)
+        registerPage.attemptRegister(user)
 
-        Alert.getAlertSuccess().should('have.text', 'Registration successful')
+        alert.getAlertSuccess().should('have.text', 'Registration successful')
         cy.url().should('contain', '/login')
     })
 

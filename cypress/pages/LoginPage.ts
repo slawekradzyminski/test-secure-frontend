@@ -1,4 +1,4 @@
-export const LoginPage = {
+export const loginPage = {
 
     selectors: {
         getUsernameInput: () => cy.get('form input[name="username"]'),
@@ -8,9 +8,9 @@ export const LoginPage = {
     },
     
     attemptLogin: (username: string, password: string) => {
-        LoginPage.selectors.getUsernameInput().type(username)
-        LoginPage.selectors.getPasswordInput().type(password)
-        LoginPage.selectors.getLoginButton().click()
+        loginPage.selectors.getUsernameInput().type(username)
+        loginPage.selectors.getPasswordInput().type(password)
+        loginPage.selectors.getLoginButton().click()
     }
 
 }
