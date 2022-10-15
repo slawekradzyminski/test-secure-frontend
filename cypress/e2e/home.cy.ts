@@ -17,15 +17,7 @@ describe('Home page tests', () => {
     })
 
     afterEach(() => {
-        cy.request({
-            method: 'DELETE',
-            url: `${Cypress.env('backendUrl')}/users/${user.username}`,
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((resp) => {
-            expect(resp.status).to.eq(204)
-        })
+        cy.deleteUser(user.username, token)
     })
 
     it('should display at least one user', () => {

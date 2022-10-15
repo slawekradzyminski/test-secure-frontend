@@ -5,6 +5,7 @@ declare global {
         interface Chainable {
             login(username: string, password: string): Promise<string>;
             register(user: User): void;
+            deleteUser(username: string, token: string): void;
         }
     }
 }
