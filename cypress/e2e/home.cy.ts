@@ -4,15 +4,24 @@ import { getRandomUser, User } from "../domain/user"
 
 describe('Home page tests', () => {
     let user: User
+    let token: string
 
     beforeEach(() => {
         user = getRandomUser()
         cy.register(user)
-        cy.login(user.username, user.password)
+        cy.login(user.username, user.password).then((jwtToken) => {
+            cy.setCookie('token', jwtToken)
+            token = jwtToken
+        })
         cy.visit('')
     })
 
-    it('should display at least one user', () => {
+    afterEach(() => {
+        // cy.deleteUser(username, token)
+
+    })
+
+    it.only('should display at least one user', () => {
         cy.get('li').should('have.length.at.least', 1)
     })
 
@@ -34,6 +43,14 @@ describe('Home page tests', () => {
         cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
 
         cy.get('h2').should('contain.text', 'Edit')
+    })
+
+    it('should delete all users except the current one', () => {
+        cy.get('li').each(($el) => {
+            if (!$el.text().includes(`${user.firstName} ${user.lastName}`)) {
+                cy.wrap($el).find('.delete').click()
+            }
+        })
     })
 
 })
