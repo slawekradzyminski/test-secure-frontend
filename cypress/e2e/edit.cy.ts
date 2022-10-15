@@ -29,4 +29,15 @@ describe('Edit page tests', () => {
         cy.get('[name=roles]').should('have.value', user.roles.join(','))
     })
 
+    it('should correctly edit an user', () => {
+        const newUser = getRandomUser()
+        cy.get('[name=firstName]').clear().type(newUser.firstName)
+        cy.get('[name=lastName]').clear().type(newUser.lastName)
+        cy.get('[name=email]').clear().type(newUser.email)
+        cy.get('.btn-primary').click()
+
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).should('not.exist')
+        cy.get('li').contains(`${newUser.firstName} ${newUser.lastName}`).should('be.visible')
+    })
+
 })
