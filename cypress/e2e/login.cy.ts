@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { getRandomUser } from "../domain/user"
+import { getRandomString } from "../util/random"
 
 describe('Login page tests', () => {
     beforeEach(() => {
@@ -25,8 +26,8 @@ describe('Login page tests', () => {
     })
 
     it('should fail to login', () => {
-        cy.get('input[name=username]').type('wrong')
-        cy.get('input[name=password]').type('credentials')
+        cy.get('input[name=username]').type(getRandomString())
+        cy.get('input[name=password]').type(getRandomString())
         cy.get('.btn-primary').click()
 
         cy.get('.alert').should('have.text', 'Invalid username/password supplied')
