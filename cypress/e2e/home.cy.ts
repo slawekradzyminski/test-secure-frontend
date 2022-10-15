@@ -4,12 +4,6 @@ import { getRandomUser } from "../domain/user"
 
 describe('Home page tests', () => {
     beforeEach(() => {
-        // 0 - rejestracja uytkownika przez API
-        // 1. Wysłać request logowania na /users/signin
-        // 2. Ustawić odpowiedź w localStorage pod kluczem user
-        // 3. Ustawić ciastko token z wartością tokena jwt który przyszedł w odpowiedzi
-        // 4. Wejść na stronę główną - powinniśmy juz być zalogowani :)
-    
         const user = getRandomUser()
         cy.request({
             method: 'POST',
@@ -18,22 +12,7 @@ describe('Home page tests', () => {
         }).then((resp) => {
             expect(resp.status).to.eq(201)
         })
-
-        cy.request({
-            // 1
-            method: 'POST',
-            url: 'http://localhost:4001/users/signin',
-            body: {
-                username: user.username,
-                password: user.password
-            }
-        }).then((resp) => {
-            expect(resp.status).to.eq(200)
-            // 2
-            localStorage.setItem('user', JSON.stringify(resp.body))
-            // 3
-            cy.setCookie('token', resp.body.token)
-        })
+        cy.login(user.username, user.password)
 
         // 4
         cy.visit('http://localhost:8081')
