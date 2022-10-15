@@ -5,18 +5,12 @@ import { getRandomString } from "../util/random"
 
 describe('Login page tests', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8081')
+        cy.visit('')
     })
 
     it('should successfully login', () => {
         const user = getRandomUser()
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signup',
-            body: user
-        }).then((resp) => {
-            expect(resp.status).to.eq(201)
-        })
+        cy.register(user)
 
         cy.get('input[name=username]').type(user.username)
         cy.get('input[name=password]').type(user.password)

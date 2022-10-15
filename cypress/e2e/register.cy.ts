@@ -5,7 +5,7 @@ import { faker } from '@faker-js/faker';
 
 describe('Register page tests', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8081/register')
+        cy.visit('/register')
     })
 
     it('should successfully register', () => {
