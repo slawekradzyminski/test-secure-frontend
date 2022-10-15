@@ -38,6 +38,19 @@ describe('Edit page tests', () => {
 
         cy.get('li').contains(`${user.firstName} ${user.lastName}`).should('not.exist')
         cy.get('li').contains(`${newUser.firstName} ${newUser.lastName}`).should('be.visible')
+
+        cy.request({
+            method: 'GET',
+            url: `${Cypress.env('backendUrl')}/users/${user.username}`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((resp) => {
+            expect(resp.status).to.eq(200)
+            expect(resp.body.firstName).to.eq(newUser.firstName)
+            expect(resp.body.lastName).to.eq(newUser.lastName)
+            expect(resp.body.email).to.eq(newUser.email)
+        })
     })
 
 })
