@@ -1,7 +1,7 @@
 Cypress.Commands.add('login', (username, password) => {
     cy.request({
         method: 'POST',
-        url: 'http://localhost:4001/users/signin',
+        url: `${Cypress.env('backendUrl')}/users/signin`,
         body: {
             username: username,
             password: password
@@ -16,7 +16,7 @@ Cypress.Commands.add('login', (username, password) => {
 Cypress.Commands.add('register', (user) => {
     cy.request({
         method: 'POST',
-        url: 'http://localhost:4001/users/signup',
+        url: `${Cypress.env('backendUrl')}/users/signup`,
         body: user
     }).then((resp) => {
         expect(resp.status).to.eq(201)

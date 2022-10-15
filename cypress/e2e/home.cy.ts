@@ -1,10 +1,12 @@
 /// <reference types="cypress" />
 
-import { getRandomUser } from "../domain/user"
+import { getRandomUser, User } from "../domain/user"
 
 describe('Home page tests', () => {
+    let user: User
+
     beforeEach(() => {
-        const user = getRandomUser()
+        user = getRandomUser()
         cy.register(user)
         cy.login(user.username, user.password)
         cy.visit('')
@@ -26,6 +28,12 @@ describe('Home page tests', () => {
 
         cy.get('h2').should('have.text', 'Register')
         cy.url().should('contain', '/add-user')
+    })
+
+    it('should open edit page for current user', () => {
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
+
+        cy.get('h2').should('contain.text', 'Edit')
     })
 
 })
