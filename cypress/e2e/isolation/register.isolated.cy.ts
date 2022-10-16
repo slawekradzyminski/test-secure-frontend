@@ -9,7 +9,7 @@ describe('Register page tests in isolation', () => {
         cy.visit('/register')
     })
 
-    it.only('should successfully register', () => {
+    it('should successfully register', () => {
         cy.intercept('POST', '**/users/signup', {
             statusCode: 201,
             body: {
