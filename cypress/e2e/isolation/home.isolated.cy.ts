@@ -1,3 +1,5 @@
+import users from '../../fixtures/users.json'
+
 describe('Home page tests is isolation', () => {
 
     beforeEach(() => {

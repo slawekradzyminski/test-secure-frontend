@@ -3,6 +3,8 @@
         "target": "es6",
         "forceConsistentCasingInFileNames": true,
         "importHelpers": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
         "strict": true,
         "moduleResolution": "node",
         "lib": [
