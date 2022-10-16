@@ -11,44 +11,41 @@ describe('Login page tests', () => {
     })
 
     it('should successfully login', () => {
+        // given
         const user = getRandomUser()
         cy.register(user)
 
-        LoginPage.getUsernameInput().type(user.username)
-        LoginPage.getPasswordInput().type(user.password)
-        LoginPage.getLoginButton().click()
+        // when
+        LoginPage.attemptLogin(user.username, user.password)
 
+        // then
         cy.get('h1').should('contain.text', user.firstName)
     })
 
     it('should fail to login', () => {
-        LoginPage.getUsernameInput().type(getRandomString())
-        LoginPage.getPasswordInput().type(getRandomString())
-        LoginPage.getLoginButton().click()
+        // when
+        LoginPage.attemptLogin(getRandomString(), getRandomString())
 
+        // then
         Alert.getAlertFailed().should('have.text', 'Invalid username/password supplied')
         cy.url().should('contain', '/login')
     })
     
     it('should open register page', () => {
-        LoginPage.getRegisterButton().click()
+        // when
+        LoginPage.clickRegister()
 
+        // then
         cy.get('h2').should('contain.text', 'Register')
         cy.url().should('contain', '/register')
     })
 
     it('should trigger frontend validation', () => {
-        LoginPage.getLoginButton().click()
-
-        LoginPage.getValidationError().should('have.length', 2)
-        LoginPage.getValidationError().each(($el) => {
-            cy.wrap($el).should('have.text', 'Required field length is 4 or more')
-        })
-
-        LoginPage.getExclamationMark().should('have.length', 2)
-        cy.get('input').each(($el) => {
-            cy.wrap($el).should('have.class', 'is-invalid')
-        })
+        // when
+        LoginPage.clickLogin()
+        
+        // then
+        LoginPage.checkValidationErrors()
     })
 
 })
