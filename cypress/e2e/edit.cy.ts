@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { getRandomUser, User } from "../domain/user"
+import { editPage } from "../pages/editPage"
 
 describe('Edit page tests', () => {
     let token: string
@@ -22,11 +23,7 @@ describe('Edit page tests', () => {
     })
 
     it('should correctly autofill user data', () => {
-        cy.get('[name=firstName]').should('have.value', user.firstName)
-        cy.get('[name=lastName]').should('have.value', user.lastName)
-        cy.get('[name=username]').should('have.value', user.username)
-        cy.get('[name=email]').should('have.value', user.email)
-        cy.get('[name=roles]').should('have.value', user.roles.join(','))
+      editPage.checkDataInEditFields(user)
     })
 
     it('should correctly edit an user', () => {
