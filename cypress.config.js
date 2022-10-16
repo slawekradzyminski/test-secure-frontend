@@ -10,7 +10,8 @@ module.exports = defineConfig({
     baseUrl: 'http://localhost:8081',
     videoUploadOnPasses: false,
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      require('@cypress/code-coverage/task')(on, config)
+      return config
     },
   },
 });
