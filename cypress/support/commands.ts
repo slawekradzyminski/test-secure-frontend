@@ -1,3 +1,5 @@
+import { getRandomUser } from "../domain/user"
+
 Cypress.Commands.add('login', (username, password) => {
     cy.request({
         method: 'POST',
@@ -33,4 +35,24 @@ Cypress.Commands.add('deleteUser', (username, token) => {
     }).then((resp) => {
         expect(resp.status).to.eq(204)
     })
+})
+
+Cypress.Commands.add('visitHomePageAsLoggedInUser', () => {
+    const fakeToken = 'fakeToken';
+    const user = getRandomUser()
+    const fakeLoginResponse = {
+        "username": user.username,
+        "roles": user.roles,
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "token": fakeToken,
+        "email": user.email
+    }
+    localStorage.setItem('user', JSON.stringify(fakeLoginResponse))
+    cy.setCookie('token', fakeToken)
+    cy.intercept('GET', '**/users', {
+        statusCode: 200,
+        fixture: 'users.json'
+    })
+    cy.visit('')
 })
