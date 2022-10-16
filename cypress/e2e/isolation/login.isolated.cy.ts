@@ -19,7 +19,7 @@ describe('Login page tests in isolation', () => {
         cy.get('.btn-primary .spinner-border').should('be.visible')
     })
 
-    it('should successfully login', () => {
+    it.only('should successfully login', () => {
         const user = getRandomUser()
 
         cy.intercept('POST', '**/users/signin', {
@@ -32,7 +32,7 @@ describe('Login page tests in isolation', () => {
                 "token": "fakeToken",
                 "email": user.email
             }
-        })
+        }).as('loginRequest')
 
         cy.intercept('GET', '**/users', {
             statusCode: 200,
@@ -44,6 +44,10 @@ describe('Login page tests in isolation', () => {
         cy.get('.btn-primary').click()
 
         cy.get('h1').should('contain.text', user.firstName)
+        cy.wait('@loginRequest').its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password
+        })
     })
 
     it('should fail to login', () => {
