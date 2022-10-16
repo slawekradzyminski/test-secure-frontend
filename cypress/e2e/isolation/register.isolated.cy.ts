@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { getRandomUser } from '../../domain/user';
+import { getRandomEmail, getRandomString } from '../../util/random';
 
 describe('Register page tests in isolation', () => {
     beforeEach(() => {
@@ -26,6 +27,31 @@ describe('Register page tests in isolation', () => {
 
         cy.get('.alert').should('contain.text', 'Registration successful')
         cy.url().should('contain', '/login')
+    })
+
+    it('should fail to register if username already exists', () => {
+        const message = "Username is already in use"
+
+        cy.intercept('POST', '**/users/signup', {
+            statusCode: 422,
+            body: {
+                "timestamp": "2022-10-16T08:30:18.123+00:00",
+                "status": 422,
+                "error": "Unprocessable Entity",
+                "message": message,
+                "path": "/users/signup"
+            }
+        })
+
+        cy.get('[name=firstName]').type(getRandomString())
+        cy.get('[name=lastName]').type(getRandomString())
+        cy.get('[name=username]').type(getRandomString())
+        cy.get('[name=password]').type(getRandomString())
+        cy.get('[name=email]').type(getRandomEmail())
+        cy.get('.btn-primary').click()
+
+        cy.get('.alert').should('contain.text', message)
+        cy.url().should('contain', '/register')
     })
 
 })
