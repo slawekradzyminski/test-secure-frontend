@@ -43,7 +43,7 @@ describe('Login page tests', () => {
     it('should trigger frontend validation', () => {
         // when
         LoginPage.clickLogin()
-        
+
         // then
         LoginPage.checkValidationErrors()
     })
