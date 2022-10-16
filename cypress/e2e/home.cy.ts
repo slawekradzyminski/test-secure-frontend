@@ -45,11 +45,26 @@ describe('Home page tests', () => {
     })
 
     it('should delete all users except the current one', () => {
+        cy.register(getRandomUser())
+        cy.reload()
+
         cy.get('li').each(($el) => {
             if (!$el.text().includes(`${user.firstName} ${user.lastName}`)) {
                 cy.wrap($el).find('.delete').click()
             }
         })
+
+        cy.get('li').should('have.length', 1)
+    })
+
+    it('should cancel user delete', () => {
+        Cypress.on('window:confirm', (confirmationText) => {
+            expect(confirmationText).to.eq('Are you sure you wish to delete this item?')
+            return false
+        })
+
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.delete').click()
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).should('be.visible')
     })
 
 })
