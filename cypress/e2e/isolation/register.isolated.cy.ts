@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { Roles } from '../../domain/roles';
 import { getRandomUser } from '../../domain/user';
 import { getRandomEmail, getRandomString } from '../../util/random';
 
@@ -8,13 +9,13 @@ describe('Register page tests in isolation', () => {
         cy.visit('/register')
     })
 
-    it('should successfully register', () => {
+    it.only('should successfully register', () => {
         cy.intercept('POST', '**/users/signup', {
             statusCode: 201,
             body: {
                 token: 'fakeToken'
             }
-        })
+        }).as('registerRequest')
 
         const user = getRandomUser()
 
@@ -27,6 +28,11 @@ describe('Register page tests in isolation', () => {
 
         cy.get('.alert').should('contain.text', 'Registration successful')
         cy.url().should('contain', '/login')
+
+        cy.wait('@registerRequest').its('request.body').should('deep.equal', {
+            ...user,
+            roles: [Roles.ROLE_CLIENT]
+        })
     })
 
     it('should fail to register if username already exists', () => {
