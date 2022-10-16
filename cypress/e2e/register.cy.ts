@@ -2,6 +2,7 @@
 
 import { getRandomEmail, getRandomString } from "../util/random"
 import { faker } from '@faker-js/faker';
+import { getRandomUser } from "../domain/user";
 
 describe('Register page tests', () => {
     beforeEach(() => {
@@ -21,9 +22,12 @@ describe('Register page tests', () => {
     })
 
     it('should fail to register if username already exists', () => {
+        const user = getRandomUser()
+        cy.register(user)
+
         cy.get('[name=firstName]').type(getRandomString())
         cy.get('[name=lastName]').type(getRandomString())
-        cy.get('[name=username]').type('admin')
+        cy.get('[name=username]').type(user.username)
         cy.get('[name=password]').type(getRandomString())
         cy.get('[name=email]').type(getRandomEmail())
         cy.get('.btn-primary').click()

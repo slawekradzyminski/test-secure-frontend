@@ -42,3 +42,5 @@ typings
 .node_repl_history
 
 cypress.env.json
+cypress/screenshots
+cypress/videos
