@@ -29,4 +29,20 @@ describe('Login page tests', () => {
         cy.get('h1').should('contain.text', user.firstName)
     })
 
+    it('should handle error', () => {
+        const user = getRandomUser()
+
+        cy.intercept('POST', '**/users/signin', {
+            delay: 2000
+        })
+
+        cy.intercept('GET', '**/users', { fixture: 'users.json' })
+
+        cy.get('input[name=username]').type(user.username)
+        cy.get('input[name=password]').type(user.password)
+        cy.get('.btn-primary').click()
+
+        cy.get('.btn-primary .spinner-border').should('be.visible')
+    })
+
 })
