@@ -1,5 +1,14 @@
 Cypress.Commands.add('login', (username, password) => {
-    cy.get('input[name=username]').type(username)
-    cy.get('input[name=password]').type(password)
-    cy.get('.btn-primary').click()
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:4001/users/signin',
+        body: {
+            username: username,
+            password: password
+        }
+    }).then((resp) => {
+        localStorage.setItem('user', JSON.stringify(resp.body))
+        cy.setCookie('token', resp.body.token)
+    })
+
 })
