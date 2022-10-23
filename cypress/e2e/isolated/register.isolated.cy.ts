@@ -1,3 +1,4 @@
+import Alert from "../../components/Alert"
 import { errorMessage, generateRegisterResponse } from "../../domain/register"
 import { Roles } from "../../domain/roles"
 import { getRandomUser } from "../../domain/user"
@@ -23,7 +24,7 @@ describe('Register tests with mocks', () => {
         cy.get('input[name=email]').type(user.email)
         cy.get('.btn-primary').click()
 
-        cy.get('.alert-success').should('contain.text', 'Registration successful')
+        Alert.getSuccessAlert().should('contain.text', 'Registration successful')
         cy.wait('@registerRequest').its('request.body').should('deep.equal', {
             username: user.username,
             password: user.password,
@@ -50,7 +51,7 @@ describe('Register tests with mocks', () => {
         cy.get('.btn-primary').click()
 
         cy.scrollTo('top')
-        cy.get('.alert-danger').should('contain.text', errorMessage)
+        Alert.getFailedAlert().should('contain.text', errorMessage)
     })
 
 })

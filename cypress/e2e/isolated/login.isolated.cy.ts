@@ -1,11 +1,14 @@
 import { getRandomUser } from "../../domain/user"
+import HomePage from "../../pages/HomePage"
+import LoginPage from "../../pages/LoginPage"
 
 describe('Login page tests', () => {
+
     beforeEach(() => {
         cy.visit('http://localhost:8081')
     })
 
-    it.only('should successfully login', () => {
+    it('should successfully login', () => {
         const user = getRandomUser()
 
         cy.intercept('POST', '**/users/signin', {
@@ -22,11 +25,11 @@ describe('Login page tests', () => {
 
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
-        cy.get('input[name=username]').type(user.username)
-        cy.get('input[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        LoginPage.getUsernameInput().type(user.username)
+        LoginPage.getPasswordInput().type(user.password)
+        LoginPage.getLoginButton().click()
 
-        cy.get('h1').should('contain.text', user.firstName)
+        HomePage.getHeader().should('contain.text', user.firstName)
         cy.wait('@loginRequest').its('request.body').should('deep.equal', {
             username: user.username,
             password: user.password
@@ -42,9 +45,9 @@ describe('Login page tests', () => {
 
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
-        cy.get('input[name=username]').type(user.username)
-        cy.get('input[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        LoginPage.getUsernameInput().type(user.username)
+        LoginPage.getPasswordInput().type(user.password)
+        LoginPage.getLoginButton().click()
 
         cy.get('.btn-primary .spinner-border').should('be.visible')
     })
