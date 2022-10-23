@@ -2,7 +2,7 @@ import { getRandomUser } from "../../domain/user"
 import GetAllUsersMocks from "../../mocks/GetAllUsersMocks"
 import LoginMocks from "../../mocks/LoginMocks"
 import HomePage from "../../pages/HomePage"
-import LoginPage from "../../pages/LoginPage"
+import { loginPage } from "../../pages/loginPageObject"
 
 describe('Login page tests', () => {
 
@@ -17,7 +17,7 @@ describe('Login page tests', () => {
         GetAllUsersMocks.mockUsers()
 
         // when
-        LoginPage.attemptLogin(user.username, user.password)
+        loginPage.attemptLogin(user.username, user.password)
 
         // then
         HomePage.getHeader().should('contain.text', user.firstName)
@@ -33,7 +33,7 @@ describe('Login page tests', () => {
         LoginMocks.mockDelayedLogin()
 
         // when
-        LoginPage.attemptLogin(user.username, user.password)
+        loginPage.attemptLogin(user.username, user.password)
 
         // then
         cy.get('.btn-primary .spinner-border').should('be.visible')
