@@ -1,15 +1,15 @@
 export const loginPage = {
 
-    selectors: {
+    getters: {
         usernameInput: () => cy.get('[name=username]'),
         passwordInput: () => cy.get('[name=password]'),
         loginButton: () => cy.get('.btn-primary')
     },
 
     attemptLogin: (username: string, password: string) => {
-        loginPage.selectors.usernameInput().type(username)
-        loginPage.selectors.passwordInput().type(password)
-        loginPage.selectors.loginButton().click()
+        loginPage.getters.usernameInput().type(username)
+        loginPage.getters.passwordInput().type(password)
+        loginPage.getters.loginButton().click()
     },
 
 
