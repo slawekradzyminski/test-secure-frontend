@@ -22,7 +22,7 @@ describe('Home page tests', () => {
 //  .then(() => cy.get(li))
 
     afterEach(() => {
-        // cy.deleteUser(user.username, token)
+        cy.deleteUser(user.username, token)
     })
 
     it('should display at least one user', () => {
@@ -30,8 +30,6 @@ describe('Home page tests', () => {
             timeout: 10000
         }).should('have.length.at.least', 1)
     })
-
-
 
     it('should logout', () => {
         cy.get('#logout').click()
