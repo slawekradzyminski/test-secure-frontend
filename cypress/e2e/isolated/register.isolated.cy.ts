@@ -1,4 +1,5 @@
 import { errorMessage, generateRegisterResponse } from "../../domain/register"
+import { Roles } from "../../domain/roles"
 import { getRandomUser } from "../../domain/user"
 
 describe('Register tests with mocks', () => {
@@ -12,7 +13,7 @@ describe('Register tests with mocks', () => {
             body: {
                 token: 'fakeToken'
             }
-        })
+        }).as('registerRequest')
         const user = getRandomUser()
 
         cy.get('input[name=username]').type(user.username)
@@ -23,6 +24,14 @@ describe('Register tests with mocks', () => {
         cy.get('.btn-primary').click()
 
         cy.get('.alert-success').should('contain.text', 'Registration successful')
+        cy.wait('@registerRequest').its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            roles: [Roles.ROLE_CLIENT]
+        })
     })
 
     it('should fail to login', () => {
