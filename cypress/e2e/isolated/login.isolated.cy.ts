@@ -5,7 +5,7 @@ describe('Login page tests', () => {
         cy.visit('http://localhost:8081')
     })
 
-    it('should successfully login', () => {
+    it.only('should successfully login', () => {
         const user = getRandomUser()
 
         cy.intercept('POST', '**/users/signin', {
@@ -18,7 +18,7 @@ describe('Login page tests', () => {
                 token: "fakeToken",
                 email: user.email
             }
-        })
+        }).as('loginRequest')
 
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
@@ -27,9 +27,17 @@ describe('Login page tests', () => {
         cy.get('.btn-primary').click()
 
         cy.get('h1').should('contain.text', user.firstName)
+        cy.wait('@loginRequest').should('deep.equal', {
+            username: user.username,
+            password: user.password
+        })
+        cy.wait('@loginRequest').its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password
+        })
     })
 
-    it('should handle error', () => {
+    it('should display loading indicator', () => {
         const user = getRandomUser()
 
         cy.intercept('POST', '**/users/signin', {
