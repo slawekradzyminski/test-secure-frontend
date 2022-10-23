@@ -17,9 +17,7 @@ describe('Login page tests', () => {
         GetAllUsersMocks.mockUsers()
 
         // when
-        LoginPage.getUsernameInput().type(user.username)
-        LoginPage.getPasswordInput().type(user.password)
-        LoginPage.getLoginButton().click()
+        LoginPage.attemptLogin(user.username, user.password)
 
         // then
         HomePage.getHeader().should('contain.text', user.firstName)
@@ -35,9 +33,7 @@ describe('Login page tests', () => {
         LoginMocks.mockDelayedLogin()
 
         // when
-        LoginPage.getUsernameInput().type(user.username)
-        LoginPage.getPasswordInput().type(user.password)
-        LoginPage.getLoginButton().click()
+        LoginPage.attemptLogin(user.username, user.password)
 
         // then
         cy.get('.btn-primary .spinner-border').should('be.visible')
