@@ -27,10 +27,6 @@ describe('Login page tests', () => {
         cy.get('.btn-primary').click()
 
         cy.get('h1').should('contain.text', user.firstName)
-        cy.wait('@loginRequest').should('deep.equal', {
-            username: user.username,
-            password: user.password
-        })
         cy.wait('@loginRequest').its('request.body').should('deep.equal', {
             username: user.username,
             password: user.password
