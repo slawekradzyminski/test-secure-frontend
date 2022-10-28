@@ -12,8 +12,8 @@ describe('Home page tests', () => {
             method: 'POST',
             url: 'http://localhost:4001/users/signin',
             body: {
-                username: 'admin',
-                password: 'admin'
+                username: Cypress.env('username'),
+                password: Cypress.env('password')
             }
         }).then((odpowiedz) => {
             // 2
@@ -23,7 +23,7 @@ describe('Home page tests', () => {
         })
 
         // 4
-        cy.visit('http://localhost:8081')
+        cy.visit(Cypress.env('url'))
     })
 
     it('should display at least one user', () => {
