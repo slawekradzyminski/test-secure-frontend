@@ -6,15 +6,27 @@ describe('login page tests', () => {
     })
 
     it('should successfully login', () => {
-        // Wpisać admin w input z usernamem
         cy.get("[name='username']").type('admin')
-        // Wpisać admin w input z hasłem
         cy.get("[name='password']").type('admin')
-        // kliknąć login
         cy.get('button.btn-primary').click()
 
         cy.get('h1').should('contain.text', 'Slawomir')
 
+    })
+
+    it('should fail to login', () => {
+        cy.get("[name='username']").type('wrong')
+        cy.get("[name='password']").type('password')
+        cy.get('button.btn-primary').click()
+
+        cy.get('.alert-danger').should('have.text', 'Invalid username/password supplied')
+    })
+
+    it.only('should open register page', () => {
+        cy.get(".btn-link").click()
+
+        cy.get('h2').should('have.text', 'Register')
+        cy.url().should('contain', '/register')
     })
 
 })
