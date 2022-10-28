@@ -5,7 +5,7 @@ module.exports = defineConfig({
   env: {
     username: 'admin',
     password: 'admin',
-    url: 'http://localhost:8082'
+    url: 'http://localhost:8081'
   },
   e2e: {
     setupNodeEvents(on, config) {
