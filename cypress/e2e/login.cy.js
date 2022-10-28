@@ -3,7 +3,7 @@
 import { getRandomString } from "../util/random"
 
 describe('login page tests', () => {
-    
+
     it('should successfully login', () => {
         const username = getRandomString()
         const password = getRandomString()
@@ -47,6 +47,15 @@ describe('login page tests', () => {
 
         cy.get('h2').should('contain.text', 'Register')
         cy.url().should('contain', '/register')
+    })
+
+    it('should trigger frontend validation', () => {
+        cy.visit('http://localhost:8081')
+        cy.get(".btn-primary").click()
+        cy.get('form > div:nth-of-type(1) .invalid-feedback').should('have.text', 'Required field length is 4 or more')
+        cy.get('form > div:nth-of-type(2) .invalid-feedback').should('have.text', 'Required field length is 4 or more')
+        cy.get('[name=username]').should('have.class', 'is-invalid')
+        cy.get('[name=password]').should('have.class', 'is-invalid')
     })
 
 })
