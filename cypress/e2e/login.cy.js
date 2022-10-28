@@ -25,7 +25,7 @@ describe('login page tests', () => {
     it.only('should open register page', () => {
         cy.get(".btn-link").click()
 
-        cy.get('h2').should('have.text', 'Register')
+        cy.get('h2').should('contain.text', 'Register')
         cy.url().should('contain', '/register')
     })
 
