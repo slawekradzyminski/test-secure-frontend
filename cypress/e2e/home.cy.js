@@ -1,15 +1,32 @@
 /// <reference types="cypress" />
 
-import { email, password } from "../util/credentials"
-
 describe('Home tests', () => {
     beforeEach(() => {
-      cy.visit('http://demo.testarena.pl/zaloguj')
-      cy.get('#email').type(email)
-      cy.get('#password').type(password)
-      cy.get('#login').click()
+        cy.request('http://demo.testarena.pl/zaloguj')
+            .its('body')
+            .then((body) => {
+                const $html = Cypress.$(body)
+                const csrf = $html.find('input[name=csrf]').val()
+
+                cy.request({
+                    method: 'POST',
+                    url: 'http://demo.testarena.pl/logowanie',
+                    form: true,
+                    body: {
+                        email: 'administrator@testarena.pl',
+                        password: 'sumXQQ72$L',
+                        remember: 0,
+                        login: 'Zaloguj',
+                        csrf: csrf,
+                    },
+                })
+                    .then((resp) => {
+                        expect(resp.status).to.eq(200)
+                    })
+            })
+        cy.visit('http://demo.testarena.pl')
     })
-  
+
     it('should display 10 items in sidebar', () => {
         cy.get('.menu > li').should('have.length', 10)
     })
@@ -20,5 +37,4 @@ describe('Home tests', () => {
         cy.get('#login').should('exist')
     })
 
-  })
-  
+})
