@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { homePage } from "../pages/homePage"
+import { loginPage } from "../pages/loginPage"
 import { email, password } from "../util/credentials"
 
 describe('Login tests', () => {
@@ -8,11 +10,8 @@ describe('Login tests', () => {
     })
   
     it('should successfully login', () => {
-        cy.get('#email').type(email)
-        cy.get('#password').type(password)
-        cy.get('#login').click()
-
-        cy.get('.user-info').should('contain.text', 'Gall Anonim')
+        loginPage.attemptLogin(email, password)
+        cy.get(homePage.selectors.userInfo).should('contain.text', 'Gall Anonim')
     })
 
     it('should open forgot my password page', () => {
