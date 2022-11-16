@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import AddProjectPage from "../pages/AddProjectPage"
+import ProjectPage from "../pages/ProjectPage"
 import { email, password } from "../util/credentials"
 import { getRandomString } from "../util/random"
 
@@ -11,14 +13,14 @@ describe('Project page tests', () => {
     })
 
     it('should find Kopernik project', () => {
-        cy.get('#search').type('Kopernik')
-        cy.get('#j_searchButton').click()
-        cy.get('tbody tr td:nth-of-type(1)').should('have.text', 'KOPERNIK')
+        ProjectPage.getSearchInput().type('Kopernik')
+        ProjectPage.getSearchButton().click()
+        ProjectPage.getFirstCell().should('have.text', 'KOPERNIK')
     })
 
-    it('should open project page', () => {
-        cy.get('.button_link').first().click()
-        cy.get('h1.content_title').should('have.text', 'Dodaj projekt')
+    it('should open add project page', () => {
+        ProjectPage.getButtonLinks().first().click()
+        AddProjectPage.getTitle().should('have.text', 'Dodaj projekt')
     })
 
     it('should import project page', () => {
@@ -26,12 +28,11 @@ describe('Project page tests', () => {
         cy.get('h1.content_title').should('have.text', 'Importuj projekt')
     })
 
-    it('should add new project', () => {
+    it.only('should add new project', () => {
         const text = getRandomString()
-        cy.get('[href="http://demo.testarena.pl/administration/add_project"]').click()
-        cy.get('#name').type(text)
-        cy.get('#prefix').type(text)
-        cy.get('#save').click()
+        ProjectPage.getButtonLinks().first().click()
+        AddProjectPage.addNewProject(text)
+
         cy.get('#text').should('contain.text', text)
         cy.visit('http://demo.testarena.pl/administration/projects')
         cy.get('#search').type(text)
