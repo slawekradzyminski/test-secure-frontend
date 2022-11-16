@@ -2,6 +2,12 @@
 
 describe('Home tests', () => {
     beforeEach(() => {
+        Cypress.on('uncaught:exception', (err, runnable) => {
+            // returning false here prevents Cypress from
+            // failing the test
+            return false
+          })
+
         cy.request('http://demo.testarena.pl/zaloguj')
             .its('body')
             .then((body) => {
