@@ -4,21 +4,7 @@ describe('home page tests', () => {
     beforeEach(() => {
         const user = getRandomUser()
         cy.register(user)
-        // 1. musimy wysłać request logowania
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signin',
-            body: {
-                username: user.username,
-                password: user.password
-            }
-        }).then((resp) => {
-            // 2. musimy odpowiedź zapisać w localStorage
-            localStorage.setItem('user', JSON.stringify(resp.body))
-            // 3. musimy token z odpowiedzi zapisać w ciastku
-            cy.setCookie('token', resp.body.token)
-        })
-        // 4. musimy wejść na stronę główną
+        cy.login(user.username, user.password)
         cy.visit('/')
     })
 
@@ -35,5 +21,33 @@ describe('home page tests', () => {
         cy.get('#addmore').click()
         cy.url().should('contain', 'add-user')
     })
+
+    // Kod wynikowy Cypressa
+    // const user = getRandomUser()
+
+    // cy.request({
+    //     method: 'POST',
+    //     url: 'http://localhost:4001/users/signup',
+    //     body: user
+    // })
+    //     .then(() => {
+    //         cy.request({
+    //             method: 'POST',
+    //             url: 'http://localhost:4001/users/signin',
+    //             body: {
+    //                 username: username,
+    //                 password: password
+    //             }
+    //         })
+    //             .then((resp) => {
+    //                 localStorage.setItem('user', JSON.stringify(resp.body))
+    //                 return resp
+    //             })
+    //             .then((resp) => {
+    //                 cy.setCookie('token', resp.body.token)
+    //             })
+    //     })
+    //     .then(() => cy.visit('/'))
+    //     .then(() => cy.get('ul li').should('have.length.at.least', 1))
 
 })
