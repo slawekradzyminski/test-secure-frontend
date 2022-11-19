@@ -40,7 +40,7 @@ describe('home page tests', () => {
         })
     })
 
-    it('should cancel user deletion', () => {
+    it.only('should cancel user deletion', () => {
         Cypress.on('window:confirm', (confirmationText) => {
             expect(confirmationText).to.eq('Are you sure you wish to delete this item?')
             return false
@@ -48,6 +48,14 @@ describe('home page tests', () => {
 
         cy.get('ul li').contains(`${user.firstName} ${user.lastName}`).find('.delete').click()
         cy.get('ul li').contains(`${user.firstName} ${user.lastName}`).should('exist')
-    })
+
+        cy.request({
+            url: `http://localhost:4001/users/${user.username}`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((resp) => expect(resp.status).to.eq(200))
+})
 
 })
