@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { Roles } from "../../domain/roles"
 import { getRandomUser } from "../../utils/user"
 
 describe('register tests in isolation', () => {
@@ -15,7 +16,7 @@ describe('register tests in isolation', () => {
             body: {
                 token: 'fakeToken'
             }
-        })
+        }).as('registerRequest')
 
         cy.get('[name=username]').type(user.username)
         cy.get('[name=password]').type(user.password)
@@ -25,6 +26,15 @@ describe('register tests in isolation', () => {
         cy.get('.btn-primary').click()
 
         cy.url().should('contain', 'login')
+        cy.wait('@registerRequest').its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            roles: [Roles.ROLE_CLIENT]
+        })
+ 
     })
 
     it('should fail to register', () => {
