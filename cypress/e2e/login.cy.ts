@@ -14,7 +14,6 @@ describe('login', () => {
       cy.get('[name=username]').type(user.username)
       cy.get('[name=password]').type(user.password)
       cy.get('.btn-primary').click()
-
     })
 
   })
