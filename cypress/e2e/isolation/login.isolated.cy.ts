@@ -39,7 +39,7 @@ describe('login tests in isolation', () => {
                 timestamp: "2022-11-19T14:26:08.639+00:00",
                 status: 422,
                 error: "Unprocessable Entity",
-                message: "Invalid username/password supplied",
+                message: message,
                 path: "/users/signin"
             }
         })
