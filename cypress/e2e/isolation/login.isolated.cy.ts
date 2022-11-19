@@ -7,7 +7,7 @@ describe('login tests in isolation', () => {
         cy.visit('/')
     })
 
-    it('should successfully login', () => {
+    it.only('should successfully login', () => {
         const user = getRandomUser()
 
         cy.intercept('POST', '**/users/signin', {
@@ -20,7 +20,7 @@ describe('login tests in isolation', () => {
                 username: user.username,
                 token: 'fakeToken'
             }
-        })
+        }).as('loginRequest')
         cy.intercept('GET', '**/users', { statusCode: 200, fixture: 'users.json' })
 
         cy.get('[name=username]').type(user.username)
@@ -28,6 +28,10 @@ describe('login tests in isolation', () => {
         cy.get('.btn-primary').click()
 
         cy.get('h1').should('contain.text', user.firstName)
+        cy.wait('@loginRequest').its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password
+        })
     })
 
     it('should fail to login', () => {
