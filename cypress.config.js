@@ -1,6 +1,9 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+  env: {
+    isMobile: false
+  },
   e2e: {
     baseUrl: 'http://localhost:8081',
     setupNodeEvents(on, config) {
