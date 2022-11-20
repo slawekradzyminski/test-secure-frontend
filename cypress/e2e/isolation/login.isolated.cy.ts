@@ -1,6 +1,11 @@
 /// <reference types="cypress" />
 
-import { getRandomUser } from "../../utils/user"
+import Alert from "../../component/Alert"
+import LoginMock from "../../mocks/LoginMock"
+import UsersMock from "../../mocks/UsersMock"
+import HomePage from "../../pages/HomePage"
+import LoginPage from "../../pages/LoginPage"
+import { getRandomUser, User } from "../../utils/user"
 
 describe('login tests in isolation', () => {
     beforeEach(() => {
@@ -8,51 +13,41 @@ describe('login tests in isolation', () => {
     })
 
     it('should successfully login', () => {
+        // given
         const user = getRandomUser()
+        LoginMock.mockSuccess(user)
+        UsersMock.mockUsers()
 
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 200,
-            body: {
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                roles: user.roles,
-                username: user.username,
-                token: 'fakeToken'
-            }
-        }).as('loginRequest')
-        cy.intercept('GET', '**/users', { statusCode: 200, fixture: 'users.json' })
+        // when
+        LoginPage.getLoginInput().type(user.username)
+        LoginPage.getPasswordInput().type(user.password)
+        LoginPage.getLoginButton().click()
 
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
-
-        cy.get('h1').should('contain.text', user.firstName)
-        cy.wait('@loginRequest').its('request.body').should('deep.equal', {
-            username: user.username,
-            password: user.password
-        })
+        // then
+        HomePage.getHeader().should('contain.text', user.firstName)
+        verifyLoginRequestBody(user)
     })
 
     it('should fail to login', () => {
+        // given
         const message = "Invalid username/password supplied"
+        LoginMock.mockFailure(message)
 
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 422,
-            body: {
-                timestamp: "2022-11-19T14:26:08.639+00:00",
-                status: 422,
-                error: "Unprocessable Entity",
-                message: message,
-                path: "/users/signin"
-            }
-        })
+        // when
+        LoginPage.getLoginInput().type('wrong')
+        LoginPage.getPasswordInput().type('wrong')
+        LoginPage.getLoginButton().click()
 
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
-
-        cy.get('.alert-danger').should('have.text', message)
+        // then
+        Alert.getFailureAlert().should('have.text', message)
     })
 
 })
+
+const verifyLoginRequestBody= (user: User) => {
+    cy.wait('@loginRequest').its('request.body').should('deep.equal', {
+        username: user.username,
+        password: user.password
+    })
+}
+
