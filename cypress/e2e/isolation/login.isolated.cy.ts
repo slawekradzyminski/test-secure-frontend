@@ -4,7 +4,7 @@ import Alert from "../../component/Alert"
 import LoginMock from "../../mocks/LoginMock"
 import UsersMock from "../../mocks/UsersMock"
 import HomePage from "../../pages/HomePage"
-import LoginPage from "../../pages/LoginPage"
+import { loginPage } from "../../pages/logginPage"
 import { getRandomUser, User } from "../../utils/user"
 
 describe('login tests in isolation', () => {
@@ -19,9 +19,7 @@ describe('login tests in isolation', () => {
         UsersMock.mockUsers()
 
         // when
-        LoginPage.getLoginInput().type(user.username)
-        LoginPage.getPasswordInput().type(user.password)
-        LoginPage.getLoginButton().click()
+        loginPage.attemptLogin(user.username, user.password)
 
         // then
         HomePage.getHeader().should('contain.text', user.firstName)
@@ -34,9 +32,7 @@ describe('login tests in isolation', () => {
         LoginMock.mockFailure(message)
 
         // when
-        LoginPage.getLoginInput().type('wrong')
-        LoginPage.getPasswordInput().type('wrong')
-        LoginPage.getLoginButton().click()
+        loginPage.attemptLogin('wrong', 'wrong')
 
         // then
         Alert.getFailureAlert().should('have.text', message)
