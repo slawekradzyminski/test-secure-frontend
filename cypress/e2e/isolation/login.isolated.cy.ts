@@ -5,6 +5,7 @@ import LoginMock from "../../mocks/LoginMock"
 import UsersMock from "../../mocks/UsersMock"
 import HomePage from "../../pages/HomePage"
 import { loginPage } from "../../pages/logginPage"
+import { registerPage } from "../../pages/registerPage"
 import { getRandomUser, User } from "../../utils/user"
 
 describe('login tests in isolation', () => {
@@ -36,6 +37,14 @@ describe('login tests in isolation', () => {
 
         // then
         Alert.getFailureAlert().should('have.text', message)
+    })
+
+    it('should open register page', () => {
+        // when
+        loginPage.clickRegister()
+
+        // then
+        cy.get(registerPage.selectors.header).should('have.text', 'Register')
     })
 
 })
