@@ -7,7 +7,7 @@ describe('login tests in isolation', () => {
         cy.visit('/')
     })
 
-    it.only('should successfully login', () => {
+    it('should successfully login', () => {
         const user = getRandomUser()
 
         cy.intercept('POST', '**/users/signin', {
