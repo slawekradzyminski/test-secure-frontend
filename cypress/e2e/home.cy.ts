@@ -40,7 +40,7 @@ describe('home page tests', () => {
         })
     })
 
-    it.only('should cancel user deletion', () => {
+    it('should cancel user deletion', () => {
         Cypress.on('window:confirm', (confirmationText) => {
             expect(confirmationText).to.eq('Are you sure you wish to delete this item?')
             return false
