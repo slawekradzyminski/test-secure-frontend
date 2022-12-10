@@ -1,44 +1,26 @@
 /// <reference types="cypress" />
 
 describe('Home page tests', () => {
-    beforeEach(() => {
-        // 1. Musimy wysłać request logowania do serwera
-        // 2. Musimy ustawić odpowiedź w localStorage pod kluczem 'user'
-        // 3. Musimy ustawić ciastko 'token' z wartością klucza JWT
+  beforeEach(() => {
+    cy.login('admin', 'admin')
+    cy.visit('http://localhost:8081')
+  })
 
-        // 1
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signin',
-            body: {
-              username: 'admin',
-              password: 'admin',
-            },
-          }).then((response) => {
-            // 2
-            localStorage.setItem('user', JSON.stringify(response.body))
-            // 3
-            cy.setCookie('token', response.body.token)
-          })
+  it('should display at least one user', () => {
+    cy.get('ul li').should('exist')
+  })
 
-          cy.visit('http://localhost:8081')
-    })
+  it('should logout', () => {
+    cy.get('#logout').click()
 
-    it('should display at least one user', () => {
-        cy.get('ul li').should('exist')
-    })
+    cy.get('h2').should('contain.text', 'Login')
+  })
 
-    it('should logout', () => {
-        cy.get('#logout').click()
+  it('should add more users', () => {
+    cy.get('#addmore').click()
 
-        cy.get('h2').should('contain.text', 'Login')
-    })
-
-    it('should add more users', () => {
-        cy.get('#addmore').click()
-
-        cy.url().should('contain', '/add-user')
-    })
+    cy.url().should('contain', '/add-user')
+  })
 
 
 })
