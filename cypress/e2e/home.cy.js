@@ -14,11 +14,11 @@ describe('Home page tests', () => {
               username: 'admin',
               password: 'admin',
             },
-          }).then((resp) => {
+          }).then((response) => {
             // 2
-            localStorage.setItem('user', JSON.stringify(resp.body))
+            localStorage.setItem('user', JSON.stringify(response.body))
             // 3
-            cy.setCookie('token', resp.body.token)
+            cy.setCookie('token', response.body.token)
           })
 
           cy.visit('http://localhost:8081')
