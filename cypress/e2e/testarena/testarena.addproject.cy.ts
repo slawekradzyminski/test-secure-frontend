@@ -1,0 +1,25 @@
+/// <reference types="cypress" />
+
+import { getRandomProject } from "../../utils/project"
+
+
+describe('Home page tests', () => {
+  beforeEach(() => {
+    cy.visit('http://demo.testarena.pl/zaloguj')
+    cy.get("#email").type('administrator@testarena.pl')
+    cy.get("#password").type('sumXQQ72$L')
+    cy.get('#save').click()
+    cy.visit('http://demo.testarena.pl/administration/add_project')
+  })
+
+  it('should add new project', () => {
+    const project = getRandomProject()
+    cy.get('#name').type(project.name)
+    cy.get('#prefix').type(project.prefix)
+    cy.get('#description').type(project.description)
+    cy.get('#save').click()
+
+    cy.get('#j_info_box').should('exist')
+  })
+
+})
