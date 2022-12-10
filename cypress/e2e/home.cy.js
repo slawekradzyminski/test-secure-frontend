@@ -2,10 +2,26 @@
 
 describe('Home page tests', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8081')
-        cy.get("input[name='username']").type('admin')
-        cy.get("input[name='password']").type('admin')
-        cy.get('.btn-primary').click()
+        // 1. Musimy wysłać request logowania do serwera
+        // 2. Musimy ustawić odpowiedź w localStorage pod kluczem 'user'
+        // 3. Musimy ustawić ciastko 'token' z wartością klucza JWT
+
+        // 1
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:4001/users/signin',
+            body: {
+              username: 'admin',
+              password: 'admin',
+            },
+          }).then((resp) => {
+            // 2
+            localStorage.setItem('user', JSON.stringify(resp.body))
+            // 3
+            cy.setCookie('token', resp.body.token)
+          })
+
+          cy.visit('http://localhost:8081')
     })
 
     it('should display at least one user', () => {
