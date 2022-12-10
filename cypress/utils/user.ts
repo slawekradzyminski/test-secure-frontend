@@ -1,6 +1,14 @@
 import { faker } from '@faker-js/faker';
 
-export const getRandomUser = () => {
+export type User = {
+    firstName: string,
+    lastName: string,
+    username: string,
+    password: string,
+    email: string
+}
+
+export const getRandomUser = (): User => {
     return {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
