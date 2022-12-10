@@ -11,3 +11,11 @@ Cypress.Commands.add('login', (username, password) => {
         cy.setCookie('token', response.body.token)
     })
 })
+
+Cypress.Commands.add('register', (user) => {
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:4001/users/signup',
+        body: user
+    })
+})

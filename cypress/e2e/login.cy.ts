@@ -10,11 +10,7 @@ describe('Login page tests', () => {
     it('should successfully login', () => {
         // Rejestracja uzytkownika przez API
         const user = getRandomUser()
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signup',
-            body: user
-        })
+        cy.register(user)
 
         // Logowanie na tego uzytkownika
         cy.get("input[name='username']").type(user.username)
