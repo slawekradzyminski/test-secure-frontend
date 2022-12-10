@@ -15,7 +15,7 @@ describe('Home page tests', () => {
     cy.get('td').contains('KOPERNIK').should('exist')
   })
 
-  it.only('should open add new project page', () => {
+  it('should open add new project page', () => {
     cy.get('a.button_link').eq(0).click()
     cy.url().should('contain', 'add_project')
   })
