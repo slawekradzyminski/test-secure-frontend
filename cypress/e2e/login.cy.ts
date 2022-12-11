@@ -1,37 +1,49 @@
 /// <reference types="cypress" />
 
 import { getRandomUser } from "../utils/user"
+import Alert from "./components/Alert"
+import HomePage from "./pages/HomePage"
+import { loginPage } from "./pages/LoginPage"
+import RegisterPage from "./pages/RegisterPage"
 
 describe('Login page tests', () => {
+
     beforeEach(() => {
       cy.visit('http://localhost:8081')
     })
   
     it('should successfully login', () => {
         // Rejestracja uzytkownika przez API
+        // given
         const user = getRandomUser()
         cy.register(user)
 
+        // when
         // Logowanie na tego uzytkownika
-        cy.get("input[name='username']").type(user.username)
-        cy.get("input[name='password']").type(user.password)
-        cy.get('.btn-primary').click()
+        loginPage.getUsernameInput().type(user.username)
+        loginPage.getPasswordInput().type(user.password)
+        loginPage.getLoginButton().click()
 
-        cy.get('h1').should('contain.text', user.firstName)
+        // then
+        HomePage.getHeader().should('contain.text', user.firstName)
     })
   
     it('should fail to login with wrong credentials', () => {
-        cy.get("input[name='username']").type('wrong')
-        cy.get("input[name='password']").type('wrong')
-        cy.get('.btn-primary').click()
+        // when
+        loginPage.getUsernameInput().type('wrong')
+        loginPage.getPasswordInput().type('wrong')
+        loginPage.getLoginButton().click()
 
-        cy.get('.alert-danger').should('contain.text', 'Invalid username/password supplied')
+        // then
+        Alert.getAlertFailure().should('contain.text', 'Invalid username/password supplied')
     })
 
     it('should open register page', () => {
-        cy.get('.btn-link').click()
+        // when
+        loginPage.getRegisterLink().click()
 
-        cy.get('h2').should('have.text', 'Register')
+        // then
+        RegisterPage.getHeader().should('have.text', 'Register')
         cy.url().should('contain', '/register')
     })
 
