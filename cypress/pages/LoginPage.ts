@@ -1,9 +1,12 @@
 class LoginPage {
 
-    getUsernameInput = () => cy.get("input[name='username']")
-    getPasswordInput = () => cy.get("input[name='password']")
-    getLoginButton = () => cy.get('.btn-primary')
     getRegisterLink = () => cy.get('.btn-link')
+
+    attemptLogin = (username: string, password: string) => {
+        cy.get("input[name='username']").type(username)
+        cy.get("input[name='password']").type(password)
+        cy.get('.btn-primary').click()
+    }
 
 }
 

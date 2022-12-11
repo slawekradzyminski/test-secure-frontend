@@ -20,9 +20,7 @@ describe('Login page tests', () => {
 
         // when
         // Logowanie na tego uzytkownika
-        loginPage.getUsernameInput().type(user.username)
-        loginPage.getPasswordInput().type(user.password)
-        loginPage.getLoginButton().click()
+        loginPage.attemptLogin(user.username, user.password)
 
         // then
         HomePage.getHeader().should('contain.text', user.firstName)
@@ -30,9 +28,7 @@ describe('Login page tests', () => {
   
     it('should fail to login with wrong credentials', () => {
         // when
-        loginPage.getUsernameInput().type('wrong')
-        loginPage.getPasswordInput().type('wrong')
-        loginPage.getLoginButton().click()
+        loginPage.attemptLogin('wrong', 'wrong')
 
         // then
         Alert.getAlertFailure().should('contain.text', 'Invalid username/password supplied')
