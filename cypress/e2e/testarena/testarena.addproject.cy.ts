@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { getRandomProject, Project } from "../../utils/project"
+import { getRandomProject } from "../../utils/project"
 
 
 describe('Home page tests', () => {

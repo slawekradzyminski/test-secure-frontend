@@ -1,22 +1,30 @@
 /// <reference types="cypress" />
 
+import { testArenaLoginPage } from "../../pages/testarena/testArenaLoginPage"
+import { testArenaProjectPage } from "../../pages/testarena/testArenaProjectPage"
+
+const testArenaUrl = 'http://demo.testarena.pl'
+
 describe('Home page tests', () => {
   beforeEach(() => {
-    cy.visit('http://demo.testarena.pl/zaloguj')
-    cy.get("#email").type('administrator@testarena.pl')
-    cy.get("#password").type('sumXQQ72$L')
-    cy.get('#save').click()
-    cy.visit('http://demo.testarena.pl/administration/projects')
+    cy.visit(`${testArenaUrl}/zaloguj`)
+    testArenaLoginPage.attemptLogin('administrator@testarena.pl', 'sumXQQ72$L')
+    cy.visit(`${testArenaUrl}/administration/projects`)
   })
 
   it('should find crucial project', () => {
-    cy.get('#search').type('Kopernik')
-    cy.get('#j_searchButton').click()
-    cy.get('td').contains('KOPERNIK').should('exist')
+    // when
+    testArenaProjectPage.searchProject('Kopernik')
+
+    // then
+    cy.get(testArenaProjectPage.selectors.cell).contains('KOPERNIK').should('exist')
   })
 
   it('should open add new project page', () => {
-    cy.get('a.button_link').eq(0).click()
+    // when
+    testArenaProjectPage.clickAddNewProject()
+
+    // then
     cy.url().should('contain', 'add_project')
   })
 
