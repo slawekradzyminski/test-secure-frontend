@@ -1,10 +1,10 @@
 /// <reference types="cypress" />
 
 import { getRandomUser } from "../utils/user"
-import Alert from "./components/Alert"
-import HomePage from "./pages/HomePage"
-import { loginPage } from "./pages/LoginPage"
-import RegisterPage from "./pages/RegisterPage"
+import Alert from "../components/Alert"
+import HomePage from "../pages/HomePage"
+import { loginPage } from "../pages/LoginPage"
+import RegisterPage from "../pages/RegisterPage"
 
 describe('Login page tests', () => {
 
