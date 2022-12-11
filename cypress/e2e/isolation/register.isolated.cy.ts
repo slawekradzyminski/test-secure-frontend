@@ -7,7 +7,7 @@ describe('Register page tests', () => {
         cy.visit('http://localhost:8081/register')
     })
 
-    it.only('should successfully register', () => {
+    it('should successfully register', () => {
         const user = getRandomUser()
 
         cy.intercept('POST', '**/users/signup', {
