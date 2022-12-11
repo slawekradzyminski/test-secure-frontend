@@ -29,6 +29,7 @@ describe('Login page tests is isolation', () => {
         cy.get('.btn-primary').click()
 
         cy.get('h1').should('contain.text', user.firstName)
+        // Sprawdzenie czy wysłaliśmy poprawne body
         cy.wait('@loginRequest').its('request.body').should('deep.equal', {
             username: user.username,
             password: user.password
