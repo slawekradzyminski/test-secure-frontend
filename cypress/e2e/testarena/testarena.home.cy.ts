@@ -13,7 +13,6 @@ describe('Home page tests', () => {
     cy.get('.content_title').should('contain.text', 'Projekty')
   })
 
-
   it('should open profile page', () => {
     cy.get('a.top_avatar_header').click()
     cy.get('#text').should('contain.text', 'Gall Anonim')

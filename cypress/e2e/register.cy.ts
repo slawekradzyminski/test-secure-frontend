@@ -18,6 +18,21 @@ describe('Register page tests', () => {
     cy.get('.btn-primary').click()
 
     cy.get('.alert-success').should('contain.text', 'Registration successful')
+
+    // Chcę odpytać endpoint /users/{user.username}
+    // Muszę przekazać token JWT jako nagłówek
+    cy.login(user.username, user.password)
+    cy.getCookie('token').then((cookie) => {
+      cy.request({
+        method: 'GET',
+        url: `http://localhost:4001/users/${user.username}`,
+        headers: {
+          Authorization: `Bearer ${cookie?.value}`
+        }
+      }).then((resp) => {
+        expect(resp.body.username).to.eq(user.username)
+      })
+    })
   })
 
   it('should fail to register if username already exists', () => {
