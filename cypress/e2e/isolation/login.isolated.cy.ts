@@ -22,6 +22,8 @@ describe('Login page tests is isolation', () => {
             }
         })
 
+        cy.intercept('GET', '**/users', { fixture: 'users.json' })
+
         cy.get("input[name='username']").type(user.username)
         cy.get("input[name='password']").type(user.password)
         cy.get('.btn-primary').click()
