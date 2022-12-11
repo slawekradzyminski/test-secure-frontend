@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { Roles } from '../../utils/roles';
 import { getRandomUser } from '../../utils/user';
 
 describe('Register page tests', () => {
@@ -27,14 +28,8 @@ describe('Register page tests', () => {
         cy.get('.alert-success').should('contain.text', 'Registration successful')
  
         cy.wait('@signupRequest').its('request.body').should('deep.equal', {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            username: user.username,
-            password: user.password,
-            roles: [
-                "ROLE_CLIENT"
-            ],
-            email: user.email
+            ...user,
+            roles: [Roles.ROLE_CLIENT]
         })
  
     })
