@@ -29,12 +29,16 @@ describe('Login page tests', () => {
         cy.url().should('contain', '/register')
     })
 
-    it.only("should check FE validation", () => {
+    it('should check FE validation', () => {
         cy.get('.btn-primary').click()
         cy.get('.invalid-feedback')
             .should('have.length', 2)
-            .and('contain.text', 'Required field length')
-        cy.get('input.form-control').should('have.class', 'is-invalid')
+            .each(($errorMessage) => {
+                cy.wrap($errorMessage).should('contain.text', 'Required field length')
+            })
+        cy.get('input.form-control').each(($input) => {
+            cy.wrap($input).should('have.class', 'is-invalid')
+        })
     });
 
 })
