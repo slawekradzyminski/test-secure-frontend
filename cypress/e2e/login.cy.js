@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import { getRandomEmail, getRandomString } from "../util/random"
 import { getRandomUser } from "../util/user"
 
 describe('Login page tests', () => {

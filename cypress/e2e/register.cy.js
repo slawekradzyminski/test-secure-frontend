@@ -28,4 +28,16 @@ describe('Register page', () => {
         cy.get('.alert').should('have.text', 'Registration successful')
     })
 
+    it('should check FE validation', () => {
+        cy.get('.btn-primary').click()
+        cy.get('.invalid-feedback')
+            .should('have.length', 5)
+            .each(($errorMessage) => {
+                cy.wrap($errorMessage).should('contain.text', 'Required field length')
+            })
+        cy.get('input.form-control').each(($input) => {
+            cy.wrap($input).should('have.class', 'is-invalid')
+        })
+    });
+
 })
