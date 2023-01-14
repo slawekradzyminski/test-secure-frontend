@@ -1,13 +1,23 @@
 /// <reference types="cypress" />
 
+import { getRandomUser } from "../util/user"
+
 describe('Home page', () => {
+    let user
+
     beforeEach(() => {
-        cy.login('admin', 'admin')
+        user = getRandomUser()
+        cy.register(user)
+        cy.login(user.username, user.password)
         cy.visit('http://localhost:8081')
     })
 
     it('should display at least one user', () => {
         cy.get('li').should('have.length.gte', 1)
+    })
+
+    it.only('should display at least one user', () => {
+        cy.get('li').contains('Slawomir').find('.delete')
     })
 
     it('should log out', () => {

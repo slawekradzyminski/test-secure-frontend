@@ -9,12 +9,7 @@ describe('Login page tests', () => {
 
     it('should successfully login', () => {
         const user = getRandomUser()
-
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signup',
-            body: user
-        })
+        cy.register(user)
 
         cy.get('[name=username]').type(user.username)
         cy.get('[name=password]').type(user.password)

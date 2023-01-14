@@ -1,4 +1,4 @@
-Cypress.Commands.add('login', (username, password) => { 
+Cypress.Commands.add('login', (username, password) => {
     cy.request({
         method: 'POST',
         url: 'http://localhost:4001/users/signin',
@@ -10,8 +10,12 @@ Cypress.Commands.add('login', (username, password) => {
         localStorage.setItem('user', JSON.stringify(resp.body))
         cy.setCookie('token', resp.body.token)
     })
- })
+})
 
- Cypress.Commands.add('register', (user) => { 
-    
- })
+Cypress.Commands.add('register', (user) => {
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:4001/users/signup',
+        body: user
+    })
+})
