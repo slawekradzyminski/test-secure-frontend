@@ -1,62 +1,54 @@
 /// <reference types="cypress" />
- 
-import { getRandomEmail, getRandomString } from "../util/random";
+
+import { editScreen } from "../pages/editScreen";
 import { getRandomUser } from "../util/user";
- 
+
 describe('Edit page', () => {
-    let user;
+    let initialUser
     let token
- 
+
     beforeEach(() => {
-        user = getRandomUser();
-        cy.register(user);
-        cy.login(user.username, user.password);
-        cy.visit('http://localhost:8081');
+        initialUser = getRandomUser()
+        cy.register(initialUser)
+        cy.login(initialUser.username, initialUser.password)
+        cy.visit('http://localhost:8081')
         cy.get('li')
-            .contains(`${user.firstName} ${user.lastName}`)
+            .contains(`${initialUser.firstName} ${initialUser.lastName}`)
             .find('.edit')
-            .click();
-        cy.url().should('contain', '/edit-user')
+            .click()
         cy.getCookie('token').then((cookie) => token = cookie.value)
     });
 
     afterEach(() => {
-        cy.deleteUser(user.username, token)
+        cy.deleteUser(initialUser.username, token)
     })
- 
+
     it('should check autofill inputs', () => {
-        cy.get('[name="firstName"]').should('have.value', user.firstName)
-        cy.get('[name="lastName"]').should('have.value', user.lastName)
-        cy.get('[name="email"]').should('have.value', user.email)
-        cy.get('[name="username"]').should('have.value', user.username)
-        cy.get('[name="roles"]').should('have.value', user.roles.join(','))
+        // then
+        editScreen.verifyInputAreFilledWithData(initialUser)
     });
 
     it('should successfully edit', () => {
-        const newEmail = getRandomEmail()
-        const newFirstName = getRandomString()
+        // given
+        const newUser = getRandomUser()
 
-        cy.get('[name="firstName"]').clear().type(newFirstName)
-        cy.get('[name="lastName"]').clear().type(getRandomString())
-        cy.get('[name="email"]').clear().type(newEmail)
-        cy.get('.btn-primary').click()
+        // when
+        editScreen.editAvailableFieldsAndSubmit(newUser)
 
-        // frontendowe sprawdzenia
+        // then
         cy.get('.alert').should('have.text', 'Updating user successful')
-        cy.get('li').contains(newFirstName).should('be.visible')
-        cy.get('li').contains(user.firstName).should('not.exist')
+        cy.get('li').contains(newUser.firstName).should('be.visible')
+        cy.get('li').contains(initialUser.firstName).should('not.exist')
 
-        // backendowe sprawdzenie
         cy.request({
-            url: `http://localhost:4001/users/${user.username}`,
+            url: `http://localhost:4001/users/${initialUser.username}`,
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then((resp) => {
-            expect(resp.body.email).to.eq(newEmail)
+            expect(resp.body.email).to.eq(newUser.email)
         })
 
-      })
-    
-    
+    })
+
 });
