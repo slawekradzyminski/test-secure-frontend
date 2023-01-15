@@ -26,6 +26,46 @@ describe('Home page', () => {
         cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
     })
 
+    it('should delete user via UI', () => {
+        // given
+        const userToDelete = getRandomUser()
+        cy.register(userToDelete)
+        cy.reload()
+
+        // when
+        cy.get('li')
+            .contains(`${userToDelete.firstName} ${userToDelete.lastName}`)
+            .find('.delete')
+            .click()
+
+        // then
+        cy.get('li')
+            .contains(`${userToDelete.firstName} ${userToDelete.lastName}`)
+            .should('have.length', 0)
+    })
+
+    it('should cancel user deletion', () => {
+        // given
+        Cypress.on('window:confirm', (confirmationText) => {
+            expect(confirmationText).to.eq('Are you sure you wish to delete this item?')
+            return false
+        })
+        const userToDelete = getRandomUser()
+        cy.register(userToDelete)
+        cy.reload()
+
+        // when
+        cy.get('li')
+            .contains(`${userToDelete.firstName} ${userToDelete.lastName}`)
+            .find('.delete')
+            .click()
+
+        // then
+        cy.get('li')
+            .contains(`${userToDelete.firstName} ${userToDelete.lastName}`)
+            .should('have.length', 1)
+    })
+
     it('should open add more users page', () => {
         cy.get('#addmore').click();
         cy.url().should('contain', '/add-user');
