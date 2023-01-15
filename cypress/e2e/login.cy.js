@@ -15,7 +15,7 @@ describe('Login page tests', () => {
         cy.register(user)
 
         // when
-        LoginScreen.attempLogin(user.username, user.password)
+        LoginScreen.attemptLogin(user.username, user.password)
 
         // then
         cy.get('h1', { timeout: 6000 }).should('contain.text', user.firstName)
@@ -23,7 +23,7 @@ describe('Login page tests', () => {
 
     it('should fail to login', () => {
         // when
-        LoginScreen.attempLogin('wrong', 'wrong')
+        LoginScreen.attemptLogin('wrong', 'wrong')
 
         // then
         cy.get('.alert').should('have.text', 'Invalid username/password supplied')

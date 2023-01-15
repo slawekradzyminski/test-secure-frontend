@@ -5,7 +5,7 @@ export default class LoginScreen {
     static getLoginButton = () => cy.get('.btn-primary')
     static getRegisterButton = () => cy.get('.btn-link')
 
-    static attempLogin = (username, password) => {
+    static attemptLogin = (username, password) => {
         LoginScreen.getUsernameInput().type(username)
         LoginScreen.getPasswordInput().type(password)
         LoginScreen.getLoginButton().click()
