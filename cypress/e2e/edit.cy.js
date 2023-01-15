@@ -19,6 +19,10 @@ describe('Edit page', () => {
         cy.url().should('contain', '/edit-user')
         cy.getCookie('token').then((cookie) => token = cookie.value)
     });
+
+    afterEach(() => {
+        cy.deleteUser(user.username, token)
+    })
  
     it('should check autofill inputs', () => {
         cy.get('[name="firstName"]').should('have.value', user.firstName)
@@ -28,7 +32,7 @@ describe('Edit page', () => {
         cy.get('[name="roles"]').should('have.value', user.roles.join(','))
     });
 
-    it.only('should successfully edit', () => {
+    it('should successfully edit', () => {
         const newEmail = getRandomEmail()
         const newFirstName = getRandomString()
 

@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import LoginScreen from "../pages/LoginScreen"
+import RegisterScreen from "../pages/RegisterScreen"
 import { getRandomUser } from "../util/user"
 
 describe('Login page tests', () => {
@@ -8,32 +10,39 @@ describe('Login page tests', () => {
     })
 
     it('should successfully login', () => {
+        // given
         const user = getRandomUser()
         cy.register(user)
 
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        // when
+        LoginScreen.attempLogin(user.username, user.password)
 
+        // then
         cy.get('h1', { timeout: 6000 }).should('contain.text', user.firstName)
     })
 
     it('should fail to login', () => {
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
+        // when
+        LoginScreen.attempLogin('wrong', 'wrong')
 
+        // then
         cy.get('.alert').should('have.text', 'Invalid username/password supplied')
     })
 
     it('should open register page', () => {
-        cy.get('.btn-link').click()
-        cy.get('h2').should('contain.text', 'Register')
+        // when
+        LoginScreen.getRegisterButton().click()
+
+        // then
+        RegisterScreen.getHeader().should('contain.text', 'Register')
         cy.url().should('contain', '/register')
     })
 
     it('should check FE validation', () => {
-        cy.get('.btn-primary').click()
+        // when
+        LoginScreen.getLoginButton().click()
+
+        // then
         cy.get('.invalid-feedback')
             .should('have.length', 2)
             .each(($errorMessage) => {
