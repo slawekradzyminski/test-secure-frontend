@@ -8,7 +8,7 @@ on:
 
 jobs:
   build_project:
-    name: Transpile, bundle and run
+    name: install project
     runs-on: ubuntu-latest
 
     steps:
