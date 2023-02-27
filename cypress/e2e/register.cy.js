@@ -16,7 +16,6 @@ describe('Register page tests', () => {
         cy.get('.btn-primary').click()
 
         cy.get('.alert-success').should('have.text', 'Registration successful')
-
     })
 
     it('should fail to register', () => {
@@ -28,7 +27,20 @@ describe('Register page tests', () => {
         cy.get('.btn-primary').click()
 
         cy.get('.alert-danger').should('have.text', 'Username is already in use')
+    })
 
+    it.only('should trigger frontend validation', () => {
+        cy.get('.btn-primary').click()
+        cy.get('form input')
+            .should('have.length', 5)
+            .each(($input) => {
+                cy.wrap($input).should('have.class', 'is-invalid')
+            })
+        cy.get('.form-group div')
+            .should('have.length', 5)
+            .each(($error) => {
+                cy.wrap($error).should('have.text', 'Required field length is 4 or more')
+            })
     })
 
   })
