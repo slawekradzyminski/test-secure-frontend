@@ -2,10 +2,18 @@
 
 describe('Home page tests', () => {
     beforeEach(() => {
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:4001/users/signin',
+            body: {
+                username: 'admin',
+                password: 'admin'
+            }
+        }).then((resp) => {
+            localStorage.setItem('user', JSON.stringify(resp.body))
+            cy.setCookie('token', resp.body.token)
+        })
         cy.visit('http://localhost:8081')
-        cy.get('[name=username]').type('admin')
-        cy.get('[name=password]').type('admin')
-        cy.get('.btn-primary').click()
     })
 
     it('should display at least one user', () => {
