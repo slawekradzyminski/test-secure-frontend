@@ -1,6 +1,7 @@
 ## Local run
 
 ```commandline
+set NODE_TLS_REJECT_UNAUTHORIZED=0
 npm install
 npm start
 ```
