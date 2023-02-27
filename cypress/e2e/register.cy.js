@@ -7,7 +7,7 @@ describe('Register page tests', () => {
       cy.visit('http://localhost:8081/register')
     })
 
-    it.only('should register successfully', () => {
+    it('should register successfully', () => {
         cy.get('[name=username]').type(faker.internet.userName())
         cy.get('[name=password]').type(faker.internet.password())
         cy.get('[name=firstName]').type(faker.name.firstName())
