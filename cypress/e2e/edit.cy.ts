@@ -20,7 +20,7 @@ describe('Edit page tests', () => {
         cy.get('[name=lastName]').should('have.value', user.lastName)
         cy.get('[name=username]').should('have.value', user.username)
         cy.get('[name=email]').should('have.value', user.email)
-        cy.get('[name=roles]').should('have.value', user.roles.join(', '))
+        cy.get('[name=roles]').should('have.value', user.roles.join(','))
 
     })
 
