@@ -1,6 +1,6 @@
-import { faker } from '@faker-js/faker';
-
 /// <reference types="cypress" />
+
+import { getRandomUser } from "../domain/user"
 
 describe('Register page tests', () => {
     beforeEach(() => {
@@ -8,11 +8,12 @@ describe('Register page tests', () => {
     })
 
     it('should register successfully', () => {
-        cy.get('[name=username]').type(faker.internet.userName())
-        cy.get('[name=password]').type(faker.internet.password())
-        cy.get('[name=firstName]').type(faker.name.firstName())
-        cy.get('[name=lastName]').type(faker.name.lastName())
-        cy.get('[name=email]').type(faker.internet.email())
+        const user = getRandomUser()
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
+        cy.get('[name=firstName]').type(user.firstName)
+        cy.get('[name=lastName]').type(user.lastName)
+        cy.get('[name=email]').type(user.email)
         cy.get('.btn-primary').click()
 
         cy.get('.alert-success').should('have.text', 'Registration successful')
@@ -29,7 +30,7 @@ describe('Register page tests', () => {
         cy.get('.alert-danger').should('have.text', 'Username is already in use')
     })
 
-    it.only('should trigger frontend validation', () => {
+    it('should trigger frontend validation', () => {
         cy.get('.btn-primary').click()
         cy.get('form input')
             .should('have.length', 5)
