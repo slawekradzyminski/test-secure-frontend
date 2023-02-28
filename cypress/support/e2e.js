@@ -1,3 +1,3 @@
-import './apiCommands'
 import './commands'
+import './apiCommands'
 
