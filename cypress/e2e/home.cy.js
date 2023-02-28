@@ -2,17 +2,7 @@
 
 describe('Home page tests', () => {
     beforeEach(() => {
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signin',
-            body: {
-                username: 'admin',
-                password: 'admin'
-            }
-        }).then((resp) => {
-            localStorage.setItem('user', JSON.stringify(resp.body))
-            cy.setCookie('token', resp.body.token)
-        })
+        cy.login('admin', 'admin')
         cy.visit('http://localhost:8081')
     })
 
