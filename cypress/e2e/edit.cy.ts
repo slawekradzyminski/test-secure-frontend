@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
 import { getRandomUser, User } from "../domain/user"
+import { editPage } from "../pages/editPage"
+import { homePage } from "../pages/homePage"
 
 
 describe('Edit page tests', () => {
@@ -23,5 +25,13 @@ describe('Edit page tests', () => {
         cy.get('[name=roles]').should('have.value', user.roles.join(','))
 
     })
+
+    it('should successfully edit user', () => {
+        const newUserData = getRandomUser()
+        editPage.editUser(newUserData)
+        homePage.verifyUserExists(newUserData)
+        homePage.verifyUserNotExists(user)
+    })
+
 
 })
