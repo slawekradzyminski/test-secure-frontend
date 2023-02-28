@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { getRandomUser } from "../domain/user"
+import LoginPage from "../pages/LoginPage"
 
 describe('Login page tests', () => {
     beforeEach(() => {
@@ -13,9 +14,7 @@ describe('Login page tests', () => {
         cy.register(user)
     
         // when
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        LoginPage.attemptLogin(user.username, user.password)
 
         // then
         cy.get('h1', { timeout: 5000 }).should('contain.text', user.firstName)
@@ -23,9 +22,7 @@ describe('Login page tests', () => {
 
     it('should fail to login', () => {
         // when
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
+        LoginPage.attemptLogin('wrong', 'wrong')
 
         // then
         cy.get('.alert-danger').should('have.text', 'Invalid username/password supplied')
@@ -33,7 +30,7 @@ describe('Login page tests', () => {
 
     it('should trigger frontend validation', () => {
         // when
-        cy.get('.btn-primary').click()
+        LoginPage.clickLogin()
 
         // then
         cy.get('form input')
