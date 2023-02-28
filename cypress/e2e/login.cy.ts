@@ -1,28 +1,45 @@
 /// <reference types="cypress" />
 
+import { getRandomUser } from "../domain/user"
+
 describe('Login page tests', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081')
     })
 
     it('should successfully login', () => {
-        cy.get('[name=username]').type(Cypress.env('username'))
-        cy.get('[name=password]').type(Cypress.env('password'))
+        // given
+        const user = getRandomUser()
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:4001/users/signup',
+            body: user
+        })
+    
+        // when
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
         cy.get('.btn-primary').click()
 
-        cy.get('h1', { timeout: 5000 }).should('contain.text', 'Slawomir')
+        // then
+        cy.get('h1', { timeout: 5000 }).should('contain.text', user.firstName)
     })
 
     it('should fail to login', () => {
+        // when
         cy.get('[name=username]').type('wrong')
         cy.get('[name=password]').type('wrong')
         cy.get('.btn-primary').click()
 
+        // then
         cy.get('.alert-danger').should('have.text', 'Invalid username/password supplied')
     })
 
     it('should trigger frontend validation', () => {
+        // when
         cy.get('.btn-primary').click()
+
+        // then
         cy.get('form input')
             .should('have.length', 2)
             .each(($input) => {
