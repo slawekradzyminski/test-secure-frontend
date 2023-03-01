@@ -19,7 +19,7 @@ describe('Register page tests', () => {
         registerPage.attemptRegister(user)
 
         // then
-        cy.get('.alert-success').should('have.text', 'Registration successful')
+        cy.get('.alert-success').should('have.text', message)
     })
 
 })
