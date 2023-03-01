@@ -22,5 +22,15 @@ describe('Home page tests', () => {
             })
     })
 
+    it('should delete all users', () => {
+        cy.intercept('DELETE', `**/users/**`, { statusCode: 204 })
+
+        cy.get('li .delete').each(($el) => {
+            cy.wrap($el).click()
+        })
+
+        cy.get('li').should('not.exist')
+    })
+
 
 })
