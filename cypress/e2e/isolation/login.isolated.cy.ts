@@ -1,7 +1,8 @@
 /// <reference types="cypress" />
 
-import { LoginResponse } from "../../domain/login"
-import { getRandomUser, User } from "../../domain/user"
+import { getRandomUser } from "../../domain/user"
+import { getUsersMocks } from "../../mocks/getUsersMocks"
+import { postUserSignin } from "../../mocks/postUserSignin"
 import LoginPage from "../../pages/LoginPage"
 
 describe('Login page tests', () => {
@@ -12,14 +13,8 @@ describe('Login page tests', () => {
     it('should successfully login', () => {
         // given
         const user = getRandomUser()
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 200,
-            body: buildLoginResponse(user)
-        })
-        cy.intercept('GET', '**/users', {
-            fixture: 'users.json',
-            statusCode: 200
-        })
+        postUserSignin.mockSuccess(user)
+        getUsersMocks.mockUsers()
 
         // when
         LoginPage.attemptLogin(user.username, user.password)
@@ -38,10 +33,3 @@ describe('Login page tests', () => {
 
 })
 
-const buildLoginResponse = (user: User): LoginResponse => {
-    const { password, ...objectWithoutPassword } = user
-    return {
-        ...objectWithoutPassword,
-        token: 'fakeToken'
-    }
-}
