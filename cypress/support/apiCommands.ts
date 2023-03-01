@@ -10,7 +10,7 @@ Cypress.Commands.add('login', (username: string, password: string) => {
         }
     }).then((resp) => {
         localStorage.setItem('user', JSON.stringify(resp.body))
-        cy.setCookie('token', resp.body.token)
+        return resp.body.token
     })
 })
 
