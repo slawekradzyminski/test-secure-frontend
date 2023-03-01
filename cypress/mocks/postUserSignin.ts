@@ -19,7 +19,7 @@ export const postUserSignin = {
     }
 }
 
-const buildLoginResponse = (user: User): LoginResponse => {
+export const buildLoginResponse = (user: User): LoginResponse => {
     // Usunięcie klucza password z obiektu
     const { password, ...userWithoutPassword } = user
 
