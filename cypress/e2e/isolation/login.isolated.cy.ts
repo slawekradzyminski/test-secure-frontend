@@ -4,6 +4,7 @@ import { getRandomUser } from "../../domain/user"
 import { getUsersMocks } from "../../mocks/getUsersMocks"
 import { postUserSignin } from "../../mocks/postUserSignin"
 import LoginPage from "../../pages/LoginPage"
+import failedLoginBody from "../../fixtures/failedLogin.json"
 
 describe('Login page tests', () => {
     beforeEach(() => {
@@ -25,14 +26,13 @@ describe('Login page tests', () => {
 
     it('should fail to login', () => {
         // given
-        const errorMessage = 'Invalid username/password supplied'
-        postUserSignin.mockFailure(errorMessage)
+        postUserSignin.mockFailure()
 
         // when
         LoginPage.attemptLogin('wrong', 'wrong')
 
         // then
-        cy.get('.alert-danger').should('have.text', errorMessage)
+        cy.get('.alert-danger').should('have.text', failedLoginBody.message)
     })
 
 })
