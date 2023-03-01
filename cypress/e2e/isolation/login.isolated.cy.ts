@@ -22,6 +22,10 @@ describe('Login page tests', () => {
 
         // then
         cy.get('h1').should('contain.text', user.firstName)
+        cy.wait('@loginRequest').its('request.body').should('deep.equal', {
+            password: user.password,
+            username: user.username
+        })
     })
 
     it('should fail to login', () => {

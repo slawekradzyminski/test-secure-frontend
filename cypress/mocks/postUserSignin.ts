@@ -8,7 +8,7 @@ export const postUserSignin = {
         cy.intercept('POST', postUserSigninUrl, {
             statusCode: 200,
             body: buildLoginResponse(user)
-        })
+        }).as('loginRequest')
     },
 
     mockFailure: () => {
