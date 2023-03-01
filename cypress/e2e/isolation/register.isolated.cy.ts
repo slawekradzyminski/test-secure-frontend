@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { Roles } from "../../domain/roles"
 import { getRandomUser } from "../../domain/user"
 import { postUserSignup } from "../../mocks/postUserSignup"
 import { registerPage } from "../../pages/registerPage"
@@ -20,6 +21,10 @@ describe('Register page tests', () => {
 
         // then
         cy.get('.alert-success').should('have.text', message)
+        cy.wait('@registerRequest').its('request.body').should('deep.equal', {
+            ...user,
+            roles: [Roles.ROLE_CLIENT]
+        })
     })
 
 })

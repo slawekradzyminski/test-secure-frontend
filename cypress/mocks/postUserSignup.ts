@@ -1,5 +1,3 @@
-import { User } from "../domain/user";
-
 const postUserSignupUrl = '**/users/signup'
 
 export const postUserSignup = {
@@ -9,7 +7,7 @@ export const postUserSignup = {
             body: {
                 token: 'fakeToken'
             }
-        })
+        }).as('registerRequest')
     },
 
 }
