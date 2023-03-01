@@ -23,13 +23,17 @@ describe('Login page tests', () => {
         cy.get('h1').should('contain.text', user.firstName)
     })
 
-    // it('should fail to login', () => {
-    //     // when
-    //     LoginPage.attemptLogin('wrong', 'wrong')
+    it('should fail to login', () => {
+        // given
+        const errorMessage = 'Invalid username/password supplied'
+        postUserSignin.mockFailure(errorMessage)
 
-    //     // then
-    //     cy.get('.alert-danger').should('have.text', 'Invalid username/password supplied')
-    // })
+        // when
+        LoginPage.attemptLogin('wrong', 'wrong')
+
+        // then
+        cy.get('.alert-danger').should('have.text', errorMessage)
+    })
 
 })
 
