@@ -1,16 +1,28 @@
 /// <reference types="cypress" />
 
+import { getRandomUser } from "../utils/user"
+
 describe('Login page tests', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081')
     })
 
     it('should successfully login', () => {
-        cy.get('[name=username]').type(Cypress.env('username'))
-        cy.get('[name=password]').type(Cypress.env('password'))
+        // given
+        const user = getRandomUser()
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:4001/users/signup',
+            body: user
+        })
+
+        // when
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
         cy.get('.btn-primary').click()
 
-        cy.get('h1').should('contain.text', 'Slawomir')
+        // then
+        cy.get('h1').should('contain.text', user.firstName)
     })
 
     it('should show error message on failed login', () => {
