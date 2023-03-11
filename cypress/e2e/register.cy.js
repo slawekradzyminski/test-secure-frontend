@@ -28,7 +28,7 @@ describe('Register page tests', () => {
         cy.url().should('contain', '/login')
     })
 
-    it.only('should fail to register', () => {
+    it('should fail to register', () => {
         cy.get('[name=firstName]').type(faker.name.firstName())
         cy.get('[name=lastName]').type(faker.name.lastName())
         cy.get('[name=username]').type('admin')
