@@ -2,20 +2,7 @@
 
 describe('Home page tests', () => {
     beforeEach(() => {
-        // 1. Wysyłamy request logowania na /users/signin
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signin',
-            body: {
-                username: Cypress.env('username'),
-                password: Cypress.env('password')
-            }
-        }).then((resp) => {
-            // 2. Odpowiedź ustawiamy w localStorage
-            localStorage.setItem('user', JSON.stringify(resp.body))
-            // 3. Token z odpowiedzi ustawiamy jako ciastko token
-            cy.setCookie('token', resp.body.token)
-        })
+        cy.login(Cypress.env('username'), Cypress.env('password'))
         cy.visit('http://localhost:8081')
     })
 
