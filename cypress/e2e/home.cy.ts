@@ -2,10 +2,21 @@
 
 describe('Home page tests', () => {
     beforeEach(() => {
+        // 1. Wysyłamy request logowania na /users/signin
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:4001/users/signin',
+            body: {
+                username: 'admin',
+                password: 'admin'
+            }
+        }).then((resp) => {
+            // 2. Odpowiedź ustawiamy w localStorage
+            localStorage.setItem('user', JSON.stringify(resp.body))
+            // 3. Token z odpowiedzi ustawiamy jako ciastko token
+            cy.setCookie('token', resp.body.token)
+        })
         cy.visit('http://localhost:8081')
-        cy.get('[name=username]').type('admin')
-        cy.get('[name=password]').type('admin')
-        cy.get('.btn-primary').click()
     })
 
     it('should display at least one user', () => {
