@@ -7,8 +7,8 @@ describe('Testarena login tests', () => {
 
     it('should successfully login', () => {
         // given
-        const username = 'administrator@testarena.pl'
-        const password = 'sumXQQ72$L'
+        const username = Cypress.env('testarenalogin')
+        const password = Cypress.env('testarenapassword')
 
         // when
         cy.get('#email').type(username)
