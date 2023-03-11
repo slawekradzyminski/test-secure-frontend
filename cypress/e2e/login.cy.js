@@ -21,14 +21,6 @@ describe('Login page tests', () => {
         cy.get('.alert').should('contain.text', 'Invalid username/password')
     })
 
-    it('should show error message on failed login', () => {
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
-
-        cy.get('.alert').should('contain.text', 'Invalid username/password')
-    })
-
     it('should trigger frontend validatio', () => {
         cy.get('.btn-primary').click()
 
@@ -43,5 +35,14 @@ describe('Login page tests', () => {
             .each(($el) => {
                 cy.wrap($el).should('have.class', 'is-invalid')
             })
+    })
+
+    it('should click register and open register page', () => {
+        cy.get('.btn-link')
+            .should('have.text', 'Register')
+            .click()
+
+        cy.get('h2').should('have.text', 'Register')
+        cy.url().should('contain', '/register')
     })
 })
