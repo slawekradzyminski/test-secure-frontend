@@ -1,3 +1,7 @@
+## Getting started
+
+Fill your username and password in `cypress.env.json`
+
 ## Local run
 
 ```commandline
