@@ -7,8 +7,8 @@ describe('Home page tests', () => {
             method: 'POST',
             url: 'http://localhost:4001/users/signin',
             body: {
-                username: 'admin',
-                password: 'admin'
+                username: Cypress.env('username'),
+                password: Cypress.env('password')
             }
         }).then((resp) => {
             // 2. Odpowiedź ustawiamy w localStorage

@@ -6,8 +6,8 @@ describe('Login page tests', () => {
     })
 
     it('should successfully login', () => {
-        cy.get('[name=username]').type('admin')
-        cy.get('[name=password]').type('admin')
+        cy.get('[name=username]').type(Cypress.env('username'))
+        cy.get('[name=password]').type(Cypress.env('password'))
         cy.get('.btn-primary').click()
 
         cy.get('h1').should('contain.text', 'Slawomir')
@@ -21,7 +21,7 @@ describe('Login page tests', () => {
         cy.get('.alert').should('contain.text', 'Invalid username/password')
     })
 
-    it('should trigger frontend validatio', () => {
+    it('should trigger frontend validation', () => {
         cy.get('.btn-primary').click()
 
         cy.get('.invalid-feedback')

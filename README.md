@@ -1,6 +1,13 @@
 ## Getting started
 
-Fill your username and password in `cypress.env.json`
+Create `cypress.env.json` in main folder with the following body
+
+```json
+{
+    "username": "FILL with your credential",
+    "password": "FILL with your credential"
+}
+```
 
 ## Local run
 
