@@ -1,8 +1,12 @@
 /// <reference types="cypress" />
 
+import { getRandomUser } from "../utils/user"
+
 describe('Home page tests', () => {
     beforeEach(() => {
-        cy.login(Cypress.env('username'), Cypress.env('password'))
+        const user = getRandomUser()
+        cy.register(user)
+        cy.login(user.username, user.password)
         cy.visit('http://localhost:8081')
     })
 
