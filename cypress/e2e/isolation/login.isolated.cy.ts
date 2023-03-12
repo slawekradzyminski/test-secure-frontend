@@ -22,6 +22,7 @@ describe('Login page tests', () => {
                 email: user.email
             }
         })
+        cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
         // when
         LoginPage.attemptLogin(user.username, user.password)
