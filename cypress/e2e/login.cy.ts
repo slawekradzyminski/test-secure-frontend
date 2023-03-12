@@ -5,7 +5,6 @@ import { getRandomUser } from "../utils/user"
 describe('Login page tests', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081')
-        cy.viewport(380, 720)
     })
 
     it('should successfully login', () => {

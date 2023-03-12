@@ -10,7 +10,7 @@ describe('Register page tests', () => {
 
     it('should click cancel and open login page', () => {
         // when
-        RegisterPage.cancelLink().click()
+        RegisterPage.clickCancel()
 
         // then
         cy.get('h2').should('have.text', 'Login')
@@ -22,12 +22,7 @@ describe('Register page tests', () => {
         const user = getRandomUser()
 
         // when
-        RegisterPage.firstNameInput().type(user.firstName)
-        RegisterPage.lastNameInput().type(user.lastName)
-        RegisterPage.usernameInput().type(user.username)
-        RegisterPage.passwordInput().type(user.password)
-        RegisterPage.emailInput().type(user.email)
-        RegisterPage.registerButton().click()
+        RegisterPage.attemptRegister(user)
 
         // then
         cy.get('.alert').should('have.text', 'Registration successful')
@@ -40,12 +35,7 @@ describe('Register page tests', () => {
         cy.register(user)
 
         // when
-        RegisterPage.firstNameInput().type(user.firstName)
-        RegisterPage.lastNameInput().type(user.lastName)
-        RegisterPage.usernameInput().type(user.username)
-        RegisterPage.passwordInput().type(user.password)
-        RegisterPage.emailInput().type(user.email)
-        RegisterPage.registerButton().click()
+        RegisterPage.attemptRegister(user)
 
         // then
         cy.get('.alert').should('have.text', 'Username is already in use')
