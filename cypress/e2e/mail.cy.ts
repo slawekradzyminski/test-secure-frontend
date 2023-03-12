@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { emailPage } from "../pages/emailPage"
+import { homePage } from "../pages/homePage"
 import { getRandomEmail } from "../utils/email"
 import { getRandomUser, User } from "../utils/user"
 
@@ -13,7 +15,7 @@ describe('Mail page tests', () => {
         cy.login(user.username, user.password)
         cy.visit('http://localhost:8081')
         cy.getCookie('token').then((cookie) => token = cookie?.value)
-        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.email').click()
+        homePage.clickEmailFor(user)
     })
 
     afterEach(() => {
@@ -25,12 +27,22 @@ describe('Mail page tests', () => {
         const email = getRandomEmail()
 
         // when
-        cy.get('[name=subject]').type(email.subject)
-        cy.get('[name=message]').type(email.body)
-        cy.get('.btn-primary').click()
+        emailPage.sendEmail(email)
 
         // then
         cy.get('.alert').should('have.text', 'Email was scheduled to be send')
+    })
+
+    it('should trigger frontend validation', () => {
+        // when
+        emailPage.selectors.editButton().click()
+
+        // then
+        cy.get('.invalid-feedback')
+            .should('have.length', 2)
+            .each(($el) => {
+                cy.wrap($el).should('have.text', 'Required field length is 4 or more')
+            })
     })
 
 })

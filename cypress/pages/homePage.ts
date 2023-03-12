@@ -7,10 +7,11 @@ export const homePage = {
     },
 
     clickEditFor: (user: User) => {
-        homePage.selectors.userRow()
-            .contains(`${user.firstName} ${user.lastName}`)
-            .find('.edit')
-            .click()
+        clickSelector(user, '.edit')
+    },
+
+    clickEmailFor: (user: User) => {
+        clickSelector(user, '.email')
     },
 
     clickLogout: () => {
@@ -21,4 +22,11 @@ export const homePage = {
         cy.get('#addmore').click()
     }
 
+}
+
+const clickSelector = (user: User, selector: string) => {
+    homePage.selectors.userRow()
+        .contains(`${user.firstName} ${user.lastName}`)
+        .find(selector)
+        .click()
 }
