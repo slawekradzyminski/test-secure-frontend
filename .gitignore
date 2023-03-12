@@ -1,4 +1,6 @@
 cypress.env.json
+cypress/videos
+cypress/screenshots
 
 # Logs
 logs
