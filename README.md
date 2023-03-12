@@ -7,7 +7,8 @@ Create `cypress.env.json` in main folder with the following body
     "username": "FILL with your credential",
     "password": "FILL with your credential",
     "testarenalogin": "http://testarena.pl/demo",
-    "testarenapassword": "http://testarena.pl/demo"
+    "testarenapassword": "http://testarena.pl/demo",
+    "isMobile": false
 }
 ```
 
