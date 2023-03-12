@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import LoginPage from "../../pages/LoginPage"
-import { getRandomUser } from "../../utils/user"
+import { getRandomUser, User } from "../../utils/user"
 
 describe('Login page tests', () => {
     beforeEach(() => {
@@ -13,14 +13,7 @@ describe('Login page tests', () => {
         const user = getRandomUser()
         cy.intercept('POST', '**/users/signin', {
             statusCode: 200,
-            body: {
-                username: user.username,
-                roles: user.roles,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                token: 'fakeToken',
-                email: user.email
-            }
+            body: buildLoginResponseBody(user)
         })
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
@@ -31,4 +24,34 @@ describe('Login page tests', () => {
         cy.get('h1').should('contain.text', user.firstName)
     })
 
+    it('should fail to login', () => {
+        // given
+        const user = getRandomUser()
+        const message = "Invalid username/password supplied"
+        cy.intercept('POST', '**/users/signin', {
+            statusCode: 422,
+            body: {
+                timestamp: "2023-03-12T13:26:26.206+00:00",
+                status: 422,
+                error: "Unprocessable Entity",
+                message: message,
+                path: "/users/signin"
+            }
+        })
+
+        // when
+        LoginPage.attemptLogin(user.username, user.password)
+
+        // then
+        cy.get('.alert').should('have.text', message)
+    })
+
 })
+
+const buildLoginResponseBody = (user: User) => {
+    const { password, ...userWithoutPassword } = user
+    return {
+        ...userWithoutPassword,
+        token: 'fakeToken'
+    }
+}
