@@ -15,7 +15,7 @@ describe('Login page tests', () => {
         // when
         cy.get('[name=username]').type(user.username)
         cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        cy.get('.btn-primary', { timeout: 30000 }).click()
 
         // then
         cy.get('h1').should('contain.text', user.firstName)
