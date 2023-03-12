@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../pages/LoginPage"
 import { getRandomUser } from "../utils/user"
 
 describe('Login page tests', () => {
@@ -13,25 +14,25 @@ describe('Login page tests', () => {
         cy.register(user)
 
         // when
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary', { timeout: 30000 }).click()
+        LoginPage.attemptLogin(user.username, user.password)
 
         // then
         cy.get('h1').should('contain.text', user.firstName)
     })
 
     it('should show error message on failed login', () => {
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
+        // when
+        LoginPage.attemptLogin('wrong', 'wrong')
 
+        // then
         cy.get('.alert').should('contain.text', 'Invalid username/password')
     })
 
     it('should trigger frontend validation', () => {
-        cy.get('.btn-primary').click()
+        // when
+        LoginPage.clickLogin()
 
+        // then
         cy.get('.invalid-feedback')
             .should('have.length', 2)
             .each(($el) => {
@@ -46,10 +47,10 @@ describe('Login page tests', () => {
     })
 
     it('should click register and open register page', () => {
-        cy.get('.btn-link')
-            .should('have.text', 'Register')
-            .click()
+        // when
+        LoginPage.clickRegister()
 
+        // then
         cy.get('h2').should('have.text', 'Register')
         cy.url().should('contain', '/register')
     })
