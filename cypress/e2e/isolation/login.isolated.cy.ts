@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { buildLoginResponseBody } from "../../helpers/loginResponse"
 import LoginPage from "../../pages/LoginPage"
 import { getRandomUser, User } from "../../utils/user"
 
@@ -47,11 +48,3 @@ describe('Login page tests', () => {
     })
 
 })
-
-const buildLoginResponseBody = (user: User) => {
-    const { password, ...userWithoutPassword } = user
-    return {
-        ...userWithoutPassword,
-        token: 'fakeToken'
-    }
-}

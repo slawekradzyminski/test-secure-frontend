@@ -13,10 +13,13 @@ describe('Edit page tests', () => {
         cy.login(user.username, user.password)
         cy.visit('http://localhost:8081')
         homePage.clickEditFor(user)
+
+        cy.intercept('POST', '**/users/signup').as('registerRequest')
     })
 
     it('should correctly autofill data', () => {
         // then
+        cy.wait('@registerRequest')
         editPage.verifyDataPresent(user)
     })
 

@@ -895,16 +895,5 @@
         ],
         "firstName": "Parker",
         "lastName": "Mraz"
-    },
-    {
-        "id": 125,
-        "username": "Florian.Zulauf",
-        "email": "Roosevelt_Heaney@gmail.com",
-        "roles": [
-            "ROLE_ADMIN",
-            "ROLE_CLIENT"
-        ],
-        "firstName": "Kaylin",
-        "lastName": "Langosh"
     }
 ]
