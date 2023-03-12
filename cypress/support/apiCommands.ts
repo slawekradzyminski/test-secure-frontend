@@ -19,3 +19,13 @@ Cypress.Commands.add('login', (username, password) => {
         cy.setCookie('token', resp.body.token)
     })
 })
+
+Cypress.Commands.add('deleteUser', (username, token) => {
+    cy.request({
+        method: 'DELETE',
+        url: `http://localhost:4001/users/${username}`,
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+})
