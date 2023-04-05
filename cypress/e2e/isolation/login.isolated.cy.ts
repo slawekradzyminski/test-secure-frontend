@@ -22,7 +22,7 @@ describe('Login page tests', () => {
         LoginPage.attemptLogin(user.username, user.password)
 
         // then
-        cy.get('h1').should('contain.text', user.firstName)
+        cy.get('h1').should('contain.text', user.lastName)
     })
 
     it('should fail to login', () => {
