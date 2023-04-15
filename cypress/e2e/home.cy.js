@@ -2,13 +2,32 @@
 
 describe('Home page', () => {
   beforeEach(() => {
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:4001/users/signin',
+      body: {
+        username: 'admin',
+        password: 'admin',
+      },
+    }).then((req) => {
+      localStorage.setItem('user', JSON.stringify(req.body))
+      cy.setCookie('token', req.body.token)
+    })
     cy.visit('http://localhost:8081')
-    cy.get('[name="username"]').type('admin')
-    cy.get('[name="password"]').type('admin')
-    cy.get('.btn-primary').click()
   })
 
-  it('displays two todo items by default', () => {
+  it('should displays at least one user', () => {
     cy.get('li').should('have.length.at.least', 1)
   })
+
+  it('should logout', () => {
+    cy.get('#logout').click()
+    cy.url().should('contain', '/login')
+  })
+
+  it('should open add user page', () => {
+    cy.get('#addmore').click()
+    cy.url().should('contain', '/add-user')
+  })
+
 })
