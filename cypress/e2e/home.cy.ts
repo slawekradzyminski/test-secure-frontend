@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import HomePage from "../pages/HomePage"
+
 describe('Home page', () => {
   beforeEach(() => {
     cy.request({
@@ -17,16 +19,16 @@ describe('Home page', () => {
   })
 
   it('should displays at least one user', () => {
-    cy.get('li').should('have.length.at.least', 1)
+    HomePage.getUserRow().should('have.length.at.least', 1)
   })
 
   it('should logout', () => {
-    cy.get('#logout').click()
+    HomePage.getLogoutLink().click()
     cy.url().should('contain', '/login')
   })
 
   it('should open add user page', () => {
-    cy.get('#addmore').click()
+    HomePage.getAddMoreLink().click()
     cy.url().should('contain', '/add-user')
   })
 
