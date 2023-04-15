@@ -9,7 +9,7 @@ describe('Register page', () => {
         // given
         cy.intercept('POST', '**/signup', {
             statusCode: 201
-        })
+        }).as('registerRequest')
 
         // when
         cy.get('[name=username]').type('admin')
@@ -21,5 +21,13 @@ describe('Register page', () => {
 
         // then
         cy.url().should('contain', '/login')
+        cy.get('@registerRequest').its('request.body').should('deep.equal', {
+            firstName: 'admin',
+            lastName: 'admin',
+            username: 'admin',
+            password: 'admin',
+            email: 'admin@cantest.it',
+            roles: ['ROLE_CLIENT']
+        })
     })
 })
