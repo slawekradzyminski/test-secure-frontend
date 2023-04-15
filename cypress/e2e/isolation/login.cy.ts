@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { getLoginResponse } from "../../domain/login"
+
 describe('Login page', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081')
@@ -9,17 +11,7 @@ describe('Login page', () => {
         // given
         cy.intercept('POST', '**/signin', {
             statusCode: 200,
-            body: {
-                username: "admin",
-                roles: [
-                    "ROLE_ADMIN",
-                    "ROLE_CLIENT"
-                ],
-                firstName: "Slawomir",
-                lastName: "Radzyminski",
-                token: "fakeToken",
-                email: "admin@email.com"
-            }
+            body: getLoginResponse()
         }).as('loginRequest')
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
