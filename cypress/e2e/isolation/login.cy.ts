@@ -2,6 +2,7 @@
 
 import { signinMocks } from "../../mocks/signinMocks"
 import { usersMocks } from "../../mocks/usersMocks"
+import { loginPage } from "../../pages/loginPage"
 
 describe('Login page', () => {
     beforeEach(() => {
@@ -14,9 +15,7 @@ describe('Login page', () => {
         usersMocks.testUsers()
 
         // when
-        cy.get('[name=username]').type('admin')
-        cy.get('[name=password]').type('admin')
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin('admin', 'admin')
 
         // then
         cy.get('h2,h1').should('contain.text', 'Slawomir')
@@ -32,12 +31,25 @@ describe('Login page', () => {
         signinMocks.failedLogin(message)
 
         // when
-        cy.get('[name=username]').type('admin')
-        cy.get('[name=password]').type('admin')
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin('admin', 'admin')
 
         // then
         cy.get('.alert').should('have.text', message)
+    })
+
+    it('should open register page', () => {
+        // when
+        loginPage.clickRegister()
+
+        // then
+        cy.url().should('contain', 'register')
+    })
+
+    it('should trigger frontend validation', () => {
+        // when
+        loginPage.selectors.loginButton().click()
+
+        // then
     })
 
 })
