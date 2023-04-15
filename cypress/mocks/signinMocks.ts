@@ -18,5 +18,13 @@ export const signinMocks = {
                 message: message,
             }
         })
+    },
+
+    delayedLogin: () => {
+        cy.intercept('POST', signinEndpoint, {
+            statusCode: 200,
+            body: getLoginResponse(),
+            delay: 2000
+        }).as('loginRequest')
     }
 }

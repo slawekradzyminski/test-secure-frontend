@@ -52,4 +52,15 @@ describe('Login page', () => {
         // then
     })
 
+    it('should trigger frontend validation', () => {
+         // given
+         signinMocks.delayedLogin()
+ 
+         // when
+         loginPage.attemptLogin('admin', 'admin')
+
+         // then
+         cy.get('.spinner-border').should('be.visible')
+    })
+
 })
