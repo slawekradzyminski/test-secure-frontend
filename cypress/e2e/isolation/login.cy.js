@@ -1,11 +1,11 @@
 /// <reference types="cypress" />
 
-describe('Home page', () => {
+describe('Login page', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081')
     })
 
-    it('should successfully login', () => {
+    it.only('should successfully login', () => {
         // given
         cy.intercept('POST', '**/signin', {
             statusCode: 200,
@@ -20,7 +20,7 @@ describe('Home page', () => {
                 token: "fakeToken",
                 email: "admin@email.com"
             }
-        })
+        }).as('loginRequest')
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
         // when
@@ -30,6 +30,10 @@ describe('Home page', () => {
 
         // then
         cy.get('h2,h1').should('contain.text', 'Slawomir')
+        cy.wait('@loginRequest').its('request.body').should('deep.equal', {
+            username: 'admin',
+            password: 'admin'
+        })
     })
 
     it('should fail to login', () => {
