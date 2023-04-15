@@ -1,8 +1,9 @@
 /// <reference types="cypress" />
 
 import { Roles } from "../../domain/roles"
-import { getRandomUser } from "../../domain/user"
+import { UserRegister, getRandomUser } from "../../domain/user"
 import { signupMocks } from "../../mocks/signupMocks"
+import RegisterPage from "../../pages/RegisterPage"
 
 describe('Register page', () => {
     beforeEach(() => {
@@ -15,19 +16,11 @@ describe('Register page', () => {
         const user = getRandomUser()
 
         // when
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('[name=firstName]').type(user.firstName)
-        cy.get('[name=lastName]').type(user.lastName)
-        cy.get('[name=email]').type(user.email)
-        cy.get('.btn-primary').click()
+        RegisterPage.attemptRegister(user)
 
         // then
         cy.url().should('contain', '/login')
-        cy.get('@registerRequest').its('request.body').should('deep.equal', {
-            ...user,
-            roles: [Roles.ROLE_CLIENT]
-        })
+        verifyLoginRequestWasCorrectlyBuild(user)
     })
 
     it('should fail to register if user already exists', () => {
@@ -37,15 +30,17 @@ describe('Register page', () => {
         signupMocks.userAlreadyExists(message)
 
         // when
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('[name=firstName]').type(user.firstName)
-        cy.get('[name=lastName]').type(user.lastName)
-        cy.get('[name=email]').type(user.email)
-        cy.get('.btn-primary').click()
+        RegisterPage.attemptRegister(user)
 
         // then
         cy.get('.alert').should('have.text', message)
     })
+
+    const verifyLoginRequestWasCorrectlyBuild = (user: UserRegister) => {
+        cy.get('@registerRequest').its('request.body').should('deep.equal', {
+            ...user,
+            roles: [Roles.ROLE_CLIENT]
+        })
+    }
 
 })
