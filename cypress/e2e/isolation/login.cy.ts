@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
-import { getLoginResponse } from "../../domain/login"
+import { signinMocks } from "../../mocks/signinMocks"
+import { usersMocks } from "../../mocks/usersMocks"
 
 describe('Login page', () => {
     beforeEach(() => {
@@ -9,11 +10,8 @@ describe('Login page', () => {
 
     it('should successfully login', () => {
         // given
-        cy.intercept('POST', '**/signin', {
-            statusCode: 200,
-            body: getLoginResponse()
-        }).as('loginRequest')
-        cy.intercept('GET', '**/users', { fixture: 'users.json' })
+        signinMocks.successfulLogin()
+        usersMocks.testUsers()
 
         // when
         cy.get('[name=username]').type('admin')
@@ -31,13 +29,7 @@ describe('Login page', () => {
     it('should fail to login', () => {
         // given
         const message = 'Invalid username/password supplied'
-        cy.intercept('POST', '**/signin', {
-            statusCode: 422,
-            body: {
-                error: 'Unprocessable Entity',
-                message: message,
-            }
-        })
+        signinMocks.failedLogin(message)
 
         // when
         cy.get('[name=username]').type('admin')
