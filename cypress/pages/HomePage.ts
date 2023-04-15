@@ -1,7 +1,13 @@
 export default class HomePage {
 
-    static getUserRow = () => cy.get('li')
-    static getLogoutLink = () => cy.get('#logout')
-    static getAddMoreLink = () => cy.get('#addmore')
+    static selectors = {
+        getUserRow: () => cy.get('li'),
+        getLogoutLink: () => cy.get('#logout'),
+        getAddMoreLink: () => cy.get('#addmore')
+    }
+
+    static verifyNumberOfUsers = (noOfUsers: number) => {
+        this.selectors.getUserRow().should('have.length', 2)
+    }
 
 }

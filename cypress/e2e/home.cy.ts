@@ -19,16 +19,16 @@ describe('Home page', () => {
   })
 
   it('should displays at least one user', () => {
-    HomePage.getUserRow().should('have.length.at.least', 1)
+    HomePage.verifyNumberOfUsers(2)
   })
 
   it('should logout', () => {
-    HomePage.getLogoutLink().click()
+    HomePage.selectors.getLogoutLink().click()
     cy.url().should('contain', '/login')
   })
 
   it('should open add user page', () => {
-    HomePage.getAddMoreLink().click()
+    HomePage.selectors.getAddMoreLink().click()
     cy.url().should('contain', '/add-user')
   })
 
