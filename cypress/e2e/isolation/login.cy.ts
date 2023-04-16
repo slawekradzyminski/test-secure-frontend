@@ -7,6 +7,7 @@ import { loginPage } from "../../pages/loginPage"
 describe('Login page', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081')
+        cy.percySnapshot()
     })
 
     it('should successfully login', () => {

@@ -8,6 +8,7 @@ import RegisterPage from "../../pages/RegisterPage"
 describe('Register page', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081/register')
+        cy.percySnapshot()
     })
 
     it('should successfully register', () => {

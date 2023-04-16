@@ -30,5 +30,3 @@ jobs:
           wait-on-timeout: 120
           browser: chrome
           spec: cypress/e2e/isolation/*
-
-  
