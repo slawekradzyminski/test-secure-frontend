@@ -30,3 +30,5 @@ jobs:
           wait-on-timeout: 120
           browser: chrome
           spec: cypress/e2e/isolation/*
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
