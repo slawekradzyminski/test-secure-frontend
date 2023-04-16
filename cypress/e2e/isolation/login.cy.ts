@@ -3,6 +3,7 @@
 import { signinMocks } from "../../mocks/signinMocks"
 import { usersMocks } from "../../mocks/usersMocks"
 import { loginPage } from "../../pages/loginPage"
+import users from "../../fixtures/users.json"
 
 describe('Login page', () => {
     beforeEach(() => {
@@ -20,6 +21,7 @@ describe('Login page', () => {
 
         // then
         cy.get('h2,h1').should('contain.text', 'Slawomir')
+        cy.get('li').should('have.length', users.length)
         cy.wait('@loginRequest').its('request.body').should('deep.equal', {
             username: 'admin',
             password: 'admin'
