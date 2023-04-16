@@ -19,7 +19,7 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           runTests: false
-      - run: yarn build:ci
+      - run: npm i
 
       - name: Save build folder
         uses: actions/upload-artifact@v3
