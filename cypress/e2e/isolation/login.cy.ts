@@ -11,6 +11,7 @@ describe('Login page', () => {
 
     it('should successfully login', () => {
         // given
+        cy.percySnapshot()
         signinMocks.successfulLogin()
         usersMocks.testUsers()
 
@@ -23,6 +24,7 @@ describe('Login page', () => {
             username: 'admin',
             password: 'admin'
         })
+        cy.percySnapshot()
     })
 
     it('should fail to login', () => {

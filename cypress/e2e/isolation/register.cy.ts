@@ -12,6 +12,7 @@ describe('Register page', () => {
 
     it('should successfully register', () => {
         // given
+        cy.percySnapshot()
         signupMocks.successfulRegister()
         const user = getRandomUser()
 
