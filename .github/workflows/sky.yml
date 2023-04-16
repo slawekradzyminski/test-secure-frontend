@@ -25,7 +25,7 @@ jobs:
       - name: "UI Tests - Chrome"
         uses: cypress-io/github-action@v4
         with:
-          start: npm start
+          start: percy exec -- npx
           wait-on: "http://localhost:8081"
           wait-on-timeout: 120
           browser: chrome
