@@ -22,8 +22,6 @@ describe('Test Arena add project tests', () => {
         cy.get('#search').type(name)
         cy.get('#j_searchButton').click()
         cy.get('tr td').first().should('have.text', name)
-        // wyszukać projekt po nazwie
-        // sprawdzić ze jest na liscie wynikow
     })
 
 })
