@@ -12,7 +12,6 @@ describe('Test Arena home page tests', () => {
     it('should open wiadomosci', () => {
         cy.get('.icon_mail').click()
 
-
         cy.get('.message-create-button').should('exist')
         cy.get('#j_msgSingleThreadList').should('contain.text', 'Anonim')
         cy.url().should('contain', '/moje_wiadomosci')
@@ -29,8 +28,5 @@ describe('Test Arena home page tests', () => {
         cy.get('.icons-switch').click()
         cy.url().should('contain', '/zaloguj')
     })
-
-
-
 
 })
