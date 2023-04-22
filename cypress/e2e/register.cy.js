@@ -24,4 +24,13 @@ describe('Register tests', () => {
         cy.url().should('contain', '/login')
     })
 
+    it('should trigger frontend validation', () => {
+        cy.get('.btn-primary').click()
+        //  albo 
+        cy.get('.invalid-feedback').should('have.length', 5).each(($el) => {
+            cy.wrap($el).should('have.text', 'Required field length is 4 or more')
+        })
+        cy.get('input.is-invalid').should('have.length', 5)
+    })
+
 })

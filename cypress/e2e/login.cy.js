@@ -3,9 +3,22 @@
 describe('Login tests', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081')
+        // kod sluzacy do lowania
     })
 
     //it.only() zeby odpalil się tylko jeden test
+
+    it('should trigger frontend validation', () => {
+        cy.get('.btn-primary').click()
+        cy.get('.invalid-feedback').should('have.length', 2)
+        //  albo 
+        //     cy.get('.invalid-feedback').should('have.length', 2).each(($el) => {
+        //     cy.wrap($el).should('have.text', 'Required field length is 4 or more')
+        //     })
+        cy.get('.invalid-feedback').eq(0).should('have.text', 'Required field length is 4 or more')
+        cy.get('.invalid-feedback').eq(1).should('have.text', 'Required field length is 4 or more')
+        cy.get('input.is-invalid').should('have.length', 2)
+    })
 
     it('should successfully login', () => {
         cy.get('[name=username]').type('admin')
