@@ -18,19 +18,11 @@ describe('Register tests', () => {
 
         cy.get('.alert').should('contain.text', 'Registration successful')
 
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signin',
-            body: {
-                username: user.username,
-                password: user.password
-            }
-        })
+        cy.login(user.username, user.password)
     })
 
     it('should open login page', () => {
         cy.get('.btn-link').click()
-
         cy.get('h2').should('have.text', 'Login')
         cy.url().should('contain', '/login')
     })

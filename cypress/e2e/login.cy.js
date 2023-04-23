@@ -24,7 +24,7 @@ describe('Login tests', () => {
     it('should successfully login', () => {
         const user = getRandomUser()
         cy.register(user)
-
+        
         cy.get('[name=username]').type(user.username)
         cy.get('[name=password]').type(user.password)
         cy.get('.btn-primary').click()
