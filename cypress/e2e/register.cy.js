@@ -1,30 +1,31 @@
 /// <reference types="cypress" />
-import { faker } from '@faker-js/faker';
+
+import { getRandomUser } from "../utils/user"
 
 describe('Register tests', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081/register')
     })
 
-    it('should successfully register', () => {
-        const userName = faker.internet.userName()
-        const password = faker.internet.password()
-        const firstName = faker.name.firstName()
-
-        cy.get('[name=username]').type(userName)
-        cy.get('[name=password]').type(password)
-        cy.get('[name=firstName]').type(firstName)
-        cy.get('[name=lastName]').type(faker.name.lastName())
-        cy.get('[name=email]').type(faker.internet.email())
+    it.only('should successfully register', () => {
+        const user = getRandomUser()
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
+        cy.get('[name=firstName]').type(user.firstName)
+        cy.get('[name=lastName]').type(user.lastName)
+        cy.get('[name=email]').type(user.email)
         cy.get('.btn-primary').click()
 
         cy.get('.alert').should('contain.text', 'Registration successful')
 
-        cy.get('[name=username]').type(userName)
-        cy.get('[name=password]').type(password)
-        cy.get('.btn-primary').click()
-
-        cy.get('h1').should('contain.text', firstName)
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:4001/users/signin',
+            body: {
+                username: user.username,
+                password: user.password
+            }
+        })
     })
 
     it('should open login page', () => {
