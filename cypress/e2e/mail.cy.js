@@ -1,3 +1,5 @@
+import { homePage } from "../pages/homePage"
+import { emailPage } from "../pages/emailPage"
 import { getRandomEmail } from "../utils/mail"
 import { getRandomUser } from "../utils/user"
 
@@ -14,11 +16,14 @@ describe('Send email', () => {
     })
 
     it('sholud succssfully send email', () => {
+        // given
         const email = getRandomEmail()
-        cy.get('li').contains(`${user.firstName}`).find('.email').click()
-        cy.get('[name=subject]').type(email.emailSubject)
-        cy.get('[name=message]').type(email.emailMessage)
-        cy.get('.btn-primary').click()
+        homePage.clickMailUser(user.firstName)
+
+        // when
+        emailPage.attemptSendEmail(email)
+
+        // then
         cy.get('.alert-success').should('have.text', 'Email was scheduled to be send')
     })
 })
