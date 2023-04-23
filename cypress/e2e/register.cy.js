@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { registerPage } from "../pages/registerPage"
 import { getRandomUser } from "../utils/user"
 
 describe('Register tests', () => {
@@ -7,29 +8,32 @@ describe('Register tests', () => {
         cy.visit('http://localhost:8081/register')
     })
 
-    it.only('should successfully register', () => {
+    it('should successfully register', () => {
+        // given
         const user = getRandomUser()
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('[name=firstName]').type(user.firstName)
-        cy.get('[name=lastName]').type(user.lastName)
-        cy.get('[name=email]').type(user.email)
-        cy.get('.btn-primary').click()
 
+        // when
+        registerPage.attemptRegister(user)
+
+        // then
         cy.get('.alert').should('contain.text', 'Registration successful')
-
         cy.login(user.username, user.password)
     })
 
     it('should open login page', () => {
-        cy.get('.btn-link').click()
+        // when
+        registerPage.selectors.getLoginButton().click()
+
+        // then
         cy.get('h2').should('have.text', 'Login')
         cy.url().should('contain', '/login')
     })
 
     it('should trigger frontend validation', () => {
-        cy.get('.btn-primary').click()
-        //  albo 
+        // when
+        registerPage.selectors.getRegisterButton().click()
+
+        // then
         cy.get('.invalid-feedback').should('have.length', 5).each(($el) => {
             cy.wrap($el).should('have.text', 'Required field length is 4 or more')
         })
