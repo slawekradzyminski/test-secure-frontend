@@ -7,7 +7,7 @@ describe('Edit page', () => {
       cy.get('li').contains('Slawomir Radzyminski').find('.edit').click();
     })
  
-    it.only('should autofill edit profile', () => {
+    it('should autofill edit profile', () => {
         cy.get("[name='firstName']").should('have.value', 'Slawomir');
         cy.get("[name='lastName']").should('have.value', 'Radzyminski');
         cy.get("[name='username']").should('have.value','admin');
