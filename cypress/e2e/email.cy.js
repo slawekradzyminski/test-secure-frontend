@@ -9,7 +9,7 @@ describe('Email page', () => {
       cy.get('li').contains('Slawomir Radzyminski').find('.email').click()
     })
   
-    it.only('should successfully send email', () => {
+    it('should successfully send email', () => {
         const randomEmail = getRandomEmail()
 
         cy.get('[name="subject"]').type(randomEmail.subject)
