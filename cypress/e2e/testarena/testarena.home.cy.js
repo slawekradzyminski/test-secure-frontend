@@ -4,10 +4,7 @@ describe('Home page', () => {
     const email = 'administrator@testarena.pl'
 
     beforeEach(() => {
-        cy.visit('http://demo.testarena.pl/zaloguj')
-        cy.get('#email').type(email)
-        cy.get('#password').type('sumXQQ72$L')
-        cy.get('#login').click()
+        cy.loginToTestArena(email, 'sumXQQ72$L')
     })
 
     it('should open my messages', () => {

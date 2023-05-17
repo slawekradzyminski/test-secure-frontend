@@ -5,5 +5,6 @@ declare namespace Cypress {
 
 
         // testarena
+        loginToTestArena(username: string, password: string): void;
     }
 }
