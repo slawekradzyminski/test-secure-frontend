@@ -22,7 +22,4 @@ describe('Projekty', () => {
         cy.get('#text').should('have.text', `${project.name}`)
     })
 
-
 })
-
-
