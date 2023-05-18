@@ -23,7 +23,15 @@ describe('Edit page', () => {
     })
 
     it('should correctly edit an user', () => {
-        
+        const newUser = generateUser()
+        cy.get("[name='firstName']").clear().type(newUser.firstName)
+        cy.get("[name='lastName']").clear().type(newUser.lastName)
+        cy.get("[name='email']").clear().type(newUser.email)
+        cy.get('.btn-primary').click()
+
+        cy.get('.alert').should('have.text', 'Updating user successful')
+        cy.get('li').contains(`${newUser.firstName} ${newUser.lastName}`).should('be.visible')
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).should('not.exist')
     })
 
 })
