@@ -1,8 +1,13 @@
 /// <reference types="cypress" />
+
+import { generateUser } from "../utils/user"
+
 describe('Home page', () => {
     beforeEach(() => {
       cy.visit('http://localhost:8081')
-      cy.login('admin', 'admin')
+      const user = generateUser()
+      cy.registerViaAPI(user)
+      cy.login(user.username, user.password)
     })
   
     it('should successfully logout', () => {

@@ -35,7 +35,6 @@ describe('Register page', () => {
             .each(($el) => {
                 cy.wrap($el).should('have.class', 'is-invalid')
             })
-
     })
 
 
