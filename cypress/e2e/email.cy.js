@@ -1,12 +1,15 @@
 /// <reference types="cypress" />
 
 import { getRandomEmail } from "../utils/email"
+import { generateUser } from "../utils/user"
 
 describe('Email page', () => {
     beforeEach(() => {
+      const user = generateUser()
+      cy.registerViaAPI(user)
+      cy.loginViaAPI(user)  
       cy.visit('http://localhost:8081')
-      cy.login('admin', 'admin')
-      cy.get('li').contains('Slawomir Radzyminski').find('.email').click()
+      cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.email').click()
     })
   
     it('should successfully send email', () => {
