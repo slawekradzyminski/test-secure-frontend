@@ -9,15 +9,10 @@ describe('Login page', () => {
 
   it('should successfully login', () => {
     const user = generateUser()
-
-    cy.request({
-      method: 'POST',
-      url: 'http://localhost:4001/users/signup',
-      body: user
-    })
+    cy.registerViaAPI(user)
 
     cy.login(user.username, user.password)
-
+    
     cy.get('h1').should('contain.text', user.firstName)
   })
 

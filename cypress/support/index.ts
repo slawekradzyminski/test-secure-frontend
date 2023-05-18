@@ -2,6 +2,7 @@ declare namespace Cypress {
     interface Chainable {
         // my app
         login(username: string, password: string): void;
+        registerViaAPI(user: object): void;
 
 
         // testarena
