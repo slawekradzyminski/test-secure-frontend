@@ -11,3 +11,17 @@ Cypress.Commands.add('registerViaAPI', (user) => {
         body: user
       })
 })
+
+Cypress.Commands.add('loginViaAPI', (user) => {
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:4001/users/signin',
+        body: {
+            username: user.username,
+            password: user.password
+        }
+    }).then(resp => {
+        localStorage.setItem('user', JSON.stringify(resp.body))
+        cy.setCookie('token', resp.body.token)
+    })
+})

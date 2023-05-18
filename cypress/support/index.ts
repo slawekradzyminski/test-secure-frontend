@@ -3,6 +3,7 @@ declare namespace Cypress {
         // my app
         login(username: string, password: string): void;
         registerViaAPI(user: object): void;
+        loginViaAPI(user: object): void;
 
 
         // testarena
