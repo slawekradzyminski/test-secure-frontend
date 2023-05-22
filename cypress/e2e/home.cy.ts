@@ -29,4 +29,27 @@ describe('Home page tests', () => {
 
         cy.url().should('contain', '/login')
     })
+
+    it('should successfully delete an user', () => {
+        // given
+        const userToDelete = getUser()
+        cy.register(userToDelete)
+        cy.reload()
+
+        // when
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).find('.delete').click()
+
+        // then
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).should('not.exist')
+        cy.request({
+            method: 'DELETE',
+            url: `http://localhost:4001/users/${userToDelete.username}`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            failOnStatusCode: false
+        }).then(resp => {
+            expect(resp.status).to.eq(404)
+        })
+    })
 })
