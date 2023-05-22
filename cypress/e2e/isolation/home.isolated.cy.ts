@@ -2,6 +2,7 @@
 
 import { buildLoginResponse } from "../../utils/login"
 import { getUser } from "../../utils/user"
+import users from "../../fixtures/users.json"
 
 describe('Home page tests', () => {
 
@@ -14,7 +15,10 @@ describe('Home page tests', () => {
     })
 
     it('should display at least one user', () => {
-        cy.get('li').should('have.length.at.least', 1)
+        cy.get('li').should('have.length', users.length)
+        cy.get('li').each(($el, i) => {
+            cy.wrap($el).should('contain.text', `${users[i].firstName} ${users[i].lastName}`)
+        })
     })
 
     it.skip('should successfully delete an user', () => {
