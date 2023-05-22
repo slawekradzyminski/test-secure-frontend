@@ -32,10 +32,22 @@ describe('Email page tests', () => {
         cy.get('[name=email]').clear().type(newUser.email)
         cy.get('.btn-primary').click()
 
-        // then
+        // then - asercje frontendowe
         cy.get('.alert').should('contain.text', 'Updating user successful')
         cy.get('li').contains(`${newUser.firstName} ${newUser.lastName}`).should('be.visible')
         cy.get('li').contains(`${user.firstName} ${user.lastName}`).should('not.exist')
+
+        // then - asercje serwerowe/backendowe
+        cy.request({
+            url: `http://localhost:4001/users/${user.username}`,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(resp => {
+            expect(resp.body.firstName).to.eq(newUser.firstName)
+            expect(resp.body.username).to.eq(user.username)
+        })
     })
 
 })
