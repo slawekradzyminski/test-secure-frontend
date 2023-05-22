@@ -24,7 +24,6 @@ describe('Home page tests', () => {
         cy.get('li').should('have.length.at.least', 1)
     })
 
-
     it('should logout', () => {
         cy.get('#logout').click()
 
