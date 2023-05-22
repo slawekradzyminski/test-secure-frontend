@@ -1,15 +1,27 @@
 /// <reference types="cypress" />
 
-describe('Login page tests', () => {
-    beforeEach(() => {
-      cy.visit('http://localhost:8081')
-    })
-  
-    it('should successfully login', () => {
-        cy.get('[name=username]').type(Cypress.env('username'))
-        cy.get('[name=password]').type(Cypress.env('password'))
-        cy.get('.btn-primary').click()
+import { getUser } from "../utils/user"
 
-        cy.get('h1').should('contain.text', 'Slawomir')
-    })
+describe('Login page tests', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:8081')
   })
+
+  it('should successfully login', () => {
+    // given
+    const user = getUser()
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:4001/users/signup',
+      body: user
+    })
+
+    // when
+    cy.get('[name=username]').type(user.username)
+    cy.get('[name=password]').type(user.password)
+    cy.get('.btn-primary').click()
+
+    // then
+    cy.get('h1').should('contain.text', user.firstName)
+  })
+})
