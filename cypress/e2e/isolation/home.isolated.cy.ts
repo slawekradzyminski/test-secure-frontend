@@ -21,7 +21,15 @@ describe('Home page tests', () => {
         })
     })
 
-    it.skip('should successfully delete an user', () => {
+    it('should successfully delete an user', () => {
+        // given
+        const userToDelete = users[1]
+        cy.intercept('DELETE', `**/users/${userToDelete.username}`, { statusCode: 204 })
 
+        // when
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).find('.delete').click()
+
+        // then
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).should('not.exist')
     })
 })
