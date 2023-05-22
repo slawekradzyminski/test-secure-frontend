@@ -17,13 +17,7 @@ describe('Home page tests', () => {
     })
 
     afterEach(() => {
-        cy.request({
-            url: `http://localhost:4001/users/${user.username}`,
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        cy.deleteUser(user.username, token)
     })
 
     it('should display at least one user', () => {
