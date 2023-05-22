@@ -1,7 +1,7 @@
 import { Roles } from "./roles"
 import { faker } from '@faker-js/faker';
 
-interface User {
+export interface User {
     firstName: string,
     lastName: string,
     username: string,
