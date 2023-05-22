@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
-import { User, getUser } from "../../utils/user"
+import { buildLoginResponse } from "../../utils/login"
+import { getUser } from "../../utils/user"
 
 describe('[ISOLATION] Login page tests', () => {
     beforeEach(() => {
@@ -49,9 +50,4 @@ describe('[ISOLATION] Login page tests', () => {
         cy.get('.alert').should('have.text', errorMessage)
     })
 
-})
-
-const buildLoginResponse = ({ password, ...userWithoutPassword }: User) => ({
-    ...userWithoutPassword,
-    token: 'fakeToken'
 })
