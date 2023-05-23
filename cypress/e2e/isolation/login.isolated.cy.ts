@@ -13,6 +13,7 @@ describe('[ISOLATION] Login page tests', () => {
 
     it('should successfully login', () => {
         // given
+        cy.percySnapshot('Login page')
         const user = getUser()
         postUserSignInMocks.mockSuccess(user)
         getUsersMocks.mockSuccess()

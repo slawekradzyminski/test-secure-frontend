@@ -15,6 +15,7 @@ describe('[ISOLATION] Home page tests', () => {
     })
 
     it('should display at least one user', () => {
+        cy.percySnapshot('Home page')
         cy.get('li').should('have.length', users.length)
         cy.get('li').each(($el, i) => {
             cy.wrap($el).should('contain.text', `${users[i].firstName} ${users[i].lastName}`)

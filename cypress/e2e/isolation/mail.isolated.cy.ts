@@ -25,6 +25,7 @@ describe('[ISOLATION] Home page tests', () => {
 
     it('should successfully send an email', () => {
         // given
+        cy.percySnapshot('Mail page')
         const email = getEmail()
         postEmailMocks.mockSuccess()
 
