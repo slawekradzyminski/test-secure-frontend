@@ -6,7 +6,7 @@ export const postUsersSignUpMocks = {
             body: {
                 token: 'fakeToken'
             }
-        })
+        }).as('registerRequest')
     },
     mockFailure: (errorMessage: string) => {
         cy.intercept('POST', '**/users/signup', {
