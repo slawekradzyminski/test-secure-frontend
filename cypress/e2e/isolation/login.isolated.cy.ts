@@ -11,7 +11,7 @@ describe('[ISOLATION] Login page tests', () => {
         cy.visit('http://localhost:8081')
     })
 
-    it('should successfully login', () => {
+    it.only('should successfully login', () => {
         // given
         cy.percySnapshot('Login page')
         const user = getUser()
@@ -23,6 +23,10 @@ describe('[ISOLATION] Login page tests', () => {
 
         // then
         cy.get('h1').should('contain.text', user.firstName)
+        cy.get('@loginRequest').its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password
+        })
     })
 
 
