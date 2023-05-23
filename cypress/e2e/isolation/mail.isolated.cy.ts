@@ -8,6 +8,7 @@ import { homePage } from "../../pages/homePage"
 import { getEmail } from "../../utils/email"
 import { postEmailMocks } from "../../mocks/postEmail"
 import { emailPage } from "../../pages/emailPage"
+import Alert from "../../components/Alert"
 
 describe('[ISOLATION] Home page tests', () => {
 
@@ -31,7 +32,7 @@ describe('[ISOLATION] Home page tests', () => {
         emailPage.attemptSendingEmail(email)
 
         // then
-        cy.get('.alert').should('contain.text', 'Email was scheduled to be send')
+        Alert.alertSuccess().should('contain.text', 'Email was scheduled to be send')
     })
 
 })
