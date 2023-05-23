@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import { buildLoginResponse } from "../../utils/login"
-import { getUser, getUserWithSpecificFirstName } from "../../utils/user"
+import { getUserWithSpecificFirstName } from "../../utils/user"
 import users from "../../fixtures/users.json"
 
 describe('[ISOLATION] Home page tests', () => {

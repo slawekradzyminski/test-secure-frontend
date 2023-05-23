@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import { getEmail } from "../utils/email"
 import { User, getUser } from "../utils/user"
 
 describe('Email page tests', () => {
