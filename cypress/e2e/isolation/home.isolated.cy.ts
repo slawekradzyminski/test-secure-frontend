@@ -4,7 +4,7 @@ import { buildLoginResponse } from "../../utils/login"
 import { getUser } from "../../utils/user"
 import users from "../../fixtures/users.json"
 
-describe('Home page tests', () => {
+describe('[ISOLATION] Home page tests', () => {
 
     beforeEach(() => {
         const user = getUser()
