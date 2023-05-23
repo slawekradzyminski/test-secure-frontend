@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import LoginPage from "../pages/LoginPage"
 import { getUser } from "../utils/user"
 
 describe('Login page tests', () => {
@@ -13,10 +14,8 @@ describe('Login page tests', () => {
     cy.register(user)
 
     // when
-    cy.get('[name=username]').type(user.username)
-    cy.get('[name=password]').type(user.password)
-    cy.get('.btn-primary').click()
-
+    LoginPage.attemptLogin('wrong', 'wrong')
+    
     // then
     cy.get('h1').should('contain.text', user.firstName)
   })

@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import Alert from "../../components/Alert"
 import { getUsersMocks } from "../../mocks/getUsers"
 import { postUserSignInMocks } from "../../mocks/postUsersSignIn"
 import LoginPage from "../../pages/LoginPage"
@@ -33,7 +34,7 @@ describe('[ISOLATION] Login page tests', () => {
         LoginPage.attemptLogin('wrong', 'wrong')
 
         // then
-        cy.get('.alert').should('have.text', errorMessage)
+        Alert.alertFailure().should('have.text', errorMessage)
     })
 
     it('should open register page', () => {
