@@ -52,4 +52,12 @@ describe('Home page tests', () => {
             expect(resp.status).to.eq(404)
         })
     })
+
+    it('should open add user page', () => {
+        // when
+        cy.get('#addmore').click()
+
+        // then
+        cy.url().should('contain', '/add-user')
+    })
 })

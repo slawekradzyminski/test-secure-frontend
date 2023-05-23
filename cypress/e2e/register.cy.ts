@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import RegisterPage from "../pages/RegisterPage"
 import { getUser } from "../utils/user"
 
 describe('Login page tests', () => {
@@ -13,12 +14,7 @@ describe('Login page tests', () => {
     cy.register(user)
 
     // when
-    cy.get('[name=username]').type(user.username)
-    cy.get('[name=firstName]').type(user.firstName)
-    cy.get('[name=lastName]').type(user.lastName)
-    cy.get('[name=password]').type(user.password)
-    cy.get('[name=email]').type(user.email)
-    cy.get('.btn-primary').click()
+    RegisterPage.attemptRegister(user)
 
     // then
     cy.get('.alert').should('have.text', 'Username is already in use')
