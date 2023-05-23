@@ -20,3 +20,14 @@ export const getUser = (): User => {
         roles: [ Roles.ROLE_ADMIN, Roles.ROLE_CLIENT ]
     }
 }
+
+export const getUserWithSpecificFirstName = (firstName: string): User => {
+    return {
+        firstName: firstName,
+        lastName: faker.person.lastName(),
+        username: faker.internet.userName(),
+        password: faker.internet.password(),
+        email: faker.internet.email(),
+        roles: [ Roles.ROLE_ADMIN, Roles.ROLE_CLIENT ]
+    }
+}

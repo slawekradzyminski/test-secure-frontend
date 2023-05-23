@@ -1,13 +1,13 @@
 /// <reference types="cypress" />
 
 import { buildLoginResponse } from "../../utils/login"
-import { getUser } from "../../utils/user"
+import { getUser, getUserWithSpecificFirstName } from "../../utils/user"
 import users from "../../fixtures/users.json"
 
 describe('[ISOLATION] Home page tests', () => {
 
     beforeEach(() => {
-        const user = getUser()
+        const user = getUserWithSpecificFirstName('Slawek')
         localStorage.setItem('user', JSON.stringify(buildLoginResponse(user)))
         cy.setCookie('token', 'fakeToken')
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
