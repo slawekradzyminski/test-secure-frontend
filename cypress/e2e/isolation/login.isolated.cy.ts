@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
-import { buildLoginResponse } from "../../utils/login"
+import { getUsersMocks } from "../../mocks/getUsers"
+import { postUserSignInMocks } from "../../mocks/postUsersSignIn"
+import LoginPage from "../../pages/LoginPage"
 import { getUser } from "../../utils/user"
 
 describe('[ISOLATION] Login page tests', () => {
@@ -11,16 +13,11 @@ describe('[ISOLATION] Login page tests', () => {
     it('should successfully login', () => {
         // given
         const user = getUser()
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 200,
-            body: buildLoginResponse(user)
-        })
-        cy.intercept('GET', '**/users', { fixture: 'users.json' })
+        postUserSignInMocks.mockSuccess(user)
+        getUsersMocks.mockSuccess()
 
         // when
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        LoginPage.attemptLogin(user.username, user.password)
 
         // then
         cy.get('h1').should('contain.text', user.firstName)
@@ -30,24 +27,21 @@ describe('[ISOLATION] Login page tests', () => {
     it('should fail to login if wrong username and password provided', () => {
         // given
         const errorMessage = "Invalid username/password supplied"
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 422,
-            body: {
-                timestamp: "2023-05-22T13:36:58.058+00:00",
-                status: 422,
-                error: "Unprocessable Entity",
-                message: errorMessage,
-                path: "/users/signin"
-            }
-        })
-
+        postUserSignInMocks.mockFailure(errorMessage)
+        
         // when
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
+        LoginPage.attemptLogin('wrong', 'wrong')
 
         // then
         cy.get('.alert').should('have.text', errorMessage)
+    })
+
+    it('should open register page', () => {
+        // when
+        LoginPage.registerButton().click()
+
+        // then
+        cy.url().should('contain', '/register')
     })
 
 })
