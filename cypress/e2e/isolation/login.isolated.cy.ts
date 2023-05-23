@@ -11,7 +11,7 @@ describe('[ISOLATION] Login page tests', () => {
         cy.visit('http://localhost:8081')
     })
 
-    it.only('should successfully login', () => {
+    it('should successfully login', () => {
         // given
         cy.percySnapshot('Login page')
         const user = getUser()
