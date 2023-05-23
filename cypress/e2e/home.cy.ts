@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { getUserApi } from "../api/getUser"
 import { User, getUser } from "../utils/user"
 
 describe('Home page tests', () => {
@@ -41,16 +42,7 @@ describe('Home page tests', () => {
 
         // then
         cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).should('not.exist')
-        cy.request({
-            method: 'DELETE',
-            url: `http://localhost:4001/users/${userToDelete.username}`,
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
-            failOnStatusCode: false
-        }).then(resp => {
-            expect(resp.status).to.eq(404)
-        })
+        getUserApi.verifyUserNotFound(userToDelete.username, token)
     })
 
     it('should open add user page', () => {
