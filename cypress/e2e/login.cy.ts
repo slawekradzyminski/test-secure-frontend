@@ -12,7 +12,7 @@ describe('Login page tests', () => {
     // given
     const user = getUser()
     cy.register(user)
-
+    
     // when
     LoginPage.attemptLogin('wrong', 'wrong')
     

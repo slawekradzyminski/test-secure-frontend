@@ -14,7 +14,7 @@ describe('[ISOLATION] Register page tests', () => {
         // given
         const user = getUser()
         postUsersSignUpMocks.mockSuccess()
-
+        
         // when
         RegisterPage.attemptRegister(user)
 

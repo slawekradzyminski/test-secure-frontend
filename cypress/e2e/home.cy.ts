@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { getUserApi } from "../api/getUser"
+import { homePage } from "../pages/homePage"
 import { User, getUser } from "../utils/user"
 
 describe('Home page tests', () => {
@@ -22,12 +23,15 @@ describe('Home page tests', () => {
     })
 
     it('should display at least one user', () => {
-        cy.get('li').should('have.length.at.least', 1)
+        // then
+        homePage.selectors.userRow().should('have.length.at.least', 1)
     })
 
     it('should logout', () => {
-        cy.get('#logout').click()
+        // when
+        homePage.clickLogout()
 
+        // then
         cy.url().should('contain', '/login')
     })
 
@@ -38,17 +42,17 @@ describe('Home page tests', () => {
         cy.reload()
 
         // when
-        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).find('.delete').click()
+        homePage.selectors.userSpecificUserRow(userToDelete).find('.delete').click()
 
         // then
-        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).should('not.exist')
+        homePage.selectors.userSpecificUserRow(userToDelete).should('not.exist')
         getUserApi.verifyUserNotFound(userToDelete.username, token)
     })
 
     it('should open add user page', () => {
         // when
-        cy.get('#addmore').click()
-
+        homePage.clickAddMore()
+        
         // then
         cy.url().should('contain', '/add-user')
     })

@@ -1,6 +1,7 @@
 import { User } from "../utils/user"
 
 export default class RegisterPage {
+    
     static firstnameInput = () => cy.get('[name=firstName]')
     static lastnameInput = () => cy.get('[name=lastName]')
     static usernameInput = () => cy.get('[name=username]')
