@@ -7,14 +7,27 @@ describe('Register page tests', () => {
       cy.visit('http://localhost:8081/register')
     })
   
-    it.only("should successfully register new user", () => {
+    it("should successfully register new user", () => {
         cy.get("[name=username]").type(generateRandomString())
         cy.get("[name=firstName]").type(generateRandomString())
         cy.get("[name=lastName]").type(generateRandomString())
         cy.get("[name=password]").type(generateRandomString())
         cy.get("[name=email]").type(generateRandomEmail())
         cy.get(".btn-primary").click()
+
         cy.get(".alert-success").should("contain.text", "Registration successful")
+        cy.url().should('contain', '/login')
+    })
+
+    it("should register error - Username is already in use", () => {
+        cy.get("[name=username]").type('admin')
+        cy.get("[name=firstName]").type(generateRandomString())
+        cy.get("[name=lastName]").type(generateRandomString())
+        cy.get("[name=password]").type(generateRandomString())
+        cy.get("[name=email]").type(generateRandomEmail())
+        cy.get(".btn-primary").click()
+
+        cy.get('.alert-danger').should("contain.text", "Username is already in use")
     })
 
     it('should open login page', () => {
