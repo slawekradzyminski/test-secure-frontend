@@ -2,8 +2,8 @@
 
 describe('Home page tests', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8081')
         cy.login('admin', 'admin')
+        cy.visit('http://localhost:8081')
     })
 
     it('should display at least one user', () => {
