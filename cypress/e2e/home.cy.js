@@ -10,4 +10,14 @@ describe('Home page tests', () => {
         cy.get('li').should('have.length.above', 0)
     })
 
+    it('should logout', () => {
+        cy.get('#logout').click()
+        cy.url().should('contain', '/login')
+    })
+
+    it('should open add more users page', () => {
+        cy.get('#addmore').click()
+        cy.url().should('contain', '/add-user')
+    })
+
 })
