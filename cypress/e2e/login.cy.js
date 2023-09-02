@@ -32,5 +32,11 @@ describe('Login page tests', () => {
         cy.get('.is-invalid').should('have.length', 2)
     })
 
+    it('should open register page', () => {
+        cy.get('.btn-link').click()
+        cy.get('h2').should('contain.text', 'Register')
+        cy.url().should('contain', '/register')
+    })
+
   })
   
