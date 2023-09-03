@@ -4,6 +4,7 @@ import { getRandomUser } from "./domain/user"
 
 describe('Edit page tests', () => {
     let user
+    let token
 
     beforeEach(() => {
         user = getRandomUser()
@@ -11,6 +12,7 @@ describe('Edit page tests', () => {
         cy.login(user.username, user.password)
         cy.visit('http://localhost:8081')
         cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
+        cy.getCookie('token').then((tokenCookie) => token = tokenCookie.value) 
     })
 
     it('should successfully autofill user data', () => {
@@ -24,6 +26,7 @@ describe('Edit page tests', () => {
 
     it.only('should successfully edit an user', () => {
         // given
+        cy.log(token)
         const newUser = getRandomUser()
 
         // when
@@ -36,6 +39,7 @@ describe('Edit page tests', () => {
         cy.get('.alert-success').should('have.text', 'Updating user successful')
         cy.get('li').contains(`${user.firstName} ${user.lastName}`).should('not.exist')
         cy.get('li').contains(`${newUser.firstName} ${newUser.lastName}`).should('exist')
+        // asercji przez API
     })
 
 })
