@@ -1,12 +1,15 @@
 /// <reference types="cypress" />
 
 import { generateRandomString } from "../utils/random"
+import { getRandomUser } from "./domain/user"
 
 describe('Home page tests', () => {
     beforeEach(() => {
-        cy.login('admin', 'admin')
+        const user = getRandomUser()
+        cy.register(user)
+        cy.login(user.username, user.password)
         cy.visit('http://localhost:8081')
-        cy.get('li').contains('Gosia Radzyminska').find('.email').click()
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.email').click()
     })
 
     it('should successfully send an email', () => {
