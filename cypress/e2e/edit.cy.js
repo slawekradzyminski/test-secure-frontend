@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { editPage } from "../pages/editPage"
+import { homePage } from "../pages/homePage"
 import { getRandomUser } from "./domain/user"
 
 describe('Edit page tests', () => {
@@ -11,7 +13,7 @@ describe('Edit page tests', () => {
         cy.register(user)
         cy.login(user.username, user.password)
         cy.visit('http://localhost:8081')
-        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
+        homePage.clickEditUser(user)
         cy.getCookie('token').then((tokenCookie) => token = tokenCookie.value) 
     })
 
@@ -33,10 +35,7 @@ describe('Edit page tests', () => {
         const newUser = getRandomUser()
 
         // when
-        cy.get('[name=firstName]').clear().type(newUser.firstName)
-        cy.get('[name=lastName]').clear().type(newUser.lastName)
-        cy.get('[name=email]').clear().type(newUser.email)
-        cy.get('.btn-primary').click()
+        editPage.attemptEdit(newUser)
 
         // then
         cy.get('.alert-success').should('have.text', 'Updating user successful')
