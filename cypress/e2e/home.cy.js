@@ -5,14 +5,7 @@ import { getRandomUser } from "./domain/user"
 describe('Home page tests', () => {
     beforeEach(() => {
         const user = getRandomUser()
-
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signup',
-            body: user
-        })
-
-
+        cy.register(user)
         cy.login(user.username, user.password)
         cy.visit('http://localhost:8081')
     })
