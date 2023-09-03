@@ -15,6 +15,10 @@ describe('Edit page tests', () => {
         cy.getCookie('token').then((tokenCookie) => token = tokenCookie.value) 
     })
 
+    afterEach(() => {
+        cy.deleteUser(user.username, token)
+    })
+
     it('should successfully autofill user data', () => {
         // then
         cy.get('[name=username]').should('have.value', user.username)

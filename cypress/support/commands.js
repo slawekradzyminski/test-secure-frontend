@@ -37,3 +37,13 @@ Cypress.Commands.add('assertUserData', (username, token, user) => {
         expect(resp.body.username).to.equal(username)
     })
 })
+
+Cypress.Commands.add('deleteUser', (username, token) => {
+    cy.request({
+        method: 'DELETE',
+        url: `http://localhost:4001/users/${username}`,
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+})
