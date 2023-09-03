@@ -26,7 +26,6 @@ describe('Edit page tests', () => {
 
     it.only('should successfully edit an user', () => {
         // given
-        cy.log(token)
         const newUser = getRandomUser()
 
         // when
@@ -39,7 +38,19 @@ describe('Edit page tests', () => {
         cy.get('.alert-success').should('have.text', 'Updating user successful')
         cy.get('li').contains(`${user.firstName} ${user.lastName}`).should('not.exist')
         cy.get('li').contains(`${newUser.firstName} ${newUser.lastName}`).should('exist')
-        // asercji przez API
+
+        cy.request({
+            method: 'GET',
+            url: `http://localhost:4001/users/${user.username}`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((resp) => {
+            expect(resp.body.firstName).to.equal(newUser.firstName)
+            expect(resp.body.lastName).to.equal(newUser.lastName)
+            expect(resp.body.email).to.equal(newUser.email)
+            expect(resp.body.username).to.equal(user.username)
+        })
     })
 
 })
