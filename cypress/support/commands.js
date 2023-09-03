@@ -22,3 +22,18 @@ Cypress.Commands.add('register', (user) => {
         body: user
     })
 })
+
+Cypress.Commands.add('assertUserData', (username, token, user) => {
+    cy.request({
+        method: 'GET',
+        url: `http://localhost:4001/users/${username}`,
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }).then((resp) => {
+        expect(resp.body.firstName).to.equal(user.firstName)
+        expect(resp.body.lastName).to.equal(user.lastName)
+        expect(resp.body.email).to.equal(user.email)
+        expect(resp.body.username).to.equal(username)
+    })
+})
