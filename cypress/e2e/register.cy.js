@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import RegisterPage from "../pages/RegisterPage"
 import { generateRandomEmail, generateRandomString } from "../utils/random"
 
 describe('Register page tests', () => {
@@ -31,14 +32,18 @@ describe('Register page tests', () => {
     })
 
     it('should open login page', () => {
-        cy.get('.btn-link').click()
+        // when
+        RegisterPage.clickCancel()
+
+        // then
         cy.get('h2').should('contain.text', 'Login')
         cy.url().should('contain', '/login')
     })
 
     it('should trigger frontend validation', () => {
-        cy.get('.btn-primary').click()
+        RegisterPage.clickRegister()
 
+        // then
         cy.get('.invalid-feedback').should('have.length', 5)
         cy.get('.invalid-feedback').eq(0).should('have.text', 'Required field length is 4 or more')
         cy.get('.is-invalid').should('have.length', 5)
