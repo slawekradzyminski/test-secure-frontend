@@ -3,7 +3,7 @@
 import { generateRandomString } from "../utils/random"
 import { getRandomUser } from "./domain/user"
 
-describe('Home page tests', () => {
+describe('Email page tests', () => {
     beforeEach(() => {
         const user = getRandomUser()
         cy.register(user)
