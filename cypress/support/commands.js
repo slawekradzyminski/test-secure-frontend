@@ -45,5 +45,7 @@ Cypress.Commands.add('deleteUser', (username, token) => {
         headers: {
             Authorization: `Bearer ${token}`
         }
+    }).then((resp) => {
+        expect(resp.status).to.eq(204)
     })
 })
