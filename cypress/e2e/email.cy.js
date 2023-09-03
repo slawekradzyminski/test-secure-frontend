@@ -13,9 +13,12 @@ describe('Email page tests', () => {
     })
 
     it('should successfully send an email', () => {
+        // when
         cy.get('[name=subject]').type(generateRandomString())
         cy.get('[name=message]').type(generateRandomString())
         cy.get('.btn-primary').click()
+
+        // then
         cy.get('.alert-success').should('have.text', 'Email was scheduled to be send')
     })
 
