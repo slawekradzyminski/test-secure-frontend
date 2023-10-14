@@ -1,8 +1,15 @@
 /// <reference types="cypress" />
 
+import { User } from "../domain/User"
+import { getRandomUser } from "../generators/userGenerator"
+
 describe('Home page tests', () => {
+    let user: User
+
     beforeEach(() => {
-        cy.login('admin', 'admin')
+        user = getRandomUser()
+        cy.register(user)
+        cy.login(user.username, user.password)
         cy.visit('http://localhost:8081')
     })
 
