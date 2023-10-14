@@ -19,5 +19,5 @@
         "**/*.js",
         "**/*.ts",
         "../node_modules/cypress"
-, "support/commands.jts"    ]
+    ]
 }
