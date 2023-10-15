@@ -19,3 +19,14 @@ export const getLoginResponseFor = (user: User): LoginResponse => {
         token: 'fakeJwtToken'
     }
 }
+
+export const getLoginResponseForWithUsername = (user: User, username: string): LoginResponse => {
+    // javascript deconstruction
+    const { password, ...data } = user
+    // javascript spread operator
+    return {
+        ...data,
+        token: 'fakeJwtToken',
+        username: username
+    }
+}
