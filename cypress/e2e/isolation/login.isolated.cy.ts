@@ -1,10 +1,12 @@
 /// <reference types="cypress" />
 
+import Alert from "../../components/Alert"
 import { User } from "../../domain/User"
 import { getLoginResponseFor } from "../../domain/requests/loginTypes"
 import { getRandomUser } from "../../generators/userGenerator"
 import { getAllUsersMocks } from "../../mocks/getAllUsersMocks"
 import { loginMocks } from "../../mocks/loginMocks"
+import LoginPage from "../../pages/LoginPage"
 
 describe('Login page tests in isolation', () => {
     beforeEach(() => {
@@ -18,9 +20,7 @@ describe('Login page tests in isolation', () => {
         getAllUsersMocks.mockUsers()
 
         // when
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        LoginPage.attemptLogin(user.username, user.password)
 
         // then
         cy.get('h1').should('contain.text', user.firstName)
@@ -33,13 +33,19 @@ describe('Login page tests in isolation', () => {
         loginMocks.mockWrongCredentials(errorMessage)
 
         // when
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
+        LoginPage.attemptLogin('wrong', 'wrong')
 
         // then
-        cy.get('.alert').should('contain.text', errorMessage)
+        Alert.getAlertError().should('contain.text', errorMessage)
         cy.url().should('contain', '/login')
+    })
+
+    it('should trigger frontend validation', () => {
+        // when
+        LoginPage.clickLogin()
+
+        // then
+        cy.get('.invalid-feedback').should('have.length', 2)
     })
 
 })
