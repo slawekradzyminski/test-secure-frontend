@@ -48,6 +48,7 @@ describe('Login page tests in isolation', () => {
 
         // then
         cy.get('.invalid-feedback').should('have.length', 2)
+        Alert.getAlertError().should('be.visible')
         cy.percySnapshot('frontent validation')
     })
 
