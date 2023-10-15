@@ -24,7 +24,7 @@
         "@babel/preset-react": "^7.0.0",
         "@faker-js/faker": "^8.1.0",
         "babel-loader": "^8.0.5",
-        "cypress": "^13.3.1",
+        "cypress": "^12.17.4",
         "html-webpack-plugin": "^5.5.0",
         "path": "^0.12.7",
         "typescript": "^5.2.2",
