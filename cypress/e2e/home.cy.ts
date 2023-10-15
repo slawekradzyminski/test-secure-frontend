@@ -26,17 +26,61 @@ describe('Home page tests', () => {
     })
 
     it('should display at least one user', () => {
+        // then
         cy.get('li').should('have.length.at.least', 1)
     })
 
     it('should logout', () => {
+        // when
         cy.get('#logout').click()
+
+        // then
         cy.url().should('contain', '/login')
     })
 
     it('should open add more page', () => {
+        // when
         cy.get('#addmore').click()
+
+        // then
         cy.url().should('contain', '/add-user')
     })
 
+    it('should open add more page', () => {
+        // given
+        const userToDelete = getRandomUser()
+        cy.register(userToDelete)
+        cy.reload()
+        cy.intercept('DELETE', `**/users/${userToDelete.username}`).as('deleteRequest')
+
+        // when
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).find('.delete').click()
+
+        // then
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).should('not.exist')
+        cy.wait('@deleteRequest').then((intercepted) => {
+            expect(intercepted.response?.statusCode).to.eq(204)
+        })
+    })
+
+    it('should not delete user if we cancel to delete via window confirm', () => {
+        // given
+        const userToDelete = getRandomUser()
+        cy.register(userToDelete)
+        cy.reload()
+        Cypress.on('window:confirm', (confirmationText) => {
+            expect(confirmationText).to.eq('Are you sure you wish to delete this item?')
+            return false
+        })
+        cy.intercept('DELETE', `**/users/${userToDelete.username}`).as('deleteRequest')
+
+        // when
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).find('.delete').click()
+
+        // then
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).should('exist')
+        cy.get('@deleteRequest.all').then((intercepted) => {
+            expect(intercepted).to.have.length(0);
+        });
+    })
 })
