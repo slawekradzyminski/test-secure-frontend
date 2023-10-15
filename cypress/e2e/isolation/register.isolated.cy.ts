@@ -17,6 +17,8 @@ describe('Register page tests in isolation', () => {
         registerMocks.mockSuccessfulRegister(user)
 
         // when
+        cy.get('.btn-primary').should('be.visible')
+        cy.percySnapshot('register screen')
         registerPage.attemptRegister(user)
 
         // then

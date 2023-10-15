@@ -20,6 +20,8 @@ describe('Login page tests in isolation', () => {
         getAllUsersMocks.mockUsers()
 
         // when
+        cy.get('.btn-primary').should('be.visible')
+        cy.percySnapshot('logging screen')
         LoginPage.attemptLogin(user.username, user.password)
 
         // then
@@ -46,6 +48,7 @@ describe('Login page tests in isolation', () => {
 
         // then
         cy.get('.invalid-feedback').should('have.length', 2)
+        cy.percySnapshot('frontent validation')
     })
 
 })
