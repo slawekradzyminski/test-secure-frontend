@@ -20,4 +20,17 @@ describe('Home page tests in isolation', () => {
         cy.percySnapshot('logged in home page')
     })
 
+    it('should delete user', () => {
+        // given
+        const userToDelete = users[1]
+        cy.intercept('DELETE', `**/users/${userToDelete.username}`, { statusCode: 204 }).as('deleteRequest')
+
+        // when
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).find('.delete').click()
+
+        // then
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).should('not.exist')
+        cy.wait('@deleteRequest')
+    })
+
 })
