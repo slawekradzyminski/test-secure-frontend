@@ -20,13 +20,13 @@ export const getLoginResponseFor = (user: User): LoginResponse => {
     }
 }
 
-export const getLoginResponseForWithUsername = (user: User, username: string): LoginResponse => {
+export const getLoginResponseForWithFirstName = (user: User, firstName: string): LoginResponse => {
     // javascript deconstruction
     const { password, ...data } = user
     // javascript spread operator
     return {
         ...data,
         token: 'fakeJwtToken',
-        username: username
+        firstName: firstName
     }
 }
