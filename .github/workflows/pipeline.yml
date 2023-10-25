@@ -15,7 +15,7 @@ jobs:
           runTests: false
       - run: npm install
       - name: "UI Tests - Chrome"
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           start: npm start
           wait-on: "http://localhost:8081"
