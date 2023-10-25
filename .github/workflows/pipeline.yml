@@ -13,6 +13,10 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           runTests: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.16.0'
       - run: npm install
       - name: "UI Tests - Chrome"
         uses: cypress-io/github-action@v5
