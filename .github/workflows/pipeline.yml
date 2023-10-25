@@ -9,14 +9,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Cypress install
-        uses: cypress-io/github-action@v5
-        with:
-          runTests: false
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.16.0'
+      - name: Cypress install
+        uses: cypress-io/github-action@v5
+        with:
+          runTests: false
       - run: npm install
       - name: "UI Tests - Chrome"
         uses: cypress-io/github-action@v5
