@@ -1,3 +1,18 @@
+## Running tests locally
+
+Create cypress.env.json with the following data
+
+```json
+{
+    "testarena_email": "your email",
+    "testarena_password": "your password"
+}
+```
+
+## Running tests in CI
+
+npx cypress run --env testarena_email=${{ secrets.email }},testarena_password=${{ secrets.password }}
+
 ## Local run
 
 ```commandline

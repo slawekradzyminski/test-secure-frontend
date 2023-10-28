@@ -6,9 +6,9 @@ describe('TestArena login page tests', () => {
     })
 
     it('should successfully login', () => {
-        const email = 'administrator@testarena.pl'
+        const email = Cypress.env('testarena_email')
         cy.get('#email').type(email)
-        cy.get('#password').type('sumXQQ72$L')    
+        cy.get('#password').type(Cypress.env('testarena_password'))    
         cy.get('#login').click()
         
         cy.get('#header_logo').should('be.visible')

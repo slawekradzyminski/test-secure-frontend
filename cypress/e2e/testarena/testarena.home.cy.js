@@ -3,8 +3,8 @@
 describe('TestArena home page tests', () => {
     beforeEach(() => {
         cy.visit('http://demo.testarena.pl/zaloguj')
-        cy.get('#email').type('administrator@testarena.pl')
-        cy.get('#password').type('sumXQQ72$L')    
+        cy.get('#email').type(Cypress.env('testarena_email'))
+        cy.get('#password').type(Cypress.env('testarena_password'))    
         cy.get('#login').click()
         cy.get('#header_logo').should('be.visible')
     })
