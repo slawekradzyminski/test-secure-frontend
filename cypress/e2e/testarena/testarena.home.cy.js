@@ -2,11 +2,7 @@
 
 describe('TestArena home page tests', () => {
     beforeEach(() => {
-        cy.visit('http://demo.testarena.pl/zaloguj')
-        cy.get('#email').type(Cypress.env('testarena_email'))
-        cy.get('#password').type(Cypress.env('testarena_password'))    
-        cy.get('#login').click()
-        cy.get('#header_logo').should('be.visible')
+        cy.loginToTestArena(Cypress.env('testarena_email'), Cypress.env('testarena_password'))
     })
 
     it('should open add projects page', () => {
