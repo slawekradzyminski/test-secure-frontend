@@ -3,5 +3,6 @@ declare namespace Cypress {
         loginToTestArena(email: string, password: string): void;
         login(username: string, password: string): void;
         register(user: object): void;
+        deleteUser(username: string, token: string): void;
     }
 }
