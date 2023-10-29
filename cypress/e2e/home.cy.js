@@ -12,18 +12,23 @@ describe('Home page tests', () => {
     })
 
     it('should display at least one user', () => {
+        // then
         cy.get('li').should('have.length.at.least', 1)
     })
 
     it('should open edit user page', () => {
-        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
+        // when
+        homePage.clickEditUser(user)
 
+        // then
         cy.get('h2').should('contain.text', 'Edit user')
     })
 
     it('should open email page', () => {
-        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.email').click()
+        // when
+        homePage.clickSendEmailToUser(user)
 
+        // then
         cy.get('h2').should('contain.text', 'Email user')
     })
 
