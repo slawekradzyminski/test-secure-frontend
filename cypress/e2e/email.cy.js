@@ -4,6 +4,8 @@ import { getRandomEmail } from "../generator/email"
 import { getRandomUser } from "../generator/user"
 
 describe('Email page tests', () => {
+    let token
+
     beforeEach(() => {
         // 1 Rejestrujemy nowego uzytkownika przez API
         const user = getRandomUser()
@@ -11,9 +13,16 @@ describe('Email page tests', () => {
 
         // 2 Logujemy sie na nowego uzytkownika
         cy.login(user.username, user.password)
+        cy.getCookie('token').then((cookie) => {
+            token = cookie.value
+        })
 
         // 3 Klikamy wyslij email to nowego uzytkownika
         cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.email').click()
+    })
+
+    afterEach(() => {
+        cy.deleteUser(user.username, token)
     })
 
     it('should successfully send an email', () => {
