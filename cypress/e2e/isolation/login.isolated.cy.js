@@ -38,11 +38,24 @@ describe('Login page tests', () => {
     })
 
     it('should fail to login', () => {
+        // given
+        const errorMessage = "Invalid username/password supplied"
+        cy.intercept('POST', '**/users/signin', {
+            statusCode: 422,
+            body: {
+                timestamp: "2023-10-29T14:24:06.248+00:00",
+                status: 422,
+                error: "Unprocessable Entity",
+                message: errorMessage,
+                path: "/users/signin"
+            },
+        })
+
         // when
         loginPage.attemptLogin('wrong', 'wrong')
 
         // then
-        actionAlert.verifyFailure('Invalid username/password supplied')
+        actionAlert.verifyFailure(errorMessage)
     })
 
 })
