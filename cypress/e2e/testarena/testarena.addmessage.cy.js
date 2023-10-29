@@ -11,7 +11,8 @@ describe('TestArena add messages page tests', () => {
     it('should post new message', () => {
         const message = generateRandomString(15)
 
-        cy.get('#j_msgContent').type(message)
+        // longer wait because we need to make sure gears disappeared
+        cy.get('#j_msgContent', { timeout: 6000 }).type(message)
         cy.get('#j_msgResponse-193').click()
 
         cy.get('.message_content_text').last().should('contain.text', message)
