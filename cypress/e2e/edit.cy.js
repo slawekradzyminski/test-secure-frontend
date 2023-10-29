@@ -5,12 +5,27 @@ import { generateRandomString } from "../utils/random"
 
 describe('Edit page tests', () => {
     let user
+    let token
 
     beforeEach(() => {
         user = getRandomUser()
         cy.register(user)
         cy.login(user.username, user.password)
+        // Przypisanie wartości ciastka do zmiennej o nazwie token
+        cy.getCookie('token').then((cookie) => {
+            token = cookie.value
+        })
         cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
+    })
+
+    afterEach(() => {
+        cy.request({
+            method: 'DELETE',
+            url: `http://localhost:4001/users/${user.username}`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
     })
 
     it('should correctly autofill data', () => {
