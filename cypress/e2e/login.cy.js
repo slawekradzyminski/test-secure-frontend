@@ -1,16 +1,21 @@
 /// <reference types="cypress" />
 
+import { getRandomUser } from "../generator/user"
+
 describe('Login page tests', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8081')
     })
 
     it('should successfully login', () => {
-        cy.get('[name=username]').type('admin')
-        cy.get('[name=password]').type('admin')
+        const user = getRandomUser()
+        cy.register(user)
+
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
         cy.get('.btn-primary').click()
 
-        cy.get('h1').should('contain.text', 'Slawomir')
+        cy.get('h1').should('contain.text', user.firstName)
     })
 
     it('should fail to login', () => {
