@@ -12,5 +12,10 @@ describe('TestArena home page tests', () => {
         cy.url().should('contain', '/add_project')
     })
 
+    it('should open messages page', () => {
+        cy.get('.icon_mail').click()
+        
+        cy.url().should('contain', '/moje_wiadomosci')
+    })
 
 })
