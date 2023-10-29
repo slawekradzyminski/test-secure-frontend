@@ -41,4 +41,17 @@ describe('Home page tests', () => {
         cy.get('h2').should('contain.text', 'Email user')
     })
 
+    it.only('should delete an user', () => {
+        // given
+        const userToDelete = getRandomUser()
+        cy.register(userToDelete)
+        cy.reload()
+
+        // when
+        homePage.clickDeleteUser(userToDelete)
+
+        // then
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).should('not.exist')
+    })
+
 })

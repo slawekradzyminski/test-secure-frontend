@@ -16,5 +16,12 @@ export const homePage = {
             .contains(`${user.firstName} ${user.lastName}`)
             .find('.email')
             .click()
+    },
+
+    clickDeleteUser: (user) => {
+        cy.get(homePage.selectors.userRow)
+            .contains(`${user.firstName} ${user.lastName}`)
+            .find('.delete')
+            .click()
     }
 }
