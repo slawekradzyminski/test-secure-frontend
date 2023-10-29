@@ -1,11 +1,22 @@
 /// <reference types="cypress" />
 
 import { getRandomEmail } from "../generator/email"
+import { getRandomUser } from "../generator/user"
 
 describe('Email page tests', () => {
     beforeEach(() => {
-        cy.login('admin', 'admin')
-        cy.get('li').contains('Gosia Radzyminska').find('.email').click()
+        // 1 Rejestrujemy nowego uzytkownika przez API
+        const user = getRandomUser()
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:4001/users/signup',
+            body: user
+        })
+        // 2 Logujemy sie na nowego uzytkownika
+        cy.login(user.username, user.password)
+
+        // 3 Klikamy wyslij email to nowego uzytkownika
+        cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.email').click()
     })
 
     it('should successfully send an email', () => {

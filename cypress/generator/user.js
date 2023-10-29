@@ -11,4 +11,4 @@ export const getRandomUser = () => {
     }
 }
 
-const getRandomEmail = () => `${generateRandomString(10)}@cantest.it`
+export const getRandomEmail = () => `${generateRandomString(10)}@cantest.it`
