@@ -7,11 +7,8 @@ describe('Email page tests', () => {
     beforeEach(() => {
         // 1 Rejestrujemy nowego uzytkownika przez API
         const user = getRandomUser()
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:4001/users/signup',
-            body: user
-        })
+        cy.register(user)
+
         // 2 Logujemy sie na nowego uzytkownika
         cy.login(user.username, user.password)
 
