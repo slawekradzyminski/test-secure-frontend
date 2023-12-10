@@ -1,10 +1,11 @@
 import { handleResponse } from "./user.service";
 import config from 'config';
+import { authHeader } from '../_helpers';
 
 export const sendEmail = (email) => {
     const requestOptions = {
         method: 'POST',
-        headers: {'Content-Type': 'application/json' },
+        headers: {...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(email)
     };
 
