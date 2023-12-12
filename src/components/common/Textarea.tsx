@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import {capitalizeAndAddSpace} from "../util/string";
-import PropTypes from 'prop-types';
 
-const Textarea = props => {
+interface TextareaProps {
+    name: string;
+    submitted?: boolean;
+    value: string;
+    handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
+const Textarea = (props: TextareaProps) => {
 
     const optionalValidationError = () => props.submitted && validationFailed(props.value) ? ' is-invalid' : ''
-    const validationFailed = (field) => !field || field.length < 4
+    const validationFailed = (field: string | any[]) => !field || field.length < 4
 
     return (
         <>
@@ -20,16 +26,5 @@ const Textarea = props => {
         </>
     );
 };
-
-Textarea.defaultProps = {
-    type: 'text'
-}
-
-Textarea.propTypes = {
-    name: PropTypes.string,
-    submitted: PropTypes.bool,
-    value: PropTypes.string,
-    handleChange: PropTypes.func,
-}
 
 export {Textarea};

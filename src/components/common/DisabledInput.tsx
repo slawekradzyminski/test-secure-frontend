@@ -1,8 +1,12 @@
 import React from 'react';
 import {capitalizeAndAddSpace} from "../util/string";
-import PropTypes from 'prop-types';
 
-const DisabledInput = props => {
+interface DisabledInputProps {
+    name: string;
+    value: string;
+}
+
+const DisabledInput = (props: DisabledInputProps) => {
     return (
         <>
             <div className="form-group">
@@ -14,8 +18,3 @@ const DisabledInput = props => {
 };
 
 export {DisabledInput};
-
-DisabledInput.propTypes = {
-    name: PropTypes.string,
-    value: PropTypes.string,
-}

@@ -1,11 +1,18 @@
 import React from 'react';
 import {capitalizeAndAddSpace} from "../util/string";
-import PropTypes from 'prop-types';
 
-const Input = props => {
+interface InputProps {
+    name: string;
+    submitted?: boolean;
+    value?: string;
+    handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    type?: string;
+};
+
+const Input = (props: InputProps) => {
 
     const optionalValidationError = () => props.submitted && validationFailed(props.value) ? ' is-invalid' : ''
-    const validationFailed = (field) => !field || field.length < 4
+    const validationFailed = (field: string | any[]) => !field || field.length < 4
 
     return (
         <>
@@ -21,16 +28,5 @@ const Input = props => {
     );
 };
 
-Input.defaultProps = {
-    type: 'text'
-}
-
-Input.propTypes = {
-    name: PropTypes.string,
-    submitted: PropTypes.bool,
-    value: PropTypes.string,
-    handleChange: PropTypes.func,
-    type: PropTypes.string
-}
 
 export {Input};
