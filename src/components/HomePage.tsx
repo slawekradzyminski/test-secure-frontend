@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie'
 
 import { userActions } from '../_actions';
+import { Roles, RootState, User } from '../types';
 
 function HomePage() {
     const navigate = useNavigate();
-    const users = useSelector(state => state.users);
-    const user = useSelector(state => state.authentication.user);
-    const isAdmin = user.roles.includes('ROLE_ADMIN')
+    const users = useSelector((state: RootState) => state.users);
+    const user = useSelector((state: RootState)=> state.authentication.user);
+    const isAdmin = user.roles.includes(Roles.ROLE_ADMIN)
     const dispatch = useDispatch();
     const tokenCookie = 'token'
 
@@ -29,13 +30,13 @@ function HomePage() {
 
     const handleDeleteUser = username => dispatch(userActions.delete(username))
 
-    const editUser = (user) => {
+    const editUser = (user: User) => {
         localStorage.setItem("userToEdit", JSON.stringify(user));
         dispatch(userActions.saveEditDetails(user));
         navigate('/edit-user');
     }
 
-    const emailUser = (user) => {
+    const emailUser = (user: User) => {
         localStorage.setItem("userToEdit", JSON.stringify(user));
         dispatch(userActions.saveEditDetails(user));
         navigate('/email');

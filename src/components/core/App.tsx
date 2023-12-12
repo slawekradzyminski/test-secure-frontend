@@ -7,6 +7,7 @@ import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 import { EditUserComponent } from "../EditUserComponent";
 import { EmailComponent } from '../EmailComponent';
+import { RootState } from '../../types';
 
 function PrivateRouteWrapper({ children }) {
     const location = useLocation();
@@ -19,7 +20,7 @@ function PrivateRouteWrapper({ children }) {
 }
 
 function  App() {
-    const alert = useSelector((state: { alert: any; }) => state.alert);
+    const alert = useSelector((state: RootState) => state.alert);
     const dispatch = useDispatch();
 
     useEffect(() => {

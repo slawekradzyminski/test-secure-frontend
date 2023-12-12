@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {userActions} from "../_actions";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
@@ -6,6 +6,7 @@ import {Input} from "./common/Input";
 import {getHandleChange} from "./util/change";
 import {DisabledInput} from "./common/DisabledInput";
 import {PrimaryButton} from "./common/PrimaryButton";
+import { RootState } from '../types';
 
 function EditUserComponent() {
 
@@ -17,7 +18,7 @@ function EditUserComponent() {
     const [lastName, setLastName] = useState(userToEdit.lastName)
     const [email, setEmail] = useState(userToEdit.email)
     const [roles, setRoles] = useState(userToEdit.roles)
-    const editing = useSelector(state => state.edituser.loading);
+    const editing = useSelector((state: RootState) => state.edituser.loading);
     const [submitted, setSubmitted] = useState(false);
 
     const saveUser = (e) => {

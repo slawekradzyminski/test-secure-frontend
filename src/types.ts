@@ -18,7 +18,9 @@ export type User = {
     firstName: string;
     lastName: string;
     roles: Roles[];
+    id?: number
     deleting?: boolean; 
+    loading?: boolean;
 };
 
 export enum Roles {
