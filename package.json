@@ -4,8 +4,7 @@
     "license": "MIT",
     "scripts": {
         "build": "webpack --mode production",
-        "startmac": "export NODE_OPTIONS='--dns-result-order=ipv4first' && webpack-dev-server --host localhost --open --port 8081",
-        "start": "set NODE_OPTIONS='--dns-result-order=ipv4first' && webpack-dev-server --host localhost --open --port 8081"
+        "start": "cross-env NODE_OPTIONS='--dns-result-order=ipv4first' && webpack-dev-server --host localhost --open --port 8081"
     },
     "dependencies": {
         "js-cookie": "^3.0.1",
@@ -21,10 +20,15 @@
         "@babel/preset-env": "^7.4.3",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.23.3",
+        "@faker-js/faker": "^8.3.1",
+        "@percy/cli": "^1.27.4",
+        "@percy/cypress": "^3.1.2",
         "@types/js-cookie": "^3.0.6",
         "@types/react": "^18.2.43",
         "@types/react-dom": "^18.2.17",
         "babel-loader": "^8.0.5",
+        "cross-env": "^7.0.3",
+        "cypress": "^13.6.1",
         "html-webpack-plugin": "^5.5.4",
         "typescript": "^5.3.3",
         "webpack": "^5.89.0",
