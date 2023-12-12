@@ -1,13 +1,14 @@
 import { handleResponse } from "./user.service";
-import config from 'config';
 import { authHeader } from '../_helpers';
+import { Email } from "../types";
 
-export const sendEmail = (email) => {
+
+export const sendEmail = (email: Email) => {
     const requestOptions = {
         method: 'POST',
         headers: {...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(email)
     };
 
-    return fetch(`${config.apiUrl}/email`, requestOptions).then(handleResponse);
+    return fetch(`${process.env.API_URL}/email`, requestOptions).then(handleResponse);
 }

@@ -7,6 +7,7 @@ import { getHandleChange } from "./util/change";
 import { DisabledInput } from "./common/DisabledInput";
 import { PrimaryButton } from "./common/PrimaryButton";
 import { Textarea } from "./common/Textarea";
+import { Email } from '../types';
 
 function EmailComponent() {
 
@@ -20,7 +21,7 @@ function EmailComponent() {
     const sendEmail = (e) => {
         e.preventDefault();
         setSubmitted(true)
-        const email = { to, subject, message }
+        const email: Email = { to, subject, message }
         dispatch(userActions.handleEmail(email));
     };
 

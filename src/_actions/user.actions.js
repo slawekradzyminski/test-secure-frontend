@@ -1,6 +1,6 @@
 import { userConstants } from '../_constants';
 import { userService } from '../_services';
-import { alertActions } from './';
+import { alertActions } from '.';
 import { sendEmail } from '../_services/email.service';
 
 export const userActions = {

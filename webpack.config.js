@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -17,9 +18,16 @@ module.exports = {
             }
         ]
     },
-    plugins: [new HtmlWebpackPlugin({
-        template: './src/index.html'
-    })],
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html'
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'API_URL': JSON.stringify('http://localhost:4001')
+            }
+        })
+    ],
     devServer: {
         historyApiFallback: true
     },

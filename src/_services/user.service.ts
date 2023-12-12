@@ -1,8 +1,10 @@
-import config from 'config';
 import { authHeader } from '../_helpers';
 import Cookies from 'js-cookie'
+import { User } from '../types';
 
-export const handleResponse = (response) => {
+const apiUrl = process.env.API_URL;
+
+export const handleResponse = (response: Response) => {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
@@ -27,14 +29,14 @@ export const userService = {
     delete: _delete
 };
 
-function login(username, password) {
+function login(username: string, password: string) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`${config.apiUrl}/users/signin`, requestOptions)
+    return fetch(`${apiUrl}/users/signin`, requestOptions)
         .then(handleResponse)
         .then(user => {
             localStorage.setItem('user', JSON.stringify(user));
@@ -53,35 +55,35 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/users`, requestOptions).then(handleResponse);
 }
 
-function register(user) {
+function register(user: User) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/signup`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/users/signup`, requestOptions).then(handleResponse);
 }
 
-function update(user) {
+function update(user: User) {
     const requestOptions = {
         method: 'PUT',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/${user.username}`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/users/${user.username}`, requestOptions).then(handleResponse);
 }
 
-function _delete(username) {
+function _delete(username: string) {
     const requestOptions = {
         method: 'DELETE',
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${username}`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/users/${username}`, requestOptions).then(handleResponse);
 }
 
