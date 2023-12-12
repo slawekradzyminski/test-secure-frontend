@@ -7,8 +7,7 @@ import { Input } from "./common/Input";
 import { getHandleChange } from "./util/change";
 import { PrimaryButton } from "./common/PrimaryButton";
 import { RootState } from '../types';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
+import { AppDispatch } from '../_helpers/store';
 
 function LoginPage() {
     const [username, setUsername] = useState('')
@@ -16,7 +15,7 @@ function LoginPage() {
     const [submitted, setSubmitted] = useState(false);
     const loggingIn = useSelector((state: RootState) => state.authentication.loggingIn);
     const navigate = useNavigate();
-    const dispatch = useDispatch<ThunkDispatch<RootState, unknown, AnyAction>>();
+    const dispatch: AppDispatch = useDispatch();
     const location = useLocation();
 
     useEffect(() => {

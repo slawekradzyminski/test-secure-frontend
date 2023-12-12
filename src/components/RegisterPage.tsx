@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {userActions} from '../_actions';
 import {Input} from "./common/Input";
 import {getHandleChange} from "./util/change";
 import {PrimaryButton} from "./common/PrimaryButton";
-import { RootState } from '../types';
+import { Roles, RootState } from '../types';
+import { AppDispatch } from '../_helpers';
+import { userActions } from '../_actions/user.actions';
 
 function RegisterPage() {
     const [username, setUsername] = useState('')
@@ -14,11 +15,11 @@ function RegisterPage() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    const [roles, setRoles] = useState(['ROLE_CLIENT'])
+    const [roles, setRoles] = useState([Roles.ROLE_CLIENT])
     const [submitted, setSubmitted] = useState(false);
     const registering = useSelector((state: RootState) => state.registration.registering);
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const dispatch: AppDispatch = useDispatch();
 
     function handleSubmit(e) {
         e.preventDefault();

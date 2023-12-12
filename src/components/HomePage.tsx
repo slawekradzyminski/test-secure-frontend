@@ -3,15 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie'
 
-import { userActions } from '../_actions';
 import { Roles, RootState, User } from '../types';
+import { AppDispatch } from '../_helpers';
+import { userActions } from '../_actions';
 
 function HomePage() {
     const navigate = useNavigate();
     const users = useSelector((state: RootState) => state.users);
     const user = useSelector((state: RootState)=> state.authentication.user);
     const isAdmin = user.roles.includes(Roles.ROLE_ADMIN)
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const tokenCookie = 'token'
 
     useEffect(() => {

@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import {userActions} from "../_actions";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import {Input} from "./common/Input";
@@ -7,12 +6,14 @@ import {getHandleChange} from "./util/change";
 import {DisabledInput} from "./common/DisabledInput";
 import {PrimaryButton} from "./common/PrimaryButton";
 import { RootState } from '../types';
+import { userActions } from '../_actions/user.actions';
+import { AppDispatch } from '../_helpers/store';
 
 function EditUserComponent() {
 
     let userToEdit = JSON.parse(localStorage.getItem('userToEdit'));
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const [username, setUsername] = useState(userToEdit.username)
     const [firstName, setFirstName] = useState(userToEdit.firstName)
     const [lastName, setLastName] = useState(userToEdit.lastName)
