@@ -19,7 +19,7 @@ function PrivateRouteWrapper({ children }) {
 }
 
 function  App() {
-    const alert = useSelector(state => state.alert);
+    const alert = useSelector((state: { alert: any; }) => state.alert);
     const dispatch = useDispatch();
 
     useEffect(() => {

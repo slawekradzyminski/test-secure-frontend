@@ -6,12 +6,13 @@ import {userActions} from '../_actions';
 import {Input} from "./common/Input";
 import {getHandleChange} from "./util/change";
 import {PrimaryButton} from "./common/PrimaryButton";
+import { RootState } from '../types';
 
 function LoginPage() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [submitted, setSubmitted] = useState(false);
-    const loggingIn = useSelector(state => state.authentication.loggingIn);
+    const loggingIn = useSelector((state: RootState) => state.authentication.loggingIn);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();

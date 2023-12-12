@@ -1,9 +1,20 @@
 import { userConstants } from '../_constants';
+import { User } from '../types';
 
-let user = JSON.parse(localStorage.getItem('user'));
-const initialState = user ? { loggedIn: true, user } : {};
+export type AuthenticationState = {
+  loggedIn?: boolean;
+  loggingIn?: boolean;
+  user?: User;
+};
+type Action = {
+  type: string;
+  user?: User;
+};
 
-export function authentication(state = initialState, action) {
+let user: User = JSON.parse(localStorage.getItem('user'));
+const initialState: AuthenticationState = user ? { loggedIn: true, user } : {};
+
+export function authentication(state: AuthenticationState = initialState, action: Action): AuthenticationState {
     switch (action.type) {
         case userConstants.LOGIN_REQUEST:
             return {

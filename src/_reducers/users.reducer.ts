@@ -1,6 +1,19 @@
 import { userConstants } from '../_constants';
+import { User } from '../types';
 
-export function users(state = {}, action) {
+export type UsersState = {
+  loading?: boolean;
+  items?: User[];
+  error?: any;
+};
+type Action = {
+  type: string;
+  users?: User[];
+  error?: any;
+  username?: string;
+};
+
+export function users(state: UsersState = {}, action: Action): UsersState {
     switch (action.type) {
         case userConstants.GETALL_REQUEST:
             return {

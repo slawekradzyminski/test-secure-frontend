@@ -1,6 +1,19 @@
-import {userConstants} from '../_constants';
+import { userConstants } from '../_constants';
+import { User } from '../types';
 
-export function edituser(state = {}, action) {
+export type EditUserState = User | {
+  loading?: boolean;
+  edituser?: User;
+  error?: any; 
+}
+
+type Action = {
+  type: string;
+  user?: User;
+  error?: any; 
+};
+
+export function edituser(state: EditUserState = {}, action: Action): EditUserState {
     switch (action.type) {
         case userConstants.SAVE_USER:
             return action.user;
