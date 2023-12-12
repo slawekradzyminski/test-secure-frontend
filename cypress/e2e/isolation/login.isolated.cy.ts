@@ -2,7 +2,6 @@
 
 import Alert from "../../components/Alert"
 import { User } from "../../domain/User"
-import { getLoginResponseFor } from "../../domain/requests/loginTypes"
 import { getRandomUser } from "../../generators/userGenerator"
 import { getAllUsersMocks } from "../../mocks/getAllUsersMocks"
 import { loginMocks } from "../../mocks/loginMocks"

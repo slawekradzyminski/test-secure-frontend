@@ -5,6 +5,8 @@ npm-debug.log*
 .DS_Store
 allure-results/
 
+cypress/screenshots
+
 .idea
 .vscode
 # Runtime data

@@ -3,7 +3,7 @@
 import { User } from "../domain/User"
 import { getRandomUser } from "../generators/userGenerator"
 
-describe('Home page tests', () => {
+describe('Edit page tests', () => {
     let user: User
     let token: string | undefined
 

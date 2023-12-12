@@ -6,7 +6,7 @@ import { editMocks } from "../../mocks/editUserMocks"
 import Alert from "../../components/Alert"
 import { GetUserResponse } from "../../domain/requests/getUserTypes"
 
-describe('Home page tests in isolation', () => {
+describe('Edit page tests in isolation', () => {
     let editedUser: GetUserResponse
 
     beforeEach(() => {
