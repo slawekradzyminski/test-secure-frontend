@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {userActions} from '../_actions';
@@ -12,6 +12,7 @@ function LoginPage() {
     const [password, setPassword] = useState('')
     const [submitted, setSubmitted] = useState(false);
     const loggingIn = useSelector(state => state.authentication.loggingIn);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
 
@@ -24,7 +25,7 @@ function LoginPage() {
 
         setSubmitted(true);
         const {from} = location.state || {from: {pathname: "/"}};
-        dispatch(userActions.login(username, password, from));
+        dispatch(userActions.login(username, password, from, navigate));
     }
 
     return (

@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {userActions} from '../_actions';
@@ -16,14 +16,15 @@ function RegisterPage() {
     const [roles, setRoles] = useState(['ROLE_CLIENT'])
     const [submitted, setSubmitted] = useState(false);
     const registering = useSelector(state => state.registration.registering);
-    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     function handleSubmit(e) {
         e.preventDefault();
 
         setSubmitted(true);
         const user = {firstName, lastName, username, password, roles, email}
-        dispatch(userActions.register(user));
+        dispatch(userActions.register(user, navigate));
     }
 
     return (

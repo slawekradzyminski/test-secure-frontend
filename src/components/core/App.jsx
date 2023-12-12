@@ -1,24 +1,29 @@
 import React, { useEffect } from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { history } from '../../_helpers';
 import { alertActions } from '../../_actions';
-import { PrivateRoute } from './PrivateRoute';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 import { EditUserComponent } from "../EditUserComponent";
 import { EmailComponent } from '../EmailComponent';
 
+function PrivateRouteWrapper({ children }) {
+    const location = useLocation();
+
+    return (
+        localStorage.getItem('user')
+            ? children
+            : <Navigate to="/login" replace state={{ from: location }} />
+    );
+}
+
 function  App() {
     const alert = useSelector(state => state.alert);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        history.listen(() => {
-            dispatch(alertActions.clear());
-        });
+        dispatch(alertActions.clear());
     }, []);
 
     return (
@@ -28,16 +33,32 @@ function  App() {
                     {alert.message &&
                         <div className={`alert ${alert.type}`}>{alert.message}</div>
                     }
-                    <Router history={history}>
-                        <Switch>
-                            <PrivateRoute exact path="/" component={HomePage} />
-                            <Route path="/login" component={LoginPage} />
-                            <Route path="/register" component={RegisterPage} />
-                            <PrivateRoute exact path="/edit-user" component={EditUserComponent} />
-                            <PrivateRoute exact path="/email" component={EmailComponent} />
-                            <PrivateRoute exact path="/add-user" component={RegisterPage} />
-                            <Redirect from="*" to="/" />
-                        </Switch>
+                    <Router>
+                        <Routes>
+                            <Route path="/" element={
+                                <PrivateRouteWrapper>
+                                    <HomePage />
+                                </PrivateRouteWrapper>
+                            } />
+                            <Route path="/login" element={<LoginPage />} />
+                            <Route path="/register" element={<RegisterPage />} />
+                            <Route path="/edit-user" element={
+                                <PrivateRouteWrapper>
+                                    <EditUserComponent />
+                                </PrivateRouteWrapper>
+                            } />
+                            <Route path="/email" element={
+                                <PrivateRouteWrapper>
+                                    <EmailComponent />
+                                </PrivateRouteWrapper>
+                            } />
+                            <Route path="/add-user" element={
+                                <PrivateRouteWrapper>
+                                    <RegisterPage />
+                                </PrivateRouteWrapper>
+                            } />
+                            <Route path="*" element={<Navigate to="/" />} />
+                        </Routes>
                     </Router>
                 </div>
             </div>

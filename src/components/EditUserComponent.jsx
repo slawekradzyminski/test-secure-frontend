@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {userActions} from "../_actions";
 import {useDispatch, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Input} from "./common/Input";
 import {getHandleChange} from "./util/change";
 import {DisabledInput} from "./common/DisabledInput";
@@ -10,6 +10,7 @@ import {PrimaryButton} from "./common/PrimaryButton";
 function EditUserComponent() {
 
     let userToEdit = JSON.parse(localStorage.getItem('userToEdit'));
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [username, setUsername] = useState(userToEdit.username)
     const [firstName, setFirstName] = useState(userToEdit.firstName)
@@ -23,7 +24,7 @@ function EditUserComponent() {
         e.preventDefault();
         setSubmitted(true)
         const user = {firstName, lastName, username, email, roles}
-        dispatch(userActions.update(user));
+        dispatch(userActions.update(user, navigate));
     };
 
     if (username === null) {

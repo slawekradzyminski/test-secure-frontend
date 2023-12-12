@@ -6,7 +6,7 @@ npm-debug.log*
 allure-results/
 
 .idea
-
+.vscode
 # Runtime data
 pids
 *.pid

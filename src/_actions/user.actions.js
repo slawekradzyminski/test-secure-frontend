@@ -1,7 +1,6 @@
 import { userConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from './';
-import { history } from '../_helpers';
 import { sendEmail } from '../_services/email.service';
 
 export const userActions = {
@@ -15,7 +14,7 @@ export const userActions = {
     handleEmail
 };
 
-function login(username, password, from) {
+function login(username, password, from, navigate) {
     return dispatch => {
         dispatch(request({ username }));
 
@@ -23,7 +22,7 @@ function login(username, password, from) {
             .then(
                 user => {
                     dispatch(success(user));
-                    history.push(from);
+                    navigate(from);
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -42,7 +41,7 @@ function logout() {
     return { type: userConstants.LOGOUT };
 }
 
-function register(user) {
+function register(user, navigate) {
     return dispatch => {
         dispatch(request(user));
 
@@ -50,7 +49,7 @@ function register(user) {
             .then(
                 () => {
                     dispatch(success());
-                    history.push('/');
+                    navigate('/');
                     dispatch(alertActions.success('Registration successful'));
                 },
                 error => {
@@ -89,7 +88,7 @@ function saveEditDetails(user) {
     }
 }
 
-function update(user) {
+function update(user, navigate) {
     return dispatch => {
         dispatch(request(user));
 
@@ -97,7 +96,7 @@ function update(user) {
             .then(
                 () => {
                     dispatch(success());
-                    history.push('/');
+                    navigate('/');
                     dispatch(alertActions.success('Updating user successful'));
                 },
                 error => {

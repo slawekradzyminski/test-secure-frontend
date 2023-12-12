@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { history } from '../_helpers';
 import Cookies from 'js-cookie'
 
 import { userActions } from '../_actions';
 
 function HomePage() {
+    const navigate = useNavigate();
     const users = useSelector(state => state.users);
     const user = useSelector(state => state.authentication.user);
     const isAdmin = user.roles.includes('ROLE_ADMIN')
@@ -23,7 +23,7 @@ function HomePage() {
 
     const readCookie = () => {
         if (!Cookies.get(tokenCookie)) {
-            history.push('/login');
+            navigate('/login');
         }
     }
 
@@ -32,13 +32,13 @@ function HomePage() {
     const editUser = (user) => {
         localStorage.setItem("userToEdit", JSON.stringify(user));
         dispatch(userActions.saveEditDetails(user));
-        history.push('/edit-user');
+        navigate('/edit-user');
     }
 
     const emailUser = (user) => {
         localStorage.setItem("userToEdit", JSON.stringify(user));
         dispatch(userActions.saveEditDetails(user));
-        history.push('/email');
+        navigate('/email');
     }
 
     const displayDeleteSection = user => {
