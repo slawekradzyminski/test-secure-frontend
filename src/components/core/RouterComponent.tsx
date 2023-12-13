@@ -4,7 +4,7 @@ import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import { alertClear } from '../../_reducers/alert.reducer';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../login/LoginPage';
-import { RegisterPage } from '../RegisterPage';
+import { RegisterPage } from '../register/RegisterPage';
 import { EditUserComponent } from "../EditUserComponent";
 import { EmailComponent } from '../EmailComponent';
 import PrivateRouteWrapper from './PrivateRouteWrapper';

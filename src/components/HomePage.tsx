@@ -32,12 +32,11 @@ function HomePage() {
     const handleDeleteUser = username => dispatch(_delete(username))
 
     const editUser = (user: User) => {
-        console.log(user)
         navigate('/edit-user', { state: { user } });
     }
 
     const emailUser = () => {
-        navigate('/email');
+        navigate('/email', { state: { user } });
     }
 
     const displayDeleteSection = user => {

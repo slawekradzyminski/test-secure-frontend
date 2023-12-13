@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Input } from "./common/Input";
 import { getHandleChange } from "./util/change";
 import { DisabledInput } from "./common/DisabledInput";
@@ -10,10 +10,10 @@ import { handleEmail } from '../_actions/user.actions';
 import { useAppDispatch } from '../_helpers/store';
 
 function EmailComponent() {
-
-    let userToEdit = JSON.parse(localStorage.getItem('userToEdit'));
+    const location = useLocation()
     const dispatch = useAppDispatch();
-    const [to, setTo] = useState(userToEdit.email)
+    const user = location.state.user;
+    const [to, setTo] = useState(user.email)
     const [subject, setSubject] = useState('')
     const [message, setMessage] = useState('')
     const [submitted, setSubmitted] = useState(false);
