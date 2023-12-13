@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userService } from '../_services';
 import { sendEmail } from '../_services/email.service';
 import { Email, User } from '../types';
-import alertActions from './alert.actions';
+import { alertError, alertSuccess } from '../_reducers/alert.reducer';
 
 export const login = createAsyncThunk<User,
     { username: string; password: string; from: string; navigate: Function },
@@ -14,7 +14,7 @@ export const login = createAsyncThunk<User,
                 navigate(from);
                 return user;
             } catch (error) {
-                dispatch(alertActions.actions.error(error.toString()));
+                dispatch(alertError(error.toString()));
                 return rejectWithValue(error.toString());
             }
         }
@@ -41,10 +41,10 @@ export const register = createAsyncThunk<User,
             try {
                 await userService.register(user);
                 navigate('/');
-                dispatch(alertActions.actions.success('Registration successful'));
+                dispatch(alertSuccess('Registration successful'));
                 return user;
             } catch (error) {
-                dispatch(alertActions.actions.error(error.toString()));
+                dispatch(alertError(error.toString()));
                 return rejectWithValue(error.toString());
             }
         }
@@ -59,7 +59,7 @@ export const getAll = createAsyncThunk<User[],
                 const users = await userService.getAll();
                 return users;
             } catch (error) {
-                dispatch(alertActions.actions.error(error.toString()));
+                dispatch(alertError(error.toString()));
                 return rejectWithValue(error.toString());
             }
         }
@@ -73,10 +73,10 @@ export const update = createAsyncThunk<User,
             try {
                 await userService.update(user);
                 navigate('/');
-                dispatch(alertActions.actions.success('Updating user successful'));
+                dispatch(alertSuccess('Updating user successful'));
                 return user;
             } catch (error) {
-                dispatch(alertActions.actions.error(error.toString()));
+                dispatch(alertError(error.toString()));
                 return rejectWithValue(error.toString());
             }
         }
@@ -89,9 +89,9 @@ export const handleEmail = createAsyncThunk<void,
         async (email, { dispatch, rejectWithValue }) => {
             try {
                 await sendEmail(email);
-                dispatch(alertActions.actions.success('Email was scheduled to be send'));
+                dispatch(alertSuccess('Email was scheduled to be send'));
             } catch (error) {
-                dispatch(alertActions.actions.error(error.toString()));
+                dispatch(alertError(error.toString()));
                 return rejectWithValue(error.toString());
             }
         }
@@ -106,7 +106,7 @@ export const _delete = createAsyncThunk<string,
                 await userService.delete(username);
                 return username;
             } catch (error) {
-                dispatch(alertActions.actions.error(error.toString()));
+                dispatch(alertError(error.toString()));
                 return rejectWithValue({ username, error: error });
             }
         }

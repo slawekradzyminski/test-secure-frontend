@@ -7,7 +7,7 @@ import { DisabledInput } from "./common/DisabledInput";
 import { PrimaryButton } from "./common/PrimaryButton";
 import { Textarea } from "./common/Textarea";
 import { Email } from '../types';
-import { handleEmail } from '../_actions';
+import { handleEmail } from '../_actions/user.actions';
 
 function EmailComponent() {
 

@@ -1,8 +1,8 @@
 export default class LoginPage {
 
     static attemptLogin = (username: string, password: string) => {
-        cy.get('[name=username]').type(username)
-        cy.get('[name=password]').type(password)
+        cy.get('[name=username]').clear().type(username)
+        cy.get('[name=password]').clear().type(password)
         LoginPage.clickLogin()
     }
 

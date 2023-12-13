@@ -51,6 +51,23 @@ describe('Login page tests in isolation', () => {
         cy.percySnapshot('frontent validation')
     })
 
+    it('should remove alert after chaning page', () => {
+         // given
+         const user = getRandomUser()
+         loginMocks.mockWrongCredentials("error")
+         LoginPage.attemptLogin(user.username, user.password)
+         Alert.getAlertError().should('be.visible')
+         loginMocks.mockSuccessfulLogin(user)
+         getAllUsersMocks.mockUsers()
+ 
+         // when
+         LoginPage.attemptLogin(user.username, user.password)
+ 
+         // then
+         cy.get('h1').should('contain.text', user.firstName)
+         Alert.getAlertError().should('not.exist')
+    })
+
 })
 
 const verifyCorrectRequestWasBuild = (user: User) => {

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from '../types';
-import { update } from '../_actions';
+import { update } from '../_actions/user.actions';
 
 export type EditUserState = {
     loading?: boolean;

@@ -11,21 +11,21 @@ const alertSlice = createSlice({
   name: 'alert',
   initialState,
   reducers: {
-    success: (state, action: PayloadAction<string>) => {
+    alertSuccess: (state, action: PayloadAction<string>) => {
       state.type = 'alert-success';
       state.message = action.payload;
     },
-    error: (state, action: PayloadAction<string>) => {
+    alertError: (state, action: PayloadAction<string>) => {
       state.type = 'alert-danger';
       state.message = action.payload;
     },
-    clear: (state) => {
+    alertClear: (state) => {
       state.type = undefined;
       state.message = undefined;
     },
   },
 });
 
-export const { success, error, clear } = alertSlice.actions;
+export const { alertSuccess: alertSuccess, alertError, alertClear } = alertSlice.actions;
 
 export default alertSlice.reducer;
