@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "build": "webpack --mode production",
-        "start": "cross-env NODE_OPTIONS='--dns-result-order=ipv4first' && webpack-dev-server --host localhost --open --port 8081"
+        "start": "cross-env NODE_OPTIONS='--dns-result-order=ipv4first' && webpack-dev-server --host 127.0.0.1 --open --port 8081"
     },
     "dependencies": {
         "@emotion/react": "^11.11.1",

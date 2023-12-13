@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import { alertClear } from '../../_reducers/alert.reducer';
 import { HomePage } from '../HomePage';
-import { LoginPage } from '../LoginPage';
+import { LoginPage } from '../login/LoginPage';
 import { RegisterPage } from '../RegisterPage';
 import { EditUserComponent } from "../EditUserComponent";
 import { EmailComponent } from '../EmailComponent';

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { userService } from '../_services';
 import { sendEmail } from '../_services/email.service';
 import { Email, User } from '../types';
 import { alertError, alertSuccess } from '../_reducers/alert.reducer';
+import { userService } from '../_services/user.service';
 
 export const login = createAsyncThunk<User,
     { username: string; password: string; from: string; navigate: Function },
