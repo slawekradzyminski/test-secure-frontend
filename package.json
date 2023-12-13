@@ -7,6 +7,7 @@
         "start": "cross-env NODE_OPTIONS='--dns-result-order=ipv4first' && webpack-dev-server --host localhost --open --port 8081"
     },
     "dependencies": {
+        "@reduxjs/toolkit": "^2.0.1",
         "js-cookie": "^3.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

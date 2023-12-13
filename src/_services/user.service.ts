@@ -4,20 +4,18 @@ import { User } from '../types';
 
 const apiUrl = process.env.API_URL;
 
-export const handleResponse = (response: Response) => {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 403) {
-                logout();
-                location.reload();
-            }
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
+export const handleResponse = async (response: Response) => {
+    const text = await response.text();
+    const data = text && JSON.parse(text);
+    if (!response.ok) {
+        if (response.status === 403) {
+            logout();
+            location.reload();
         }
-
-        return data;
-    });
+        const error = (data && data.message) || response.statusText;
+        return Promise.reject(error);
+    }
+    return data;
 }
 
 export const userService = {
@@ -29,61 +27,63 @@ export const userService = {
     delete: _delete
 };
 
-function login(username: string, password: string) {
+async function login(username: string, password: string) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`${apiUrl}/users/signin`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
-            localStorage.setItem('user', JSON.stringify(user));
-            Cookies.set('token', user.token)
-            return user;
-        });
+    const response = await fetch(`${apiUrl}/users/signin`, requestOptions);
+    const user = await handleResponse(response);
+    localStorage.setItem('user', JSON.stringify(user));
+    Cookies.set('token', user.token);
+    return user;
 }
 
 function logout() {
     localStorage.removeItem('user');
 }
 
-function getAll() {
+async function getAll() {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
-    return fetch(`${apiUrl}/users`, requestOptions).then(handleResponse);
+    const response = await fetch(`${apiUrl}/users`, requestOptions);
+    return handleResponse(response);
 }
 
-function register(user: User) {
+async function register(user: User) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
 
-    return fetch(`${apiUrl}/users/signup`, requestOptions).then(handleResponse);
+    const response = await fetch(`${apiUrl}/users/signup`, requestOptions);
+    return handleResponse(response);
 }
 
-function update(user: User) {
+async function update(user: User) {
     const requestOptions = {
         method: 'PUT',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
 
-    return fetch(`${apiUrl}/users/${user.username}`, requestOptions).then(handleResponse);
+    const response = await fetch(`${apiUrl}/users/${user.username}`, requestOptions);
+    return handleResponse(response);
 }
 
-function _delete(username: string) {
+async function _delete(username: string) {
     const requestOptions = {
         method: 'DELETE',
         headers: authHeader()
     };
 
-    return fetch(`${apiUrl}/users/${username}`, requestOptions).then(handleResponse);
+    const response = await fetch(`${apiUrl}/users/${username}`, requestOptions);
+    return handleResponse(response);
 }
 

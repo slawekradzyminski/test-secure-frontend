@@ -1,143 +1,113 @@
-import { userConstants } from '../_constants';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { userService } from '../_services';
-import { alertActions } from '.';
 import { sendEmail } from '../_services/email.service';
 import { Email, User } from '../types';
+import alertActions from './alert.actions';
 
-export const userActions = {
-    login,
-    logout,
-    register,
-    saveEditDetails,
-    update,
-    getAll,
-    delete: _delete,
-    handleEmail
-};
+export const login = createAsyncThunk<User,
+    { username: string; password: string; from: string; navigate: Function },
+    { rejectValue: string }>(
+        'user/login',
+        async ({ username, password, from, navigate }, { dispatch, rejectWithValue }) => {
+            try {
+                const user = await userService.login(username, password);
+                navigate(from);
+                return user;
+            } catch (error) {
+                dispatch(alertActions.actions.error(error.toString()));
+                return rejectWithValue(error.toString());
+            }
+        }
+    );
 
-function login(username: string, password: string, from: string, navigate: Function) {
-    return dispatch => {
-        dispatch(request(username));
+export const logout = createAsyncThunk<void,
+    void,
+    { rejectValue: string }>(
+        'user/logout',
+        async (_, { dispatch, rejectWithValue }) => {
+            try {
+                userService.logout();
+            } catch (error) {
+                return rejectWithValue(error.toString());
+            }
+        }
+    );
 
-        userService.login(username, password)
-            .then(
-                user => {
-                    dispatch(success(user));
-                    navigate(from);
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
-    };
+export const register = createAsyncThunk<User,
+    { user: User; navigate: Function },
+    { rejectValue: string }>(
+        'user/register',
+        async ({ user, navigate }, { dispatch, rejectWithValue }) => {
+            try {
+                await userService.register(user);
+                navigate('/');
+                dispatch(alertActions.actions.success('Registration successful'));
+                return user;
+            } catch (error) {
+                dispatch(alertActions.actions.error(error.toString()));
+                return rejectWithValue(error.toString());
+            }
+        }
+    );
 
-    function request(username: string) { return { type: userConstants.LOGIN_REQUEST, username } }
-    function success(user: User) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error: string) { return { type: userConstants.LOGIN_FAILURE, error } }
-}
+export const getAll = createAsyncThunk<User[],
+    void,
+    { rejectValue: string }>(
+        'users',
+        async (_, { dispatch, rejectWithValue }) => {
+            try {
+                const users = await userService.getAll();
+                return users;
+            } catch (error) {
+                dispatch(alertActions.actions.error(error.toString()));
+                return rejectWithValue(error.toString());
+            }
+        }
+    );
 
-function logout() {
-    userService.logout();
-    return { type: userConstants.LOGOUT };
-}
+export const update = createAsyncThunk<User,
+    { user: User; navigate: Function },
+    { rejectValue: string }>(
+        'user/update',
+        async ({ user, navigate }, { dispatch, rejectWithValue }) => {
+            try {
+                await userService.update(user);
+                navigate('/');
+                dispatch(alertActions.actions.success('Updating user successful'));
+                return user;
+            } catch (error) {
+                dispatch(alertActions.actions.error(error.toString()));
+                return rejectWithValue(error.toString());
+            }
+        }
+    );
 
-function register(user: User, navigate: Function) {
-    return dispatch => {
-        dispatch(request(user));
+export const handleEmail = createAsyncThunk<void,
+    Email,
+    { rejectValue: string }>(
+        'user/handleEmail',
+        async (email, { dispatch, rejectWithValue }) => {
+            try {
+                await sendEmail(email);
+                dispatch(alertActions.actions.success('Email was scheduled to be send'));
+            } catch (error) {
+                dispatch(alertActions.actions.error(error.toString()));
+                return rejectWithValue(error.toString());
+            }
+        }
+    );
 
-        userService.register(user)
-            .then(
-                () => {
-                    dispatch(success(user));
-                    navigate('/');
-                    dispatch(alertActions.success('Registration successful'));
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
-    };
-
-    function request(user: User) { return { type: userConstants.REGISTER_REQUEST, user } }
-    function success(user: User) { return { type: userConstants.REGISTER_SUCCESS, user } }
-    function failure(error: string) { return { type: userConstants.REGISTER_FAILURE, error } }
-}
-
-function getAll() {
-    return dispatch => {
-        dispatch(request());
-
-        userService.getAll()
-            .then(
-                users => dispatch(success(users)),
-                error => dispatch(failure(error.toString()))
-            );
-    };
-
-    function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(users: User[]) { return { type: userConstants.GETALL_SUCCESS, users } }
-    function failure(error: string) { return { type: userConstants.GETALL_FAILURE, error } }
-}
-
-function saveEditDetails(user: User) {
-    return dispatch => {
-        dispatch(request(user));
-    }
-
-    function request(user: User) { return { type: userConstants.SAVE_USER, user } }
-}
-
-function update(user: User, navigate: Function) {
-    return dispatch => {
-        dispatch(request(user));
-
-        userService.update(user)
-            .then(
-                () => {
-                    dispatch(success(user));
-                    navigate('/');
-                    dispatch(alertActions.success('Updating user successful'));
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
-    };
-
-    function request(user: User) { return { type: userConstants.UPDATE_USER_REQUEST, user } }
-    function success(user: User) { return { type: userConstants.UPDATE_USER_SUCCESS, user } }
-    function failure(error: string) { return { type: userConstants.UPDATE_USER_FAILURE, error } }
-}
-
-function handleEmail(email: Email) {
-    return dispatch => {
-        sendEmail(email)
-            .then(
-                () => {
-                    dispatch(alertActions.success('Email was scheduled to be send'));
-                },
-                error => {
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
-    };
-}
-
-function _delete(username: string) {
-    return dispatch => {
-        dispatch(request(username));
-
-        userService.delete(username)
-            .then(
-                () => dispatch(success(username)),
-                error => dispatch(failure(username, error.toString()))
-            );
-    };
-
-    function request(username: string) { return { type: userConstants.DELETE_REQUEST, username } }
-    function success(username: string) { return { type: userConstants.DELETE_SUCCESS, username } }
-    function failure(username: string, error: string) { return { type: userConstants.DELETE_FAILURE, username, error } }
-}
+export const _delete = createAsyncThunk<string,
+    string,
+    { rejectValue: { username: string, error: any } }>(
+        'user/delete',
+        async (username, { dispatch, rejectWithValue }) => {
+            try {
+                await userService.delete(username);
+                return username;
+            } catch (error) {
+                dispatch(alertActions.actions.error(error.toString()));
+                return rejectWithValue({ username, error: error });
+            }
+        }
+    );

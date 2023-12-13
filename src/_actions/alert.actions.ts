@@ -1,19 +1,17 @@
-import { alertConstants } from '../_constants';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export const alertActions = {
-    success,
-    error,
-    clear
-};
+type AlertMessage = string;
 
-function success(message: string) {
-    return { type: alertConstants.SUCCESS, message };
-}
+const alertSlice = createSlice({
+  name: 'alert',
+  initialState: '',
+  reducers: {
+    success: (_, action: PayloadAction<AlertMessage>) => action.payload,
+    error: (_, action: PayloadAction<AlertMessage>) => action.payload,
+    clear: () => '',
+  },
+});
 
-function error(message: string) {
-    return { type: alertConstants.ERROR, message };
-}
+export const { success, error, clear } = alertSlice.actions;
 
-function clear() {
-    return { type: alertConstants.CLEAR };
-}
+export default alertSlice;

@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { alertActions } from '../../_actions';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 import { EditUserComponent } from "../EditUserComponent";
 import { EmailComponent } from '../EmailComponent';
 import { RootState } from '../../types';
+import { clear } from '../../_actions/alert.actions';
 
 function PrivateRouteWrapper({ children }) {
     const location = useLocation();
@@ -24,7 +24,7 @@ function  App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(alertActions.clear());
+        dispatch(clear());
     }, []);
 
     return (

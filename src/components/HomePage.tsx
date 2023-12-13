@@ -4,19 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie'
 
 import { Roles, RootState, User } from '../types';
-import { AppDispatch } from '../_helpers';
-import { userActions } from '../_actions';
+import { _delete, getAll } from '../_actions/user.actions';
 
 function HomePage() {
     const navigate = useNavigate();
     const users = useSelector((state: RootState) => state.users);
-    const user = useSelector((state: RootState)=> state.authentication.user);
+    const user = useSelector((state: RootState) => state.authentication.user);
     const isAdmin = user.roles.includes(Roles.ROLE_ADMIN)
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useDispatch();
     const tokenCookie = 'token'
 
     useEffect(() => {
-        dispatch(userActions.getAll());
+        dispatch(getAll());
     }, []);
 
     useEffect(() => {
@@ -29,17 +28,14 @@ function HomePage() {
         }
     }
 
-    const handleDeleteUser = username => dispatch(userActions.delete(username))
+    const handleDeleteUser = username => dispatch(_delete(username))
 
     const editUser = (user: User) => {
-        localStorage.setItem("userToEdit", JSON.stringify(user));
-        dispatch(userActions.saveEditDetails(user));
-        navigate('/edit-user');
+        console.log(user)
+        navigate('/edit-user', { state: { user } });
     }
 
-    const emailUser = (user: User) => {
-        localStorage.setItem("userToEdit", JSON.stringify(user));
-        dispatch(userActions.saveEditDetails(user));
+    const emailUser = () => {
         navigate('/email');
     }
 
@@ -61,7 +57,7 @@ function HomePage() {
                     {`${user.firstName} ${user.lastName}`}
                     {isAdmin && displayDeleteSection(user)}
                     {<span> - <a onClick={() => editUser(user)} className="text-primary edit">Edit</a></span>}
-                    {<span> - <a onClick={() => emailUser(user)} className="text-primary email">Email</a></span>}
+                    {<span> - <a onClick={() => emailUser()} className="text-primary email">Email</a></span>}
                 </li>
             )}
         </ul>;

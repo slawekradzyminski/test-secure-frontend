@@ -5,7 +5,7 @@ import { RegistrationState } from './_reducers/registration.reducer';
 import { UsersState } from './_reducers/users.reducer';
 
 export type RootState = {
-    authentication: AuthenticationState;
+    authentication: AuthenticationState
     alert: AlertState
     edituser: EditUserState
     registration: RegistrationState
@@ -18,7 +18,7 @@ export type User = {
     firstName: string;
     lastName: string;
     roles: Roles[];
-    id?: number
+    id?: number;
     deleting?: boolean;
     loading?: boolean;
 };
@@ -27,7 +27,6 @@ export enum Roles {
     ROLE_ADMIN = 'ROLE_ADMIN',
     ROLE_CLIENT = 'ROLE_CLIENT'
 }
-
 
 export type Email = {
     to: string,

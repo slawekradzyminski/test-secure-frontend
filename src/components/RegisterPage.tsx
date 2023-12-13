@@ -6,8 +6,7 @@ import {Input} from "./common/Input";
 import {getHandleChange} from "./util/change";
 import {PrimaryButton} from "./common/PrimaryButton";
 import { Roles, RootState } from '../types';
-import { AppDispatch } from '../_helpers';
-import { userActions } from '../_actions/user.actions';
+import { register } from '../_actions/user.actions';
 
 function RegisterPage() {
     const [username, setUsername] = useState('')
@@ -19,14 +18,14 @@ function RegisterPage() {
     const [submitted, setSubmitted] = useState(false);
     const registering = useSelector((state: RootState) => state.registration.registering);
     const navigate = useNavigate()
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useDispatch();
 
     function handleSubmit(e) {
         e.preventDefault();
 
         setSubmitted(true);
         const user = {firstName, lastName, username, password, roles, email}
-        dispatch(userActions.register(user, navigate));
+        dispatch(register({ user, navigate }));
     }
 
     return (

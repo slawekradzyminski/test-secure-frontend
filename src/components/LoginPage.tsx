@@ -2,24 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { userActions } from '../_actions';
 import { Input } from "./common/Input";
 import { getHandleChange } from "./util/change";
 import { PrimaryButton } from "./common/PrimaryButton";
 import { RootState } from '../types';
-import { AppDispatch } from '../_helpers/store';
+import { login, logout } from '../_actions/user.actions';
 
 function LoginPage() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [submitted, setSubmitted] = useState(false);
-    const loggingIn = useSelector((state: RootState) => state.authentication.loggingIn);
+    const loggingIn = useSelector((state: RootState) => state.authentication.loading);
     const navigate = useNavigate();
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useDispatch();
     const location = useLocation();
 
     useEffect(() => {
-        dispatch(userActions.logout());
+        dispatch(logout());
     }, []);
 
     function handleSubmit(e) {
@@ -27,7 +26,7 @@ function LoginPage() {
 
         setSubmitted(true);
         const { from } = location.state || { from: { pathname: "/" } };
-        dispatch(userActions.login(username, password, from, navigate));
+        dispatch(login({ username, password, from, navigate }));
     }
 
     return (

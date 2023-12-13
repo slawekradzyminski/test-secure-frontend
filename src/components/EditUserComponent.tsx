@@ -1,32 +1,31 @@
-import React, {useState} from 'react'
-import {useDispatch, useSelector} from "react-redux";
-import {Link, useNavigate} from "react-router-dom";
-import {Input} from "./common/Input";
-import {getHandleChange} from "./util/change";
-import {DisabledInput} from "./common/DisabledInput";
-import {PrimaryButton} from "./common/PrimaryButton";
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Input } from "./common/Input";
+import { getHandleChange } from "./util/change";
+import { DisabledInput } from "./common/DisabledInput";
+import { PrimaryButton } from "./common/PrimaryButton";
 import { RootState } from '../types';
-import { userActions } from '../_actions/user.actions';
-import { AppDispatch } from '../_helpers/store';
+import { update } from '../_actions/user.actions';
 
 function EditUserComponent() {
-
-    let userToEdit = JSON.parse(localStorage.getItem('userToEdit'));
+    const location = useLocation();
     const navigate = useNavigate();
-    const dispatch: AppDispatch = useDispatch();
-    const [username, setUsername] = useState(userToEdit.username)
-    const [firstName, setFirstName] = useState(userToEdit.firstName)
-    const [lastName, setLastName] = useState(userToEdit.lastName)
-    const [email, setEmail] = useState(userToEdit.email)
-    const [roles, setRoles] = useState(userToEdit.roles)
-    const editing = useSelector((state: RootState) => state.edituser.loading);
+    const dispatch = useDispatch();
+    const user = location.state.user;
+    const [username, setUsername] = useState(user.username)
+    const [firstName, setFirstName] = useState(user.firstName)
+    const [lastName, setLastName] = useState(user.lastName)
+    const [email, setEmail] = useState(user.email)
+    const [roles, setRoles] = useState(user.roles)
+    const loading = useSelector((state: RootState) => state.edituser.loading);
     const [submitted, setSubmitted] = useState(false);
 
     const saveUser = (e) => {
         e.preventDefault();
         setSubmitted(true)
-        const user = {firstName, lastName, username, email, roles}
-        dispatch(userActions.update(user, navigate));
+        const user = { firstName, lastName, username, email, roles }
+        dispatch(update({ user, navigate }));
     };
 
     if (username === null) {
@@ -38,27 +37,31 @@ function EditUserComponent() {
         );
     }
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className="col-lg-8 offset-lg-2">
             <h2>Edit user</h2>
             {username &&
-            <form name="form" onSubmit={saveUser}>
-                <Input name="firstName" value={firstName} submitted={submitted}
-                       handleChange={getHandleChange(setFirstName)}/>
-                <Input name="lastName" value={lastName} submitted={submitted}
-                       handleChange={getHandleChange(setLastName)}/>
-                <Input name="email" value={email} submitted={submitted}
-                       handleChange={getHandleChange(setEmail)}/>
-                <DisabledInput name="username" value={username}/>
-                <DisabledInput name="roles" value={roles}/>
-                <div className="form-group">
-                    <PrimaryButton text="Edit User" isLoading={editing}/>
-                    <Link to="/" className="btn btn-link">Cancel</Link>
-                </div>
-            </form>
+                <form name="form" onSubmit={saveUser}>
+                    <Input name="firstName" value={firstName} submitted={submitted}
+                        handleChange={getHandleChange(setFirstName)} />
+                    <Input name="lastName" value={lastName} submitted={submitted}
+                        handleChange={getHandleChange(setLastName)} />
+                    <Input name="email" value={email} submitted={submitted}
+                        handleChange={getHandleChange(setEmail)} />
+                    <DisabledInput name="username" value={username} />
+                    <DisabledInput name="roles" value={roles.join(',')} />
+                    <div className="form-group">
+                        <PrimaryButton text="Edit User" isLoading={loading} />
+                        <Link to="/" className="btn btn-link">Cancel</Link>
+                    </div>
+                </form>
             }
         </div>
     );
 }
 
-export {EditUserComponent};
+export { EditUserComponent };

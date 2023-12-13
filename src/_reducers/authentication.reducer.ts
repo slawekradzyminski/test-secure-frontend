@@ -1,36 +1,50 @@
-import { userConstants } from '../_constants';
+import { createSlice } from '@reduxjs/toolkit';
 import { User } from '../types';
+import { login, logout } from '../_actions/user.actions';
 
 export type AuthenticationState = {
   loggedIn?: boolean;
-  loggingIn?: boolean;
+  loading?: boolean;
   user?: User;
-};
-type Action = {
-  type: string;
-  user?: User;
+  error? : string
 };
 
 let user: User = JSON.parse(localStorage.getItem('user'));
 const initialState: AuthenticationState = user ? { loggedIn: true, user } : {};
 
-export function authentication(state: AuthenticationState = initialState, action: Action): AuthenticationState {
-    switch (action.type) {
-        case userConstants.LOGIN_REQUEST:
-            return {
-                loggingIn: true,
-                user: action.user
-            };
-        case userConstants.LOGIN_SUCCESS:
-            return {
-                loggedIn: true,
-                user: action.user
-            };
-        case userConstants.LOGIN_FAILURE:
-            return {};
-        case userConstants.LOGOUT:
-            return {};
-        default:
-            return state
-    }
-}
+const authenticationSlice = createSlice({
+  name: 'authentication',
+  initialState,
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.loggedIn = true;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(logout.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.loggedIn = false;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+  },
+  reducers: {
+  },
+});
+
+
+export default authenticationSlice.reducer;

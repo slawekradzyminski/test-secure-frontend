@@ -7,13 +7,12 @@ import { DisabledInput } from "./common/DisabledInput";
 import { PrimaryButton } from "./common/PrimaryButton";
 import { Textarea } from "./common/Textarea";
 import { Email } from '../types';
-import { userActions } from '../_actions';
-import { AppDispatch } from '../_helpers/store';
+import { handleEmail } from '../_actions';
 
 function EmailComponent() {
 
     let userToEdit = JSON.parse(localStorage.getItem('userToEdit'));
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useDispatch();
     const [to, setTo] = useState(userToEdit.email)
     const [subject, setSubject] = useState('')
     const [message, setMessage] = useState('')
@@ -23,7 +22,7 @@ function EmailComponent() {
         e.preventDefault();
         setSubmitted(true)
         const email: Email = { to, subject, message }
-        dispatch(userActions.handleEmail(email));
+        dispatch(handleEmail(email));
     };
 
     if (to === undefined) {

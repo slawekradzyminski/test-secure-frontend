@@ -1,36 +1,34 @@
-import { userConstants } from '../_constants';
+import { createSlice } from '@reduxjs/toolkit';
 import { User } from '../types';
+import { update } from '../_actions';
 
-export type EditUserState = User | {
-  loading?: boolean;
-  edituser?: User;
-  error?: any; 
+export type EditUserState = {
+    loading?: boolean;
+    userToEdit?: User;
+    error?: any;
 }
 
-type Action = {
-  type: string;
-  user?: User;
-  error?: any; 
-};
+let initialState: EditUserState = {};
 
-export function edituser(state: EditUserState = {}, action: Action): EditUserState {
-    switch (action.type) {
-        case userConstants.SAVE_USER:
-            return action.user;
-
-        case userConstants.UPDATE_USER_REQUEST:
-            return {
-                loading: true
-            };
-        case userConstants.UPDATE_USER_SUCCESS:
-            return {
-                edituser: action.user
-            };
-        case userConstants.UPDATE_USER_FAILURE:
-            return {
-                error: action.error
-            };
-        default:
-            return state
+const editUserSlice = createSlice({
+    name: 'editUser',
+    initialState,
+    reducers: {
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(update.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(update.fulfilled, (state, action) => {
+                state.loading = false;
+                state.userToEdit = action.payload;
+            })
+            .addCase(update.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
     }
-}
+});
+
+export default editUserSlice.reducer;

@@ -1,21 +1,30 @@
-import { userConstants } from '../_constants';
+import { createSlice } from '@reduxjs/toolkit';
+import { register } from '../_actions/user.actions';
 
 export type RegistrationState = {
-  registering?: boolean;
-};
-type Action = {
-  type: string;
+    registering?: boolean;
 };
 
-export function registration(state: RegistrationState = {}, action: Action): RegistrationState {
-    switch (action.type) {
-        case userConstants.REGISTER_REQUEST:
-            return { registering: true };
-        case userConstants.REGISTER_SUCCESS:
-            return {};
-        case userConstants.REGISTER_FAILURE:
-            return {};
-        default:
-            return state
+const initialState: RegistrationState = {};
+
+const registrationSlice = createSlice({
+    name: 'registration',
+    initialState,
+    reducers: {
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(register.pending, (state) => {
+                state.registering = true;
+            })
+            .addCase(register.fulfilled, (state) => {
+                state.registering = false;
+
+            })
+            .addCase(register.rejected, (state) => {
+                state.registering = false;
+            })
     }
-}
+});
+
+export default registrationSlice.reducer;
