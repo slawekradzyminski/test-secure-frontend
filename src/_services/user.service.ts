@@ -1,6 +1,6 @@
-import { authHeader } from '../_helpers';
 import Cookies from 'js-cookie'
 import { User } from '../types';
+import { authHeader } from '../_helpers/auth-header';
 
 const apiUrl = process.env.API_URL;
 

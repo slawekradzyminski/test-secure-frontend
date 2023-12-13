@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie'
 
 import { Roles, RootState, User } from '../types';
 import { _delete, getAll } from '../_actions/user.actions';
+import { useAppDispatch } from '../_helpers/store';
 
 function HomePage() {
     const navigate = useNavigate();
     const users = useSelector((state: RootState) => state.users);
     const user = useSelector((state: RootState) => state.authentication.user);
     const isAdmin = user.roles.includes(Roles.ROLE_ADMIN)
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const tokenCookie = 'token'
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import { handleResponse } from "./user.service";
-import { authHeader } from '../_helpers';
 import { Email } from "../types";
+import { authHeader } from "../_helpers/auth-header";
 
 
 export const sendEmail = async (email: Email) => {

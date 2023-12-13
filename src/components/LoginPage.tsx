@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Input } from "./common/Input";
 import { getHandleChange } from "./util/change";
 import { PrimaryButton } from "./common/PrimaryButton";
 import { RootState } from '../types';
 import { login, logout } from '../_actions/user.actions';
+import { useAppDispatch } from '../_helpers/store';
 
 function LoginPage() {
     const [username, setUsername] = useState('')
@@ -14,7 +15,7 @@ function LoginPage() {
     const [submitted, setSubmitted] = useState(false);
     const loggingIn = useSelector((state: RootState) => state.authentication.loading);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
 
     useEffect(() => {

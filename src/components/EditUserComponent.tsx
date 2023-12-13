@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Input } from "./common/Input";
 import { getHandleChange } from "./util/change";
@@ -8,11 +8,12 @@ import { PrimaryButton } from "./common/PrimaryButton";
 import { RootState } from '../types';
 import { update } from '../_actions/user.actions';
 import { ToastContext } from '../context/ToastContext';
+import { useAppDispatch } from '../_helpers/store';
 
 function EditUserComponent() {
     const location = useLocation();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const user = location.state.user;
     const [username, setUsername] = useState(user.username)
     const [firstName, setFirstName] = useState(user.firstName)

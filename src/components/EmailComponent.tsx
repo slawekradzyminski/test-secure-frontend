@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Input } from "./common/Input";
 import { getHandleChange } from "./util/change";
@@ -8,11 +7,12 @@ import { PrimaryButton } from "./common/PrimaryButton";
 import { Textarea } from "./common/Textarea";
 import { Email } from '../types';
 import { handleEmail } from '../_actions/user.actions';
+import { useAppDispatch } from '../_helpers/store';
 
 function EmailComponent() {
 
     let userToEdit = JSON.parse(localStorage.getItem('userToEdit'));
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [to, setTo] = useState(userToEdit.email)
     const [subject, setSubject] = useState('')
     const [message, setMessage] = useState('')
