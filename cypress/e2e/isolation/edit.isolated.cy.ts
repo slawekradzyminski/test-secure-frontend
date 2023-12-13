@@ -3,7 +3,6 @@
 import { getRandomUser } from "../../generators/userGenerator"
 import users from "../../fixtures/users.json"
 import { editMocks } from "../../mocks/editUserMocks"
-import Alert from "../../components/Alert"
 import { GetUserResponse } from "../../domain/requests/getUserTypes"
 
 describe('Edit page tests in isolation', () => {

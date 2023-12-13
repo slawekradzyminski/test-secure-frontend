@@ -5,6 +5,7 @@ import { User } from "../../domain/User"
 import { getRandomUser } from "../../generators/userGenerator"
 import { getAllUsersMocks } from "../../mocks/getAllUsersMocks"
 import { loginMocks } from "../../mocks/loginMocks"
+import { refreshMocks } from "../../mocks/refreshUserMocks"
 import LoginPage from "../../pages/LoginPage"
 
 describe('Login page tests in isolation', () => {
@@ -59,6 +60,7 @@ describe('Login page tests in isolation', () => {
          Alert.getAlertError().should('be.visible')
          loginMocks.mockSuccessfulLogin(user)
          getAllUsersMocks.mockUsers()
+         refreshMocks.mockSuccessfulRefresh(user)
  
          // when
          LoginPage.attemptLogin(user.username, user.password)

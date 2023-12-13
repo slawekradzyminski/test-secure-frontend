@@ -20,6 +20,21 @@ export const login = createAsyncThunk<User,
         }
     );
 
+export const refresh = createAsyncThunk<User,
+    { },
+    { rejectValue: string }>(
+        'user/refresh',
+        async ({ }, { dispatch, rejectWithValue }) => {
+            try {
+                const user = await userService.refresh();
+                return user;
+            } catch (error) {
+                dispatch(alertError(error.toString()));
+                return rejectWithValue(error.toString());
+            }
+        }
+    );
+
 export const logout = createAsyncThunk<void,
     void,
     { rejectValue: string }>(
@@ -41,7 +56,7 @@ export const register = createAsyncThunk<User,
             try {
                 await userService.register(user);
                 setToast({ type: 'success', message: 'Registration successful!' });
-                navigate('/')
+                navigate('/login')
                 return user;
             } catch (error) {
                 dispatch(alertError(error.toString()));

@@ -37,11 +37,6 @@ function RoutesComponent() {
                         <EmailComponent />
                     </PrivateRouteWrapper>
                 } />
-                <Route path="/add-user" element={
-                    <PrivateRouteWrapper>
-                        <RegisterPage />
-                    </PrivateRouteWrapper>
-                } />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </>

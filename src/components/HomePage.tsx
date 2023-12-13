@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Cookies from 'js-cookie'
 
 import { Roles, RootState, User } from '../types';
 import { _delete, getAll } from '../_actions/user.actions';
@@ -13,21 +12,10 @@ function HomePage() {
     const user = useSelector((state: RootState) => state.authentication.user);
     const isAdmin = user.roles.includes(Roles.ROLE_ADMIN)
     const dispatch = useAppDispatch();
-    const tokenCookie = 'token'
 
     useEffect(() => {
         dispatch(getAll());
     }, []);
-
-    useEffect(() => {
-        readCookie()
-    }, []);
-
-    const readCookie = () => {
-        if (!Cookies.get(tokenCookie)) {
-            navigate('/login');
-        }
-    }
 
     const handleDeleteUser = username => dispatch(_delete(username))
 
@@ -72,10 +60,7 @@ function HomePage() {
             {users.error && <span className="text-danger">ERROR: {users.error}</span>}
             {users.items && displayUsers()}
             <p>
-                <Link id="logout" to="/login" onClick={() => Cookies.remove('token')}>Logout</Link>
-            </p>
-            <p>
-                <Link id="addmore" to="/add-user">Add more users</Link>
+                <Link id="logout" to="/login" onClick={() => true}>Logout</Link>
             </p>
         </div>
     );

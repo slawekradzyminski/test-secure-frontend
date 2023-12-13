@@ -12,16 +12,13 @@ describe('Home page tests', () => {
         cy.register(user)
         cy.login(user.username, user.password)
         cy.visit('http://127.0.0.1:8081')
-        cy.getCookie('token').then((cookie) => token = cookie?.value)
     })
 
     afterEach(() => {
         cy.request({
             method: 'DELETE',
             url: `http://localhost:4001/users/${user.username}`,
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+            failOnStatusCode: false
         })
     })
 
@@ -36,14 +33,6 @@ describe('Home page tests', () => {
 
         // then
         cy.url().should('contain', '/login')
-    })
-
-    it('should open add more page', () => {
-        // when
-        cy.get('#addmore').click()
-
-        // then
-        cy.url().should('contain', '/add-user')
     })
 
     it('should open add more page', () => {

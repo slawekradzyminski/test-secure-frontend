@@ -12,7 +12,6 @@ describe('Edit page tests', () => {
         cy.register(user)
         cy.login(user.username, user.password)
         cy.visit('http://127.0.0.1:8081')
-        cy.getCookie('token').then((cookie) => token = cookie?.value)
         cy.get('li').contains(`${user.firstName} ${user.lastName}`).find('.edit').click()
     })
 
@@ -20,9 +19,7 @@ describe('Edit page tests', () => {
         cy.request({
             method: 'DELETE',
             url: `http://localhost:4001/users/${user.username}`,
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+            failOnStatusCode: false
         })
     })
 
@@ -42,9 +39,6 @@ describe('Edit page tests', () => {
         cy.request({
             method: 'GET',
             url: `http://localhost:4001/users/${user.username}`,
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
         }).then((resp) => {
             expect(resp.body.firstName).to.eq(newUser.firstName)
             expect(resp.body.lastName).to.eq(newUser.lastName)

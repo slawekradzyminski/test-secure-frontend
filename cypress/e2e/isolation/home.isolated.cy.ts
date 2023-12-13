@@ -4,8 +4,6 @@ import { User } from "../../domain/User"
 import users from "../../fixtures/users.json"
 
 describe('Home page tests in isolation', () => {
-    let user: User
-
     beforeEach(() => {
         cy.isolatedLogin()
         cy.visit('http://127.0.0.1:8081')

@@ -1,16 +1,15 @@
-import Cookies from 'js-cookie'
 import { User } from '../types';
-import { authHeader } from '../_helpers/auth-header';
 
 const apiUrl = process.env.API_URL;
 
 export const handleResponse = async (response: Response) => {
     const text = await response.text();
-    const data = text && JSON.parse(text);
+    const data = parseText(text)
     if (!response.ok) {
         if (response.status === 403) {
             logout();
-            location.reload();
+            // location.reload();
+            throw new Error('Not authenticated');
         }
         const error = (data && data.message) || response.statusText;
         return Promise.reject(error);
@@ -18,9 +17,20 @@ export const handleResponse = async (response: Response) => {
     return data;
 }
 
+const parseText = (text: string) => {
+    if (text) {
+        try {
+            return JSON.parse(text)
+        } catch (error) {
+            return text
+        }
+    }
+}
+
 export const userService = {
     login,
     logout,
+    refresh,
     register,
     getAll,
     update,
@@ -31,26 +41,39 @@ async function login(username: string, password: string) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: "include" as RequestCredentials,
         body: JSON.stringify({ username, password })
     };
 
     const response = await fetch(`${apiUrl}/users/signin`, requestOptions);
     const user = await handleResponse(response);
-    localStorage.setItem('user', JSON.stringify(user));
-    Cookies.set('token', user.token);
     return user;
 }
 
-function logout() {
-    localStorage.removeItem('user');
+async function logout() {
+    const requestOptions = {
+        credentials: 'include' as RequestCredentials,
+        method: 'POST'
+    };
+    const response = await fetch(`${apiUrl}/users/logout`, requestOptions);
+    return handleResponse(response);
+}
+
+async function refresh() {
+    const requestOptions = {
+        credentials: "include" as RequestCredentials,
+        method: "GET"
+    };
+    const response = await fetch(`${apiUrl}/users/refresh`, requestOptions);
+    const isAuthenticated = await handleResponse(response);
+    return isAuthenticated;
 }
 
 async function getAll() {
     const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
+        credentials: "include" as RequestCredentials,
+        method: "GET"
     };
-
     const response = await fetch(`${apiUrl}/users`, requestOptions);
     return handleResponse(response);
 }
@@ -59,6 +82,7 @@ async function register(user: User) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: "include" as RequestCredentials,
         body: JSON.stringify(user)
     };
 
@@ -69,7 +93,8 @@ async function register(user: User) {
 async function update(user: User) {
     const requestOptions = {
         method: 'PUT',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
+        credentials: "include" as RequestCredentials,
         body: JSON.stringify(user)
     };
 
@@ -80,7 +105,7 @@ async function update(user: User) {
 async function _delete(username: string) {
     const requestOptions = {
         method: 'DELETE',
-        headers: authHeader()
+        credentials: "include" as RequestCredentials,
     };
 
     const response = await fetch(`${apiUrl}/users/${username}`, requestOptions);

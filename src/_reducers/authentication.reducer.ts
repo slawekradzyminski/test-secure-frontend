@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from '../types';
-import { login, logout } from '../_actions/user.actions';
+import { login, logout, refresh } from '../_actions/user.actions';
 
 export type AuthenticationState = {
   loggedIn?: boolean;
@@ -9,8 +9,7 @@ export type AuthenticationState = {
   error? : string
 };
 
-let user: User = JSON.parse(localStorage.getItem('user'));
-const initialState: AuthenticationState = user ? { loggedIn: true, user } : {};
+const initialState: AuthenticationState = {}
 
 const authenticationSlice = createSlice({
   name: 'authentication',
@@ -28,6 +27,9 @@ const authenticationSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(refresh.fulfilled, (state, action) => {
+        state.user = action.payload;
       })
       .addCase(logout.pending, (state) => {
         state.loading = true;
