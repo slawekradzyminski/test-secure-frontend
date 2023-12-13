@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Input } from "./common/Input";
@@ -7,6 +7,7 @@ import { DisabledInput } from "./common/DisabledInput";
 import { PrimaryButton } from "./common/PrimaryButton";
 import { RootState } from '../types';
 import { update } from '../_actions/user.actions';
+import { ToastContext } from '../context/ToastContext';
 
 function EditUserComponent() {
     const location = useLocation();
@@ -20,12 +21,13 @@ function EditUserComponent() {
     const [roles, setRoles] = useState(user.roles)
     const loading = useSelector((state: RootState) => state.edituser.loading);
     const [submitted, setSubmitted] = useState(false);
+    const setToast = useContext(ToastContext);
 
     const saveUser = (e) => {
         e.preventDefault();
         setSubmitted(true)
         const user = { firstName, lastName, username, email, roles }
-        dispatch(update({ user, navigate }));
+        dispatch(update({ user, setToast, navigate }));
     };
 
     if (username === null) {

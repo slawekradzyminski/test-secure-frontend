@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -7,6 +7,7 @@ import {getHandleChange} from "./util/change";
 import {PrimaryButton} from "./common/PrimaryButton";
 import { Roles, RootState } from '../types';
 import { register } from '../_actions/user.actions';
+import { ToastContext } from '../context/ToastContext';
 
 function RegisterPage() {
     const [username, setUsername] = useState('')
@@ -16,6 +17,7 @@ function RegisterPage() {
     const [email, setEmail] = useState('')
     const [roles, setRoles] = useState([Roles.ROLE_CLIENT])
     const [submitted, setSubmitted] = useState(false);
+    const setToast = useContext(ToastContext);
     const registering = useSelector((state: RootState) => state.registration.registering);
     const navigate = useNavigate()
     const dispatch = useDispatch();
@@ -25,7 +27,7 @@ function RegisterPage() {
 
         setSubmitted(true);
         const user = {firstName, lastName, username, password, roles, email}
-        dispatch(register({ user, navigate }));
+        dispatch(register({ user, setToast, navigate }))
     }
 
     return (

@@ -34,14 +34,14 @@ export const logout = createAsyncThunk<void,
     );
 
 export const register = createAsyncThunk<User,
-    { user: User; navigate: Function },
+    { user: User; setToast: Function; navigate: Function },
     { rejectValue: string }>(
         'user/register',
-        async ({ user, navigate }, { dispatch, rejectWithValue }) => {
+        async ({ user, setToast, navigate }, { dispatch, rejectWithValue }) => {
             try {
                 await userService.register(user);
-                navigate('/');
-                dispatch(alertSuccess('Registration successful'));
+                setToast({ type: 'success', message: 'Registration successful!' });
+                navigate('/')
                 return user;
             } catch (error) {
                 dispatch(alertError(error.toString()));
@@ -66,14 +66,14 @@ export const getAll = createAsyncThunk<User[],
     );
 
 export const update = createAsyncThunk<User,
-    { user: User; navigate: Function },
+    { user: User; setToast: Function, navigate: Function },
     { rejectValue: string }>(
         'user/update',
-        async ({ user, navigate }, { dispatch, rejectWithValue }) => {
+        async ({ user, setToast, navigate }, { dispatch, rejectWithValue }) => {
             try {
                 await userService.update(user);
-                navigate('/');
-                dispatch(alertSuccess('Updating user successful'));
+                setToast({ type: 'success', message: 'Updating user successful!' });
+                navigate('/')
                 return user;
             } catch (error) {
                 dispatch(alertError(error.toString()));

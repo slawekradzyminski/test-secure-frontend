@@ -22,7 +22,7 @@ describe('Register page tests in isolation', () => {
         registerPage.attemptRegister(user)
 
         // then
-        Alert.getAlertSuccess().should('contain.text', 'Registration successful')
+        cy.get('.MuiAlert-message').should('contain.text', 'Registration successful')
         cy.url().should('contain', '/login')
         cy.get('@registerRequest').its('request.body').should('deep.equal', buildRegisterRequestFrom(user))
     })

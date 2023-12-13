@@ -28,7 +28,7 @@ describe('Edit page tests in isolation', () => {
         cy.get('.btn-primary').click()
 
         // then
-        Alert.getAlertSuccess().should('have.text', 'Updating user successful')
+        cy.get('.MuiAlert-message').should('contain.text', 'Updating user successful!')
         cy.get('@editRequest').its('request.body').should('deep.equal', {
             firstName: newUser.firstName,
             lastName: newUser.lastName,
