@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Roles } from '../../types';
+import { User } from '../../types';
 import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon, Email as EmailIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
