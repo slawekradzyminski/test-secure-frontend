@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Roles, User } from '../domain/user';
 
-const getRandomUser = (): User => {
+export const getRandomUser = (): User => {
     return {
         firstName: faker.person.firstName(),
         lastName: faker.person.lastName(),

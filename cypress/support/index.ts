@@ -5,8 +5,6 @@ declare global {
         interface Chainable {
             /**
              * Login the new user via API
-             * @param username 
-             * @param password 
              */
             login(username: string, password: string): Promise<string>;
 

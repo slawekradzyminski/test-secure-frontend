@@ -1,13 +1,16 @@
 /// <reference types="cypress" />
 
+import { User } from "../domain/user"
+import { getRandomUser } from "../generator/userGenerator"
+
 let tokenInTest: string
+let user: User
 
 describe('example to-do app', () => {
     beforeEach(() => {
-        // const user = getRandomUser()
-        // cy.register(user)
-
-        cy.login('admin', 'admin').then(token => {
+        user = getRandomUser()
+        cy.register(user)
+        cy.login(user.username, user.password).then(token => {
             tokenInTest = token
             cy.log(token)
             cy.setCookie('token', token)
@@ -15,7 +18,8 @@ describe('example to-do app', () => {
         cy.visit('')
     })
 
-    it('should display at least one user', () => {
+    it('should display correct data', () => {
+        cy.get('h1').should('contain.text', user.firstName)
         cy.get('li').should('have.length.at.least', 1)
         cy.log(tokenInTest)
     })
