@@ -1,0 +1,24 @@
+/// <reference types="cypress" />
+
+describe('example to-do app', () => {
+    beforeEach(() => {
+      cy.visit('')
+      cy.login('admin', 'admin')
+    })
+  
+    it('should display at least one user', () => {
+        cy.get('li').should('have.length.at.least', 1)
+    })
+
+    it('should logout', () => {
+        cy.get('#logout').click()
+        cy.url().should('contain', 'login')
+    })
+
+    it('should add more user', () => {
+        cy.get('#addmore').click()
+        cy.url().should('contain', 'add-user')
+    })
+
+  })
+  
