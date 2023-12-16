@@ -1,13 +1,21 @@
 /// <reference types="cypress" />
 
+let tokenInTest: string
+
 describe('example to-do app', () => {
     beforeEach(() => {
-      cy.visit('')
-      cy.login('admin', 'admin')
+        // @ts-ignore
+        cy.login('admin', 'admin').then(token => {
+            tokenInTest = token
+            cy.log(token)
+            cy.setCookie('token', token)
+        })
+        cy.visit('')
     })
-  
+
     it('should display at least one user', () => {
         cy.get('li').should('have.length.at.least', 1)
+        cy.log(tokenInTest)
     })
 
     it('should logout', () => {
@@ -20,5 +28,4 @@ describe('example to-do app', () => {
         cy.url().should('contain', 'add-user')
     })
 
-  })
-  
+})
