@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+import { Roles } from "../../domain/user"
 import { getRandomUser } from "../../generator/userGenerator"
 
 describe('register page tests in isolation', () => {
@@ -15,7 +16,7 @@ describe('register page tests in isolation', () => {
             body: {
                 token: 'fakeToken'
             }
-        })
+        }).as('registerRequest')
 
         // when
         cy.get('[name=username]').type(user.username)
@@ -28,6 +29,10 @@ describe('register page tests in isolation', () => {
         // then
         cy.url().should('contain', '/login')
         cy.get('.alert-success').should('have.text', 'Registration successful')
+        cy.get('@registerRequest').its('request.body').should('deep.equal', {
+            ...user,
+            roles: [Roles.ROLE_CLIENT]
+        })
     })
 
   })

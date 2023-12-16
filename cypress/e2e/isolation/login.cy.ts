@@ -8,7 +8,7 @@ describe('Login page tests in isolation', () => {
         cy.visit('')
     })
 
-    it('should open register page', () => {
+    it('clicking on Register button should correctly redirect', () => {
         cy.get('.btn-link').click()
         cy.url().should('contain', 'register')
     })
@@ -19,7 +19,7 @@ describe('Login page tests in isolation', () => {
         cy.intercept('POST', '/users/signin', {
             statusCode: 200,
             body: getLoginResponseFrom(user)
-        })
+        }).as('loginRequest')
         cy.intercept('GET', '**/users', { fixture: 'users.json' })
 
         // when
@@ -29,6 +29,10 @@ describe('Login page tests in isolation', () => {
 
         // then
         cy.get('h1').contains(user.firstName)
+        cy.get('@loginRequest').its('request.body').should('deep.equal', {
+            username: user.username,
+            password: user.password
+        })
     })
 
 })
