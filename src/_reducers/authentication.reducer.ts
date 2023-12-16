@@ -30,6 +30,7 @@ const authenticationSlice = createSlice({
       })
       .addCase(refresh.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.loggedIn = true;
       })
       .addCase(logout.pending, (state) => {
         state.loading = true;

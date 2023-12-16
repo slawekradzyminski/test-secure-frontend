@@ -1,9 +1,9 @@
 export const pagePaths = {
     'Login': '/login',
     'Register': '/register',
-    // Add more pages here as needed
+    'QR Codes': '/qr'
 };
 
-export const loggedInPages = ['Products', 'Pricing', 'Blog'];
+export const loggedInPages = ['Products', 'Pricing', 'Blog', 'QR Codes'];
 export const loggedOutPages = ['Login', 'Register']
 export const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];

@@ -8,7 +8,7 @@ export const handleResponse = async (response: Response) => {
     if (!response.ok) {
         if (response.status === 403) {
             logout();
-            // location.reload();
+            location.reload();
             throw new Error('Not authenticated');
         }
         const error = (data && data.message) || response.statusText;

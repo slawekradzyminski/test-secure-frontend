@@ -32,6 +32,11 @@ function RoutesComponent() {
                         <EditUserComponent />
                     </PrivateRouteWrapper>
                 } />
+                <Route path="/qr" element={
+                    <PrivateRouteWrapper>
+                        <EditUserComponent />
+                    </PrivateRouteWrapper>
+                } />
                 <Route path="/email" element={
                     <PrivateRouteWrapper>
                         <EmailComponent />
