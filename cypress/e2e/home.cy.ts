@@ -18,6 +18,10 @@ describe('example to-do app', () => {
         cy.visit('')
     })
 
+    afterEach('cleanup user', () => {
+        cy.deleteUser(user.username, tokenInTest)
+    })
+
     it('should display correct data', () => {
         cy.get('h1').should('contain.text', user.firstName)
         cy.get('li').should('have.length.at.least', 1)
@@ -33,5 +37,16 @@ describe('example to-do app', () => {
         cy.get('#addmore').click()
         cy.url().should('contain', 'add-user')
     })
+
+    it('should display edit, delete and email link for each user', () => {
+        cy.get('li').each(($row) => {
+            // The implementation above uses Cypress API but is slower
+            // cy.wrap($row) is very slow even for dozens of elements
+            // cy.wrap($row).find('.edit').should('be.visible')
+            expect($row.find('.edit')).to.be.visible;
+            expect($row.find('.delete')).to.be.visible;
+            expect($row.find('.email')).to.be.visible;
+        });
+    });
 
 })

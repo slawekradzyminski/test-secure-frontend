@@ -12,6 +12,12 @@ declare global {
              * Register new user via API
              */
             register(user: User): void;
+
+            /**
+             * Delete user via API
+             */
+            deleteUser(username: string, token: string): void;
         }
+        
     }
 }
