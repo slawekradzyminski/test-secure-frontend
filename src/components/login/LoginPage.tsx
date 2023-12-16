@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { login, logout } from '../../_actions/user.actions';
 import { useAppDispatch } from '../../_helpers/store';
 import LoginForm from './LoginForm';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../types';
 
 const DEFAULT_PATH = "/";
 const LOGIN = "Login";
@@ -12,9 +14,12 @@ function LoginPage() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const location = useLocation();
+    const loggedIn = useSelector((state: RootState) => state.authentication.loggedIn);
 
     useEffect(() => {
-        dispatch(logout());
+        if (loggedIn) {
+            dispatch(logout());
+        }
     }, [dispatch]);
 
     const handleSubmit = useCallback(({ username, password }) => {
