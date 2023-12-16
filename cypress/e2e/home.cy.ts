@@ -4,7 +4,9 @@ let tokenInTest: string
 
 describe('example to-do app', () => {
     beforeEach(() => {
-        // @ts-ignore
+        // const user = getRandomUser()
+        // cy.register(user)
+
         cy.login('admin', 'admin').then(token => {
             tokenInTest = token
             cy.log(token)
