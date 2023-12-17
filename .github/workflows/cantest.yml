@@ -27,6 +27,30 @@ jobs:
           browser: chrome
           spec: cypress/e2e/isolation/*
 
+  chrome-tests-node-18:
+    runs-on: ubuntu-latest
+    container: 
+      image: cypress/browsers:node-18.16.1-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
+      options: --user 1001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+      - run: npm install
+
+      - name: "Chrome Tests"
+        uses: cypress-io/github-action@v4
+        with:
+          start: npm start
+          wait-on: "http://localhost:8081"
+          wait-on-timeout: 120
+          browser: chrome
+          spec: cypress/e2e/isolation/*
+
   firefox-tests:
     runs-on: ubuntu-latest
     container: 
