@@ -1,8 +1,10 @@
 /// <reference types="cypress" />
 
+import { User } from "../../domain/user"
 import { getRandomUser } from "../../generator/userGenerator"
 import { getUserMocks } from "../../mocks/getUserMocks"
 import { loginMocks } from "../../mocks/loginMocks"
+import { loginPage } from "../../pages/loginPage"
 
 describe('Login page tests in isolation', () => {
     beforeEach(() => {
@@ -11,7 +13,7 @@ describe('Login page tests in isolation', () => {
 
     it('clicking on Register button should correctly redirect', () => {
         // when
-        cy.get('.btn-link').click()
+        loginPage.clickRegister()
 
         // then
         cy.url().should('contain', 'register')
@@ -24,16 +26,11 @@ describe('Login page tests in isolation', () => {
         getUserMocks.mockUsers()
 
         // when
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin(user)
 
         // then
         cy.get('h1').contains(user.firstName)
-        cy.get('@loginRequest').its('request.body').should('deep.equal', {
-            username: user.username,
-            password: user.password
-        })
+        verifyLoginRequestWasCorrectlyBuild(user)
     })
 
     it('should fail to login if credentials are wrong', () => {
@@ -43,9 +40,7 @@ describe('Login page tests in isolation', () => {
         loginMocks.mockInvalidCredentials(errorMessage)
 
         // when
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        loginPage.attemptLogin(user)
 
         // then
         cy.get('.alert-danger').should('have.text', errorMessage)
@@ -54,7 +49,7 @@ describe('Login page tests in isolation', () => {
 
     it('should trigger frontend validation', () => {
         // when
-        cy.get('.btn-primary').click()
+        loginPage.clickLogin()
 
         // then
         cy.get('.invalid-feedback').should('have.length', 2)
@@ -68,4 +63,9 @@ describe('Login page tests in isolation', () => {
 
 })
 
-// 77 linii na starcie
+const verifyLoginRequestWasCorrectlyBuild = (user: User) => {
+    cy.get('@loginRequest').its('request.body').should('deep.equal', {
+        username: user.username,
+        password: user.password
+    })
+}
