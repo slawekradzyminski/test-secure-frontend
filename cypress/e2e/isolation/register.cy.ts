@@ -15,6 +15,7 @@ describe('register page tests in isolation', () => {
         // given
         const user = getRandomUser()
         registerMocks.mockSuccessfulRegister()
+        cy.percySnapshot()
 
         // when
         RegisterPage.attemptRegister(user)
