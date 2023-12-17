@@ -4,6 +4,7 @@ import { getLoginResponseFrom } from "../../domain/api/login"
 import { getRandomUser } from "../../generator/userGenerator"
 import users from "../../fixtures/users.json"
 import { User } from "../../domain/user"
+import { getUserMocks } from "../../mocks/getUserMocks"
 
 let user: User
 
@@ -12,7 +13,7 @@ describe('Home page tests in isolation', () => {
         user = getRandomUser()
         localStorage.setItem('user', JSON.stringify(getLoginResponseFrom(user)))
         cy.setCookie('token', 'fakeToken')
-        cy.intercept('GET', '**/users', { fixture: 'users.json' })
+        getUserMocks.mockUsers()
         cy.visit('')
     })
 

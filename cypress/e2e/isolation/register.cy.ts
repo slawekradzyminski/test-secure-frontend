@@ -2,6 +2,7 @@
 
 import { Roles } from "../../domain/user"
 import { getRandomUser } from "../../generator/userGenerator"
+import { registerMocks } from "../../mocks/registerMocks"
 
 describe('register page tests in isolation', () => {
     beforeEach(() => {
@@ -11,12 +12,7 @@ describe('register page tests in isolation', () => {
     it('should successfully register', () => {
         // given
         const user = getRandomUser()
-        cy.intercept('POST', '**/users/signup', {
-            statusCode: 201,
-            body: {
-                token: 'fakeToken'
-            }
-        }).as('registerRequest')
+        registerMocks.mockSuccessfulRegister()
 
         // when
         cy.get('[name=username]').type(user.username)

@@ -1,7 +1,8 @@
 /// <reference types="cypress" />
 
-import { getLoginResponseFrom } from "../../domain/api/login"
 import { getRandomUser } from "../../generator/userGenerator"
+import { getUserMocks } from "../../mocks/getUserMocks"
+import { loginMocks } from "../../mocks/loginMocks"
 
 describe('Login page tests in isolation', () => {
     beforeEach(() => {
@@ -16,11 +17,8 @@ describe('Login page tests in isolation', () => {
     it('should successfully login', () => {
         // given
         const user = getRandomUser()
-        cy.intercept('POST', '/users/signin', {
-            statusCode: 200,
-            body: getLoginResponseFrom(user)
-        }).as('loginRequest')
-        cy.intercept('GET', '**/users', { fixture: 'users.json' })
+        loginMocks.mockSuccessfulLogin(user)
+        getUserMocks.mockUsers()
 
         // when
         cy.get('[name=username]').type(user.username)
@@ -39,16 +37,7 @@ describe('Login page tests in isolation', () => {
         // given
         const errorMessage = "Invalid username/password supplied"
         const user = getRandomUser()
-        cy.intercept('POST', '/users/signin', {
-            statusCode: 422,
-            body: {
-                timestamp: "2023-12-17T09:42:41.140+00:00",
-                status: 422,
-                error: "Unprocessable Entity",
-                message: errorMessage,
-                path: "/users/signin"
-            }
-        })
+        loginMocks.mockInvalidCredentials(errorMessage)
 
         // when
         cy.get('[name=username]').type(user.username)
@@ -75,3 +64,5 @@ describe('Login page tests in isolation', () => {
     })
 
 })
+
+// 77 linii na starcie
