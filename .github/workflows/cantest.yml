@@ -1,0 +1,76 @@
+name: Cypress Tests December 2023
+
+on: push
+
+jobs:
+  chrome-tests:
+    runs-on: ubuntu-latest
+    container: 
+      image: cypress/browsers:node-16.18.1-chrome-110.0.5481.96-1-ff-109.0-edge-110.0.1587.41-1
+      options: --user 1001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+      - run: npm install
+
+      - name: "Chrome Tests"
+        uses: cypress-io/github-action@v4
+        with:
+          start: npm start
+          wait-on: "http://localhost:8081"
+          wait-on-timeout: 120
+          browser: chrome
+          spec: cypress/e2e/isolation/*
+
+  firefox-tests:
+    runs-on: ubuntu-latest
+    container: 
+      image: cypress/browsers:node-16.18.1-chrome-110.0.5481.96-1-ff-109.0-edge-110.0.1587.41-1
+      options: --user 1001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+      - run: npm install
+
+      - name: "Firefox Tests"
+        uses: cypress-io/github-action@v4
+        with:
+          start: npm start
+          wait-on: "http://localhost:8081"
+          wait-on-timeout: 120
+          browser: firefox
+          spec: cypress/e2e/isolation/*
+
+  edge-tests:
+    runs-on: ubuntu-latest
+    container: 
+      image: cypress/browsers:node-16.18.1-chrome-110.0.5481.96-1-ff-109.0-edge-110.0.1587.41-1
+      options: --user 1001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+      - run: npm install
+
+      - name: "Edge Tests"
+        uses: cypress-io/github-action@v4
+        with:
+          start: npm start
+          wait-on: "http://localhost:8081"
+          wait-on-timeout: 120
+          browser: edge
+          spec: cypress/e2e/isolation/*
