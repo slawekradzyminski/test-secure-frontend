@@ -14,6 +14,7 @@ Change in package.json localhost to 0.0.0.0
 "start": "webpack-dev-server --host 0.0.0.0 --open --port 8081"
 ```
 
+
 Build docker image
 
 ```commandline
