@@ -35,4 +35,29 @@ describe('Login page tests in isolation', () => {
         })
     })
 
+    it('should fail to login', () => {
+        // given
+        const errorMessage = "Invalid username/password supplied"
+        const user = getRandomUser()
+        cy.intercept('POST', '/users/signin', {
+            statusCode: 422,
+            body: {
+                timestamp: "2023-12-17T09:42:41.140+00:00",
+                status: 422,
+                error: "Unprocessable Entity",
+                message: errorMessage,
+                path: "/users/signin"
+            }
+        })
+
+        // when
+        cy.get('[name=username]').type(user.username)
+        cy.get('[name=password]').type(user.password)
+        cy.get('.btn-primary').click()
+
+        // then
+        cy.get('.alert-danger').should('have.text', errorMessage)
+        cy.url().should('contain', '/login')
+    })
+
 })
