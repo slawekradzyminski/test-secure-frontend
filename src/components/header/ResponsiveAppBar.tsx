@@ -3,12 +3,12 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../types';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import UserSettingsMenu from './UserSettingsMenu';
 import MobileView from './MobileView';
 import DesktopView from './DesktopView';
+import { RootState } from '../../_reducers';
 
 function ResponsiveAppBar() {
   const loggedIn = useSelector((state: RootState) => state.authentication.loggedIn);

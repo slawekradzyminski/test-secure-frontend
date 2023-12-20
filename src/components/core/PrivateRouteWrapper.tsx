@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../_helpers/store';
 import { refresh } from '../../_actions/user.actions';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../types';
+import { RootState } from '../../_reducers';
 
 function PrivateRouteWrapper({ children }) {
     const location = useLocation();

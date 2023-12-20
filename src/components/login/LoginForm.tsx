@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Input } from "../common/Input";
 import { getHandleChange } from "../util/change";
 import { PrimaryButton } from "../common/PrimaryButton";
-import { RootState } from '../../types';
+import { RootState } from '../../_reducers';
 
 const LOGIN = "Login";
 const REGISTER = "/register";

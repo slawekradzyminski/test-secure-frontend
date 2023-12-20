@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { loggedInPages, pagePaths, loggedOutPages } from './navbarConstants';
 import { Menu } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../types';
+import { RootState } from '../../_reducers';
 
 const MobileView = () => {
     const loggedIn = useSelector((state: RootState) => state.authentication.loggedIn);

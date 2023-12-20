@@ -8,6 +8,7 @@ import { RegisterPage } from '../register/RegisterPage';
 import { EditUserComponent } from "../EditUserComponent";
 import { EmailComponent } from '../EmailComponent';
 import PrivateRouteWrapper from './PrivateRouteWrapper';
+import QrComponent from '../QrComponent';
 
 function RoutesComponent() {
     const dispatch = useDispatch();
@@ -34,7 +35,7 @@ function RoutesComponent() {
                 } />
                 <Route path="/qr" element={
                     <PrivateRouteWrapper>
-                        <EditUserComponent />
+                        <QrComponent />
                     </PrivateRouteWrapper>
                 } />
                 <Route path="/email" element={

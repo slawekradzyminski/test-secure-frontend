@@ -6,7 +6,7 @@ import BugReportIcon from '@mui/icons-material/BugReport';
 import { Link } from 'react-router-dom';
 import { loggedInPages, pagePaths, loggedOutPages } from './navbarConstants';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../types';
+import { RootState } from '../../_reducers';
 
 const DesktopView = () => {
     const loggedIn = useSelector((state: RootState) => state.authentication.loggedIn);

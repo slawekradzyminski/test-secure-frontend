@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { RootState } from '../../types';
 import RoutesComponent from './RouterComponent';
 import { ToastProvider } from '../common/ToastProvider';
 import ResponsiveAppBar from '../header/ResponsiveAppBar';
+import { RootState } from '../../_reducers';
 
 function App() {
     const alert = useSelector((state: RootState) => state.alert);

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Roles, RootState } from '../../types';
+import { Roles } from '../../types';
 import { _delete, getAll } from '../../_actions/user.actions';
 import { useAppDispatch } from '../../_helpers/store';
 import UserTable from './UserTable';
+import { RootState } from '../../_reducers';
 
 function HomePage() {
     const users = useSelector((state: RootState) => state.users);

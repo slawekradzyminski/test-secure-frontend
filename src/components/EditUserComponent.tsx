@@ -5,10 +5,10 @@ import { Input } from "./common/Input";
 import { getHandleChange } from "./util/change";
 import { DisabledInput } from "./common/DisabledInput";
 import { PrimaryButton } from "./common/PrimaryButton";
-import { RootState } from '../types';
 import { update } from '../_actions/user.actions';
 import { ToastContext } from '../context/ToastContext';
 import { useAppDispatch } from '../_helpers/store';
+import { RootState } from '../_reducers';
 
 function EditUserComponent() {
     const location = useLocation();

@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { RootState } from '../../types';
 import { register } from '../../_actions/user.actions';
 import { ToastContext } from '../../context/ToastContext';
 import { useAppDispatch } from '../../_helpers/store';
 import RegisterForm from './RegisterForm';
+import { RootState } from '../../_reducers';
 
 function RegisterPage() {
     const setToast = useContext(ToastContext);
