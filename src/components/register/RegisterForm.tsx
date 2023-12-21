@@ -8,11 +8,11 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Roles } from '../../types';
+import { Roles, User } from '../../types';
 import FormHelperText from '@mui/material/FormHelperText';
 
 interface Props {
-    onSubmit: (user: any) => void;
+    onSubmit: (user: User) => void;
 }
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

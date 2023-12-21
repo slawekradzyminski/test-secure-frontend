@@ -12,7 +12,7 @@ export const ToastProvider = ({ children }) => {
                 <Snackbar open
                     autoHideDuration={3000}
                     onClose={() => setToast(null)}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
                     <Alert severity={toast.type} onClose={() => setToast(null)}>
                         {toast.message}
                     </Alert>
