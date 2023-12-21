@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
-import { alertClear } from '../../_reducers/alert.reducer';
 import { HomePage } from '../home/HomePage';
 import { LoginPage } from '../login/LoginPage';
 import { RegisterPage } from '../register/RegisterPage';
@@ -11,13 +10,6 @@ import PrivateRouteWrapper from './PrivateRouteWrapper';
 import QrComponent from '../QrComponent';
 
 function RoutesComponent() {
-    const dispatch = useDispatch();
-    const location = useLocation();
-
-    useEffect(() => {
-        dispatch(alertClear());
-    }, [location, dispatch]);
-
     return (
         <>
             <Routes>

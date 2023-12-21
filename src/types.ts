@@ -1,10 +1,3 @@
-import { AlertState } from './_reducers/alert.reducer';
-import { AuthenticationState } from './_reducers/authentication.reducer';
-import { EditUserState } from './_reducers/edituser.reducer';
-import { QrState } from './_reducers/qr.reducer';
-import { RegistrationState } from './_reducers/registration.reducer';
-import { UsersState } from './_reducers/users.reducer';
-
 
 export type User = {
     username: string;

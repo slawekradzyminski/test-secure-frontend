@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Roles } from '../../types';
 import { _delete, getAll } from '../../_actions/user.actions';
@@ -25,9 +24,6 @@ function HomePage() {
             {users.loading && <em>Loading users...</em>}
             {users.error && <span className="text-danger">ERROR: {users.error}</span>}
             {users.items && <UserTable users={users.items} isAdmin={isAdmin} />}
-            <p>
-                <Link id="logout" to="/login" onClick={() => true}>Logout</Link>
-            </p>
         </div>
     );
 }

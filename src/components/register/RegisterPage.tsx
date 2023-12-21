@@ -19,10 +19,7 @@ function RegisterPage() {
     }
 
     return (
-        <div className="col-lg-8 offset-lg-2">
-            <h2>Register</h2>
             <RegisterForm onSubmit={handleSubmit} registering={registering} />
-        </div>
     );
 }
 

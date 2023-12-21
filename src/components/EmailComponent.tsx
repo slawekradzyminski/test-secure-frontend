@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useLocation } from "react-router-dom";
 import { Input } from "./common/Input";
 import { getHandleChange } from "./util/change";
@@ -8,6 +8,7 @@ import { Textarea } from "./common/Textarea";
 import { Email } from '../types';
 import { handleEmail } from '../_actions/user.actions';
 import { useAppDispatch } from '../_helpers/store';
+import { ToastContext } from '../context/ToastContext';
 
 function EmailComponent() {
     const location = useLocation()
@@ -17,12 +18,13 @@ function EmailComponent() {
     const [subject, setSubject] = useState('')
     const [message, setMessage] = useState('')
     const [submitted, setSubmitted] = useState(false);
+    const setToast = useContext(ToastContext);
 
     const sendEmail = (e) => {
         e.preventDefault();
         setSubmitted(true)
         const email: Email = { to, subject, message }
-        dispatch(handleEmail(email));
+        dispatch(handleEmail({ email, setToast }));
     };
 
     if (to === undefined) {

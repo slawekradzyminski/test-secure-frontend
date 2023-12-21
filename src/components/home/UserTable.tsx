@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { User } from '../../types';
 import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon, Email as EmailIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../_helpers/store';
 import { _delete } from '../../_actions/user.actions';
+import { ToastContext } from '../../context/ToastContext';
 
 interface UserTableProps {
     users: User[];
@@ -14,6 +15,7 @@ interface UserTableProps {
 const UserTable: React.FC<UserTableProps> = ({ users, isAdmin }) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const setToast = useContext(ToastContext);
 
     const editUser = (user: User) => {
         navigate('/edit-user', { state: { user } });
@@ -24,7 +26,8 @@ const UserTable: React.FC<UserTableProps> = ({ users, isAdmin }) => {
     }
 
     const handleDeleteClick = (username: string) => {
-        window.confirm("Are you sure you wish to delete this item?") && dispatch(_delete(username))
+        window.confirm("Are you sure you wish to delete this item?") &&
+            dispatch(_delete({ username, setToast }))
     }
 
     return (

@@ -7,7 +7,7 @@ export const handleResponse = async (response: Response) => {
     const data = parseText(text)
     if (!response.ok) {
         if (response.status === 403) {
-            logout();
+            window.location.href = '/login';
             throw new Error('Not authenticated');
         }
         const error = (data && data.message) || response.statusText;
