@@ -10,7 +10,7 @@ import MobileView from './MobileView';
 import DesktopView from './DesktopView';
 import { RootState } from '../../_reducers';
 
-function ResponsiveAppBar() {
+const ResponsiveAppBar = () => {
   const loggedIn = useSelector((state: RootState) => state.authentication.loggedIn);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -26,8 +26,8 @@ function ResponsiveAppBar() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
+    <AppBar position="static" sx={{ marginBottom: '30px' }}>
+    <Container maxWidth="xl">
         <Toolbar disableGutters>
           {isMobile ? <MobileView /> : <DesktopView />}
           {loggedIn && (

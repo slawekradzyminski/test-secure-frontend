@@ -10,7 +10,6 @@ import { RootState } from '../../_reducers';
 
 function RegisterPage() {
     const setToast = useContext(ToastContext);
-    const registering = useSelector((state: RootState) => state.registration.registering);
     const navigate = useNavigate()
     const dispatch = useAppDispatch();
 
@@ -19,7 +18,7 @@ function RegisterPage() {
     }
 
     return (
-            <RegisterForm onSubmit={handleSubmit} registering={registering} />
+            <RegisterForm onSubmit={handleSubmit} />
     );
 }
 

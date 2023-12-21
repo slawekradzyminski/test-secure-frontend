@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,13 +10,24 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import FormHelperText from '@mui/material/FormHelperText';
 
 function LoginForm({ onSubmit }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [usernameError, setUsernameError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     const handleSubmit = useCallback((e: React.FormEvent) => {
         e.preventDefault();
+        if (username.length < 3) {
+            setUsernameError(true);
+            return;
+        }
+        if (password.length < 3) {
+            setPasswordError(true);
+            return;
+        }
         onSubmit({ username, password });
     }, [username, password, onSubmit]);
 
@@ -44,6 +53,7 @@ function LoginForm({ onSubmit }) {
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
+                            error={usernameError}
                             margin="normal"
                             required
                             fullWidth
@@ -53,9 +63,14 @@ function LoginForm({ onSubmit }) {
                             autoComplete="username"
                             autoFocus
                             value={username} 
-                            onChange={e => setUsername(e.target.value)} 
+                            onChange={e => {
+                                setUsername(e.target.value);
+                                setUsernameError(e.target.value.length < 3);
+                            }} 
                         />
+                        {usernameError && <FormHelperText error>Username must be at least 3 characters long</FormHelperText>}
                         <TextField
+                            error={passwordError}
                             margin="normal"
                             required
                             fullWidth
@@ -65,17 +80,18 @@ function LoginForm({ onSubmit }) {
                             id="password"
                             autoComplete="current-password"
                             value={password}
-                            onChange={e => setPassword(e.target.value)} 
+                            onChange={e => {
+                                setPassword(e.target.value);
+                                setPasswordError(e.target.value.length < 3);
+                            }} 
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
+                        {passwordError && <FormHelperText error>Password must be at least 3 characters long</FormHelperText>}
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 3, mb: 2, minWidth: '400px' }}
+                            disabled={usernameError || passwordError}
                         >
                             Sign In
                         </Button>

@@ -1,22 +1,20 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import RoutesComponent from './RouterComponent';
 import { ToastProvider } from '../common/ToastProvider';
 import ResponsiveAppBar from '../header/ResponsiveAppBar';
-import { RootState } from '../../_reducers';
+import Footer from './Footer';
 
 function App() {
     return (
         <ToastProvider>
             <Router>
-                <ResponsiveAppBar />
-                <div className="jumbotron">
-                    <div className="container">
-                        <div className="col-md-8 offset-md-2">
-                            <RoutesComponent />
-                        </div>
+                <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                    <ResponsiveAppBar />
+                    <div className="col-md-8 offset-md-2">
+                        <RoutesComponent />
                     </div>
+                    <Footer />
                 </div>
             </Router>
         </ToastProvider>
