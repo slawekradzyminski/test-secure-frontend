@@ -7,7 +7,7 @@ import { EditUserComponent } from "../EditUserComponent";
 import { EmailComponent } from '../EmailComponent';
 import PrivateRouteWrapper from './PrivateRouteWrapper';
 import QrComponent from '../QrComponent';
-import DoctorTypesComponent from '../DoctorTypes';
+import DoctorTypesComponent from '../doctortypes/DoctorTypes';
 
 function RoutesComponent() {
     return (

@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Checkbox, FormControl, FormGroup, FormControlLabel, Button, Container, Grid, Box, TextField, Paper, Typography } from '@mui/material';
-import { fetchDoctorTypes, updateDoctorTypes, createDoctorType } from '../_services/doctorTypes.service';
+import { fetchDoctorTypes, updateDoctorTypes, createDoctorType } from '../../_services/doctorTypes.service';
 import { useSelector } from 'react-redux';
-import { RootState } from '../_reducers';
-import { userService } from '../_services/user.service';
-import { ToastContext } from '../context/ToastContext';
+import { RootState } from '../../_reducers';
+import { userService } from '../../_services/user.service';
+import { ToastContext } from '../../context/ToastContext';
+import SpecialtyList from './SpecialtyList';
+import AddSpecialty from './AddSpecialty';
+import { Container } from '@mui/material';
 
 const DoctorTypesComponent = () => {
     const [selectedSpecialties, setSelectedSpecialties] = useState({});
@@ -57,36 +59,17 @@ const DoctorTypesComponent = () => {
 
     return (
         <Container>
-            <Box display="flex" justifyContent="center">
-                <FormControl component="fieldset">
-                    <FormGroup>
-                        <Grid container spacing={3}>
-                            {specialties.map((specialty, index) => (
-                                <Grid item xs={6} key={index}>
-                                    <FormControlLabel
-                                        control={<Checkbox checked={selectedSpecialties[specialty.doctorType] || false} onChange={handleChange} name={specialty.doctorType} />}
-                                        label={specialty.doctorType}
-                                    />
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </FormGroup>
-                    <Button variant="contained" color="primary" onClick={handleSubmit}>
-                        Update My Specialties
-                    </Button>
-                </FormControl>
-            </Box>
-            <Box mt={6} p={2} component={Paper} elevation={3} bgcolor="grey.100">
-                <Typography variant="h6" align="center" gutterBottom>
-                    Can't find your specialty? Add it!
-                </Typography>
-                <Box display="flex" justifyContent="center" mt={2}>
-                    <TextField value={newDoctorType} onChange={(e) => setNewDoctorType(e.target.value)} label="New Doctor Type" />
-                    <Button variant="contained" color="primary" onClick={handleCreate} style={{ marginLeft: '10px' }}>
-                        Add Doctor Type
-                    </Button>
-                </Box>
-            </Box>
+            <SpecialtyList
+                specialties={specialties}
+                selectedSpecialties={selectedSpecialties}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+            />
+            <AddSpecialty
+                newDoctorType={newDoctorType}
+                handleCreate={handleCreate}
+                setNewDoctorType={setNewDoctorType}
+            />
         </Container>
     );
 };
