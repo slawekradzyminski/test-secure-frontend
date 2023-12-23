@@ -32,6 +32,7 @@ export const userService = {
     refresh,
     register,
     getAll,
+    get,
     update,
     delete: _delete
 };
@@ -74,6 +75,15 @@ async function getAll() {
         method: "GET"
     };
     const response = await fetch(`${apiUrl}/users`, requestOptions);
+    return handleResponse(response);
+}
+
+async function get(username: string) {
+    const requestOptions = {
+        credentials: "include" as RequestCredentials,
+        method: "GET"
+    };
+    const response = await fetch(`${apiUrl}/users/${username}`, requestOptions);
     return handleResponse(response);
 }
 

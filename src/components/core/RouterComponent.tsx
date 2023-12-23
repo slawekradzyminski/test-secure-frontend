@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
+import React from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { HomePage } from '../home/HomePage';
 import { LoginPage } from '../login/LoginPage';
 import { RegisterPage } from '../register/RegisterPage';
@@ -8,6 +7,7 @@ import { EditUserComponent } from "../EditUserComponent";
 import { EmailComponent } from '../EmailComponent';
 import PrivateRouteWrapper from './PrivateRouteWrapper';
 import QrComponent from '../QrComponent';
+import DoctorTypesComponent from '../DoctorTypes';
 
 function RoutesComponent() {
     return (
@@ -33,6 +33,11 @@ function RoutesComponent() {
                 <Route path="/email" element={
                     <PrivateRouteWrapper>
                         <EmailComponent />
+                    </PrivateRouteWrapper>
+                } />
+                <Route path="/doctortypes" element={
+                    <PrivateRouteWrapper>
+                        <DoctorTypesComponent />
                     </PrivateRouteWrapper>
                 } />
                 <Route path="*" element={<Navigate to="/" />} />
