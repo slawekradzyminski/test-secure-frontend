@@ -1,4 +1,4 @@
-import { handleResponse } from "./user.service";
+import { handleResponse } from "./responseHandler";
 
 export const fetchDoctorTypes = async () => {
     const requestOptions = {

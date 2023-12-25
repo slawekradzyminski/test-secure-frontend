@@ -1,6 +1,5 @@
-import { handleResponse } from "./user.service";
 import { Email } from "../types";
-
+import { handleResponse } from "./responseHandler";
 
 export const sendEmail = async (email: Email) => {
     const requestOptions = {
