@@ -6,7 +6,7 @@ import { RegisterPage } from '../register/RegisterPage';
 import { EditUserComponent } from "../EditUserComponent";
 import { EmailComponent } from '../EmailComponent';
 import PrivateRouteWrapper from './PrivateRouteWrapper';
-import QrComponent from '../QrComponent';
+import QrComponent from '../qr/QrComponent';
 import DoctorTypesComponent from '../doctortypes/DoctorTypes';
 
 function RoutesComponent() {

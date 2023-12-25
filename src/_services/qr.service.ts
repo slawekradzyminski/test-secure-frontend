@@ -13,7 +13,9 @@ export const generateQrCode = async (createQrDto: CreateQrDto) => {
     };
 
     const response = await fetch(`${process.env.API_URL}/qr/create`, requestOptions);
-    return handleImageResponse(response);
+    const blob = await handleImageResponse(response);
+    const url = URL.createObjectURL(blob);
+    return url;
 }
 
 export const handleImageResponse = async (response: Response) => {

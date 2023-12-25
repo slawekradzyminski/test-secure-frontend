@@ -18,7 +18,7 @@ const DesktopView = () => {
                 variant="h6"
                 noWrap
                 component="a"
-                href="#app-bar-with-responsive-menu"
+                href="/"
                 sx={{
                     mr: 2,
                     display: { xs: 'none', md: 'flex' },
@@ -29,7 +29,7 @@ const DesktopView = () => {
                     textDecoration: 'none',
                 }}
             >
-                LOGO
+                HOME
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {loggedIn ? (

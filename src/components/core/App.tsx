@@ -11,9 +11,7 @@ function App() {
             <Router>
                 <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                     <ResponsiveAppBar />
-                    <div className="col-md-8 offset-md-2">
-                        <RoutesComponent />
-                    </div>
+                    <RoutesComponent />
                     <Footer />
                 </div>
             </Router>
