@@ -87,9 +87,7 @@ function EditUserComponent() {
                         >
                             Edit User
                         </Button>
-                        <Link to="/">
-                            Cancel
-                        </Link>
+                        <Button component={Link} to="/" variant="text" fullWidth>Cancel</Button>
                     </Box>
                 </Box>
             </Container>

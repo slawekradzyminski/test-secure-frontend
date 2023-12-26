@@ -1,10 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
-import { Input } from "./common/Input";
-import { getHandleChange } from "./util/change";
-import { DisabledInput } from "./common/DisabledInput";
-import { PrimaryButton } from "./common/PrimaryButton";
-import { Textarea } from "./common/Textarea";
+import { TextField, Button, Typography, Box, Container, CssBaseline, Avatar, FormHelperText, TextareaAutosize } from "@mui/material";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import EmailIcon from '@mui/icons-material/Email';
 import { Email } from '../types';
 import { handleEmail } from '../_actions/user.actions';
 import { useAppDispatch } from '../_helpers/store';
@@ -20,39 +18,64 @@ function EmailComponent() {
     const [submitted, setSubmitted] = useState(false);
     const setToast = useContext(ToastContext);
 
+    const [subjectError, setSubjectError] = useState(false);
+    const [messageError, setMessageError] = useState(false);
+
     const sendEmail = (e) => {
         e.preventDefault();
         setSubmitted(true)
+        setSubjectError(subject.length < 3);
+        setMessageError(message.length < 3);
+
+        if (subject.length < 3 || message.length < 3) {
+            return;
+        }
+
         const email: Email = { to, subject, message }
         dispatch(handleEmail({ email, setToast }));
     };
 
-    if (to === undefined) {
-        return (
-            <div className="col-lg-8 offset-lg-2">
-                <h2>Something is no yes...</h2>
-                <Link to="/" className="btn btn-link">Go back</Link>
-            </div>
-        );
-    }
+    const defaultTheme = createTheme();
 
     return (
-        <div className="col-lg-8 offset-lg-2">
-            <h2>Email user</h2>
-            {to &&
-                <form name="form" onSubmit={sendEmail}>
-                    <DisabledInput name="email" value={to} />
-                    <Input name="subject" value={subject} submitted={submitted}
-                        handleChange={getHandleChange(setSubject)} />
-                    <Textarea name="message" value={message} submitted={submitted}
-                        handleChange={getHandleChange(setMessage)} />
-                    <div className="form-group">
-                        <PrimaryButton text="Send email" isLoading={false} />
-                        <Link to="/" className="btn btn-link">Cancel</Link>
-                    </div>
-                </form>
-            }
-        </div>
+        <ThemeProvider theme={defaultTheme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <EmailIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Email user
+                    </Typography>
+                    <Box component="form" onSubmit={sendEmail} noValidate sx={{ mt: 1 }}>
+                        <TextField disabled fullWidth name="email" value={to} label="Email" margin="normal" />
+                        <TextField name="subject" value={subject} error={submitted && subjectError}
+                            onChange={(e) => setSubject(e.target.value)} label="Subject" fullWidth margin="normal" />
+                        {subjectError && <FormHelperText error>Subject must be at least 3 characters long</FormHelperText>}
+                        <TextareaAutosize
+                            minRows={5}
+                            name="message"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            style={{ width: '500px', marginBottom: '1rem' }}
+                        />
+                        {messageError && <FormHelperText error>Message must be at least 3 characters long</FormHelperText>}
+                        <Box sx={{ mt: 2, mb: 2 }}>
+                            <Button type="submit" variant="contained" color="primary" fullWidth>Send email</Button>
+                            <Button component={Link} to="/" variant="text" fullWidth>Cancel</Button>
+                        </Box>
+                    </Box>
+                </Box>
+            </Container>
+        </ThemeProvider>
     );
 }
 
