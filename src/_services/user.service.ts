@@ -1,4 +1,4 @@
-import { User } from '../types';
+import { EditUser, User } from '../types';
 import { handleResponse } from './responseHandler';
 
 const apiUrl = process.env.API_URL;
@@ -76,7 +76,7 @@ async function register(user: User) {
     return handleResponse(response);
 }
 
-async function update(user: User) {
+async function update(username: string, user: EditUser) {
     const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -84,7 +84,7 @@ async function update(user: User) {
         body: JSON.stringify(user)
     };
 
-    const response = await fetch(`${apiUrl}/users/${user.username}`, requestOptions);
+    const response = await fetch(`${apiUrl}/users/${username}`, requestOptions);
     return handleResponse(response);
 }
 

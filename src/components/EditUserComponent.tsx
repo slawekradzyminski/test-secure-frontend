@@ -1,69 +1,99 @@
 import React, { useContext, useState } from 'react'
-import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Input } from "./common/Input";
-import { getHandleChange } from "./util/change";
-import { DisabledInput } from "./common/DisabledInput";
-import { PrimaryButton } from "./common/PrimaryButton";
-import { update } from '../_actions/user.actions';
+import { TextField, Button, FormControl, Checkbox, FormControlLabel, Box, Container, createTheme, ThemeProvider, CssBaseline, Typography, Avatar } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
 import { ToastContext } from '../context/ToastContext';
-import { useAppDispatch } from '../_helpers/store';
-import { RootState } from '../_reducers';
+import { Roles } from '../types';
+import { userService } from '../_services/user.service';
 
 function EditUserComponent() {
     const location = useLocation();
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
     const user = location.state.user;
     const [username, setUsername] = useState(user.username)
     const [firstName, setFirstName] = useState(user.firstName)
     const [lastName, setLastName] = useState(user.lastName)
     const [email, setEmail] = useState(user.email)
     const [roles, setRoles] = useState(user.roles)
-    const loading = useSelector((state: RootState) => state.edituser.loading);
-    const [submitted, setSubmitted] = useState(false);
     const setToast = useContext(ToastContext);
+    const rolesArray = Object.values(Roles);
 
-    const saveUser = (e) => {
-        e.preventDefault();
-        setSubmitted(true)
-        const user = { firstName, lastName, username, email, roles }
-        dispatch(update({ user, setToast, navigate }));
+    const handleRoleChange = (role: Roles) => {
+        if (roles.includes(role)) {
+            setRoles(roles.filter((r) => r !== role));
+        } else {
+            setRoles([...roles, role]);
+        }
     };
 
-    if (username === null) {
-        return (
-            <div className="col-lg-8 offset-lg-2">
-                <h2>Something is no yes...</h2>
-                <Link to="/" className="btn btn-link">Go back</Link>
-            </div>
-        );
-    }
+    const saveUser = async (e) => {
+        e.preventDefault();
+        const editUser = { firstName, lastName, email, roles }
+        try {
+            await userService.update(username, editUser);
+            setToast({ type: 'success', message: 'Updating user successful!' });
+            navigate('/')
+            return user;
+        } catch (error) {
+            setToast({ type: 'error', message: error.toString() });
+        }
+    };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    const defaultTheme = createTheme();
 
     return (
-        <div className="col-lg-8 offset-lg-2">
-            <h2>Edit user</h2>
-            {username &&
-                <form name="form" onSubmit={saveUser}>
-                    <Input name="firstName" value={firstName} submitted={submitted}
-                        handleChange={getHandleChange(setFirstName)} />
-                    <Input name="lastName" value={lastName} submitted={submitted}
-                        handleChange={getHandleChange(setLastName)} />
-                    <Input name="email" value={email} submitted={submitted}
-                        handleChange={getHandleChange(setEmail)} />
-                    <DisabledInput name="username" value={username} />
-                    <DisabledInput name="roles" value={roles.join(',')} />
-                    <div className="form-group">
-                        <PrimaryButton text="Edit User" isLoading={loading} />
-                        <Link to="/" className="btn btn-link">Cancel</Link>
-                    </div>
-                </form>
-            }
-        </div>
+        <ThemeProvider theme={defaultTheme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <EditIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Edit User
+                    </Typography>
+                    <Box component="form" onSubmit={saveUser} noValidate sx={{ mt: 1 }}>
+                        <TextField name="firstName" value={firstName} onChange={e => setFirstName(e.target.value)} label="First Name" fullWidth margin="normal" />
+                        <TextField name="lastName" value={lastName} onChange={e => setLastName(e.target.value)} label="Last Name" fullWidth margin="normal" />
+                        <TextField name="email" value={email} onChange={e => setEmail(e.target.value)} label="Email" fullWidth margin="normal" />
+                        <TextField name="username" value={username} disabled label="Username" fullWidth margin="normal" />
+                        <FormControl fullWidth margin="normal">
+                            {rolesArray.map((role, index) => (
+                                <FormControlLabel
+                                    key={index}
+                                    control={
+                                        <Checkbox
+                                            checked={roles.includes(role)}
+                                            onChange={() => handleRoleChange(role)}
+                                            name={role}
+                                        />
+                                    }
+                                    label={role}
+                                />
+                            ))}
+                        </FormControl>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Edit User
+                        </Button>
+                        <Link to="/">
+                            Cancel
+                        </Link>
+                    </Box>
+                </Box>
+            </Container>
+        </ThemeProvider>
     );
 }
 

@@ -14,9 +14,7 @@ export const fetchDoctorTypes = async () => {
 export const updateDoctorTypes = async (doctorTypeUpdateDto: { doctorTypeIds: number[] }) => {
     const requestOptions = {
         method: 'PUT',
-        headers: { 
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         credentials: "include" as RequestCredentials,
         body: JSON.stringify(doctorTypeUpdateDto)
     };
@@ -28,9 +26,7 @@ export const updateDoctorTypes = async (doctorTypeUpdateDto: { doctorTypeIds: nu
 export const createDoctorType = async (createDoctorTypeDto: { doctorType: string }) => {
     const requestOptions = {
         method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         credentials: "include" as RequestCredentials,
         body: JSON.stringify(createDoctorTypeDto)
     };

@@ -77,23 +77,6 @@ export const getAll = createAsyncThunk<User[],
         }
     );
 
-export const update = createAsyncThunk<User,
-    { user: User; setToast: Function, navigate: Function },
-    { rejectValue: string }>(
-        'user/update',
-        async ({ user, setToast, navigate }, { dispatch, rejectWithValue }) => {
-            try {
-                await userService.update(user);
-                setToast({ type: 'success', message: 'Updating user successful!' });
-                navigate('/')
-                return user;
-            } catch (error) {
-                setToast({ type: 'error', message: error.toString() });
-                return rejectWithValue(error.toString());
-            }
-        }
-    );
-
 export const handleEmail = createAsyncThunk<void,
     { email: Email, setToast: Function },
     { rejectValue: string }>(

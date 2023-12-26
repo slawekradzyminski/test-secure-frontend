@@ -1,4 +1,4 @@
-import { logout } from "../_actions/user.actions";
+import { handleImageResponse } from "./responseHandler";
 
 export type CreateQrDto = {
     text: string
@@ -18,14 +18,3 @@ export const generateQrCode = async (createQrDto: CreateQrDto) => {
     return url;
 }
 
-export const handleImageResponse = async (response: Response) => {
-    if (!response.ok) {
-        if (response.status === 403) {
-            logout();
-            throw new Error('Not authenticated');
-        }
-        const error = response.statusText;
-        return Promise.reject(error);
-    }
-    return response.blob();
-}
