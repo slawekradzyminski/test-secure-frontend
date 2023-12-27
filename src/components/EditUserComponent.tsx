@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { TextField, Button, FormControl, Checkbox, FormControlLabel, Box, Container, createTheme, ThemeProvider, CssBaseline, Typography, Avatar } from "@mui/material";
+import { TextField, Button, FormControl, Checkbox, FormControlLabel, Box, CssBaseline, Typography, Avatar } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import { ToastContext } from '../context/ToastContext';
 import { Roles } from '../types';
-import { userService } from '../_services/user.service';
+import { userService } from '../api/user.api';
+import ThemedContainer from './core/ThemedContainer';
 
 function EditUserComponent() {
     const location = useLocation();
@@ -39,59 +40,55 @@ function EditUserComponent() {
         }
     };
 
-    const defaultTheme = createTheme();
-
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <Box
-                    sx={{
-                        marginTop: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <EditIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
+        <ThemedContainer maxWidth='xs'>
+            <CssBaseline />
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <EditIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Edit User
+                </Typography>
+                <Box component="form" onSubmit={saveUser} noValidate sx={{ mt: 1 }}>
+                    <TextField name="firstName" value={firstName} onChange={e => setFirstName(e.target.value)} label="First Name" fullWidth margin="normal" />
+                    <TextField name="lastName" value={lastName} onChange={e => setLastName(e.target.value)} label="Last Name" fullWidth margin="normal" />
+                    <TextField name="email" value={email} onChange={e => setEmail(e.target.value)} label="Email" fullWidth margin="normal" />
+                    <TextField name="username" value={username} disabled label="Username" fullWidth margin="normal" />
+                    <FormControl fullWidth margin="normal">
+                        {rolesArray.map((role, index) => (
+                            <FormControlLabel
+                                key={index}
+                                control={
+                                    <Checkbox
+                                        checked={roles.includes(role)}
+                                        onChange={() => handleRoleChange(role)}
+                                        name={role}
+                                    />
+                                }
+                                label={role}
+                            />
+                        ))}
+                    </FormControl>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
                         Edit User
-                    </Typography>
-                    <Box component="form" onSubmit={saveUser} noValidate sx={{ mt: 1 }}>
-                        <TextField name="firstName" value={firstName} onChange={e => setFirstName(e.target.value)} label="First Name" fullWidth margin="normal" />
-                        <TextField name="lastName" value={lastName} onChange={e => setLastName(e.target.value)} label="Last Name" fullWidth margin="normal" />
-                        <TextField name="email" value={email} onChange={e => setEmail(e.target.value)} label="Email" fullWidth margin="normal" />
-                        <TextField name="username" value={username} disabled label="Username" fullWidth margin="normal" />
-                        <FormControl fullWidth margin="normal">
-                            {rolesArray.map((role, index) => (
-                                <FormControlLabel
-                                    key={index}
-                                    control={
-                                        <Checkbox
-                                            checked={roles.includes(role)}
-                                            onChange={() => handleRoleChange(role)}
-                                            name={role}
-                                        />
-                                    }
-                                    label={role}
-                                />
-                            ))}
-                        </FormControl>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            Edit User
-                        </Button>
-                        <Button component={Link} to="/" variant="text" fullWidth>Cancel</Button>
-                    </Box>
+                    </Button>
+                    <Button component={Link} to="/" variant="text" fullWidth>Cancel</Button>
                 </Box>
-            </Container>
-        </ThemeProvider>
+            </Box>
+        </ThemedContainer>
     );
 }
 

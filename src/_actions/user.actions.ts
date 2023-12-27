@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { sendEmail } from '../_services/email.service';
-import { Email, User } from '../types';
-import { userService } from '../_services/user.service';
+import { User } from '../types';
+import { userService } from '../api/user.api';
 
 export const login = createAsyncThunk<User,
     { username: string; password: string; from: string; navigate: Function, setToast: Function },
@@ -63,47 +62,3 @@ export const register = createAsyncThunk<User,
         }
     );
 
-export const getAll = createAsyncThunk<User[],
-    void,
-    { rejectValue: string }>(
-        'users',
-        async (_, { rejectWithValue }) => {
-            try {
-                const users = await userService.getAll();
-                return users;
-            } catch (error) {
-                return rejectWithValue(error.toString());
-            }
-        }
-    );
-
-export const handleEmail = createAsyncThunk<void,
-    { email: Email, setToast: Function },
-    { rejectValue: string }>(
-        'user/handleEmail',
-        async ({ email, setToast }, { rejectWithValue }) => {
-            try {
-                await sendEmail(email);
-                setToast({ type: 'success', message: 'Email scheduled to be send' });
-            } catch (error) {
-                setToast({ type: 'error', message: error.toString() });
-                return rejectWithValue(error.toString());
-            }
-        }
-    );
-
-export const _delete = createAsyncThunk<string,
-    { username: string, setToast: Function},
-    { rejectValue: { username: string, error: any } }>(
-        'user/delete',
-        async ({ username, setToast }, { rejectWithValue }) => {
-            try {
-                await userService.delete(username);
-                setToast({ type: 'success', message: 'User deleted' });
-                return username;
-            } catch (error) {
-                setToast({ type: 'error', message: error.toString() });
-                return rejectWithValue({ username, error: error });
-            }
-        }
-    );

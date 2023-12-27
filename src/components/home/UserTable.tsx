@@ -1,21 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { User } from '../../types';
 import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon, Email as EmailIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../_helpers/store';
-import { _delete } from '../../_actions/user.actions';
-import { ToastContext } from '../../context/ToastContext';
 
 interface UserTableProps {
     users: User[];
+    handleDelete: (username: string) => Promise<void>;
     isAdmin: boolean;
 }
 
-const UserTable: React.FC<UserTableProps> = ({ users, isAdmin }) => {
+const UserTable: React.FC<UserTableProps> = ({ users, handleDelete, isAdmin }) => {
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const setToast = useContext(ToastContext);
 
     const editUser = (user: User) => {
         navigate('/edit-user', { state: { user } });
@@ -23,11 +19,6 @@ const UserTable: React.FC<UserTableProps> = ({ users, isAdmin }) => {
 
     const emailUser = (user: User) => {
         navigate('/email', { state: { user } });
-    }
-
-    const handleDeleteClick = (username: string) => {
-        window.confirm("Are you sure you wish to delete this item?") &&
-            dispatch(_delete({ username, setToast }))
     }
 
     return (
@@ -45,7 +36,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, isAdmin }) => {
                             <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
                             <TableCell>
                                 {isAdmin &&
-                                    <IconButton onClick={() => handleDeleteClick(user.username)} color="error">
+                                    <IconButton onClick={() => handleDelete(user.username)} color="error">
                                         <DeleteIcon />
                                     </IconButton>
                                 }

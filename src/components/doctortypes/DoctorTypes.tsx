@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { fetchDoctorTypes, updateDoctorTypes, createDoctorType } from '../../_services/doctorTypes.service';
+import { fetchDoctorTypes, updateDoctorTypes, createDoctorType } from '../../api/doctorTypes.api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../_reducers';
-import { userService } from '../../_services/user.service';
 import { ToastContext } from '../../context/ToastContext';
 import SpecialtyList from './SpecialtyList';
 import AddSpecialty from './AddSpecialty';
-import { Container } from '@mui/material';
+import { createTheme } from '@mui/material';
+import { userService } from '../../api/user.api';
+import ThemedContainer from '../core/ThemedContainer';
 
 const DoctorTypesComponent = () => {
     const [selectedSpecialties, setSelectedSpecialties] = useState({});
@@ -19,7 +20,6 @@ const DoctorTypesComponent = () => {
         const fetchData = async () => {
             const data = await fetchDoctorTypes();
             setSpecialties(data);
-
             const userDetails = await userService.get(username);
             const userSpecialties = userDetails.doctorTypes
                 .reduce((acc, curr) => ({ ...acc, [curr.doctorType]: true }), {});
@@ -57,8 +57,10 @@ const DoctorTypesComponent = () => {
         }
     };
 
+    const defaultTheme = createTheme();
+
     return (
-        <Container>
+        <ThemedContainer maxWidth="md">
             <SpecialtyList
                 specialties={specialties}
                 selectedSpecialties={selectedSpecialties}
@@ -70,7 +72,7 @@ const DoctorTypesComponent = () => {
                 handleCreate={handleCreate}
                 setNewDoctorType={setNewDoctorType}
             />
-        </Container>
+        </ThemedContainer>
     );
 };
 

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { TextareaAutosize, Button, Box, CircularProgress } from '@mui/material';
-import { CreateQrDto, generateQrCode } from '../../_services/qr.service';
+import { CreateQrDto, generateQrCode } from '../../api/qr.api';
 import { ToastContext } from '../../context/ToastContext';
 
 function QrComponent() {
