@@ -6,10 +6,13 @@ export type User = {
     lastName: string;
     roles: Roles[];
     id?: number;
-    deleting?: boolean;
-    loading?: boolean;
+    doctorTypes: DoctorType[];
 };
 
+export type DoctorType = {
+    id: number;
+    doctorType: string
+}
 
 export type EditUser = {
     email: string;

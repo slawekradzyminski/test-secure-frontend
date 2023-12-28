@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Typography from '@mui/material/Typography';
-import { createTheme } from '@mui/material/styles';
 import { Roles, User } from '../../types';
 import FormHelperText from '@mui/material/FormHelperText';
 import ThemedContainer from '../core/ThemedContainer';
@@ -24,6 +23,7 @@ const RegisterForm: React.FC<Props> = ({ onSubmit }) => {
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [roles, setRoles] = useState([Roles.ROLE_CLIENT])
+    const doctorTypes = []
 
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
@@ -59,11 +59,9 @@ const RegisterForm: React.FC<Props> = ({ onSubmit }) => {
             return;
         }
 
-        const user = { firstName, lastName, username, password, roles, email }
+        const user = { firstName, lastName, username, password, roles, email, doctorTypes }
         onSubmit(user);
     }
-
-    const defaultTheme = createTheme();
 
     return (
         <ThemedContainer maxWidth='xs'>

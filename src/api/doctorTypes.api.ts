@@ -11,7 +11,7 @@ export const fetchDoctorTypes = async () => {
     return handleResponse(response);
 };
 
-export const updateDoctorTypes = async (doctorTypeUpdateDto: { doctorTypeIds: number[] }) => {
+export const setDoctorTypes = async (doctorTypeUpdateDto: { doctorTypeIds: number[] }) => {
     const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

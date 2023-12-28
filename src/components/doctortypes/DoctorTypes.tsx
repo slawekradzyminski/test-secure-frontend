@@ -1,33 +1,35 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { fetchDoctorTypes, updateDoctorTypes, createDoctorType } from '../../api/doctorTypes.api';
+import { fetchDoctorTypes, createDoctorType } from '../../api/doctorTypes.api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../_reducers';
 import { ToastContext } from '../../context/ToastContext';
 import SpecialtyList from './SpecialtyList';
 import AddSpecialty from './AddSpecialty';
-import { createTheme } from '@mui/material';
-import { userService } from '../../api/user.api';
 import ThemedContainer from '../core/ThemedContainer';
+import { useAppDispatch } from '../../_helpers/store';
+import { updateDoctorTypes } from '../../_actions/user.actions';
 
 const DoctorTypesComponent = () => {
     const [selectedSpecialties, setSelectedSpecialties] = useState({});
     const [specialties, setSpecialties] = useState([]);
     const [newDoctorType, setNewDoctorType] = useState('');
     const setToast = useContext(ToastContext);
-    const username = useSelector((state: RootState) => state.authentication.user.username);
+    const dispatch = useAppDispatch();
+    const user = useSelector((state: RootState) => state.authentication.user);
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await fetchDoctorTypes();
             setSpecialties(data);
-            const userDetails = await userService.get(username);
-            const userSpecialties = userDetails.doctorTypes
-                .reduce((acc, curr) => ({ ...acc, [curr.doctorType]: true }), {});
-            setSelectedSpecialties(userSpecialties);
+            if (user && user.doctorTypes) {
+                const userSpecialties = user.doctorTypes
+                    .reduce((acc, curr) => ({ ...acc, [curr.doctorType]: true }), {});
+                setSelectedSpecialties(userSpecialties);
+            }
         };
 
         fetchData();
-    }, [username]);
+    }, [user]);
 
     const handleChange = (event) => {
         setSelectedSpecialties({ ...selectedSpecialties, [event.target.name]: event.target.checked });
@@ -37,12 +39,7 @@ const DoctorTypesComponent = () => {
         const selectedIds = Object.keys(selectedSpecialties)
             .filter(key => selectedSpecialties[key])
             .map(key => specialties.find(specialty => specialty.doctorType === key).id);
-        try {
-            await updateDoctorTypes({ doctorTypeIds: selectedIds });
-            setToast({ open: true, message: 'Doctor types updated successfully!', type: 'success' });
-        } catch (error) {
-            setToast({ open: true, message: 'Failed to update doctor types!', type: 'error' });
-        }
+        dispatch(updateDoctorTypes({ selectedIds, setToast }))
     };
 
     const handleCreate = async () => {
@@ -56,8 +53,6 @@ const DoctorTypesComponent = () => {
             setToast({ open: true, message: 'Failed to create doctor type!', type: 'error' });
         }
     };
-
-    const defaultTheme = createTheme();
 
     return (
         <ThemedContainer maxWidth="md">
