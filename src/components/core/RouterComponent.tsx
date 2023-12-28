@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { HomePage } from '../home/HomePage';
 import { LoginPage } from '../login/LoginPage';
 import { RegisterPage } from '../register/RegisterPage';
-import { EditUserComponent } from "../EditUserComponent";
+import { EditUserComponent } from "../edit/EditUserComponent";
 import { EmailComponent } from '../EmailComponent';
 import PrivateRouteWrapper from './PrivateRouteWrapper';
 import QrComponent from '../qr/QrComponent';

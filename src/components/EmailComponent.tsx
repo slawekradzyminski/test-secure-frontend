@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import { TextField, Button, Typography, Box, CssBaseline, Avatar, FormHelperText, TextareaAutosize } from "@mui/material";
-import { createTheme } from '@mui/material/styles';
 import EmailIcon from '@mui/icons-material/Email';
 import { Email } from '../types';
 import { ToastContext } from '../context/ToastContext';
@@ -40,8 +39,6 @@ function EmailComponent() {
             setToast({ type: 'error', message: error.toString() });
         }
     };
-
-    const defaultTheme = createTheme();
 
     return (
         <ThemedContainer maxWidth="xs">
