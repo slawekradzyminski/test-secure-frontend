@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Roles } from '../../types';
 import UserTable from './UserTable';
 import { RootState } from '../../_reducers';
-import { createTheme } from '@mui/material/styles';
 import { CssBaseline, Box } from "@mui/material";
 import { userService } from '../../api/user.api';
 import { ToastContext } from '../../context/ToastContext';
@@ -36,8 +35,6 @@ function HomePage() {
         }
     }
 
-    const defaultTheme = createTheme();
-
     return (
         <ThemedContainer maxWidth="md">
             <CssBaseline />
@@ -60,7 +57,3 @@ function HomePage() {
 }
 
 export { HomePage };
-
-function setToast(arg0: { type: string; message: string; }) {
-    throw new Error('Function not implemented.');
-}

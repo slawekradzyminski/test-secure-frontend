@@ -5,6 +5,9 @@ export const handleResponse = async (response: Response) => {
         if (response.status === 403) {
             handleUnauthorizedError()
         }
+        if (response.status === 400) {
+           return Promise.reject(JSON.stringify(data))
+        }
         const error = (data && data.message) || response.statusText;
         return Promise.reject(error);
     }
@@ -15,7 +18,11 @@ export const handleImageResponse = async (response: Response) => {
     if (!response.ok) {
         if (response.status === 403) {
             handleUnauthorizedError()
-
+        }
+        if (response.status === 400) {
+            const text = await response.text();
+            const data = parseText(text)
+            return Promise.reject(JSON.stringify(data))
         }
         const error = response.statusText;
         return Promise.reject(error);

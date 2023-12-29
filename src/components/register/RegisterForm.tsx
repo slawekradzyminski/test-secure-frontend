@@ -9,9 +9,7 @@ import Typography from '@mui/material/Typography';
 import { Roles, User } from '../../types';
 import FormHelperText from '@mui/material/FormHelperText';
 import ThemedContainer from '../core/ThemedContainer';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import RolesCheckboxGroup from '../common/RolesCheckboxGroup';
 
 interface Props {
     onSubmit: (user: User) => void;
@@ -26,9 +24,9 @@ const RegisterForm: React.FC<Props> = ({ onSubmit }) => {
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [roles, setRoles] = useState([])
+    const [attemptedRegister, setAttemptedRegister] = useState(false);
     const doctorTypes = []
 
-    const rolesArray = Object.values(Roles);
 
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
@@ -46,6 +44,7 @@ const RegisterForm: React.FC<Props> = ({ onSubmit }) => {
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
+        setAttemptedRegister(true);
 
         if (!emailRegex.test(email)) {
             setEmailError(true);
@@ -69,6 +68,10 @@ const RegisterForm: React.FC<Props> = ({ onSubmit }) => {
 
         if (lastName.length < 3) {
             setLastNameError(true);
+            return;
+        }
+
+        if (roles.length === 0) {
             return;
         }
 
@@ -177,21 +180,10 @@ const RegisterForm: React.FC<Props> = ({ onSubmit }) => {
                         }}
                     />
                     {emailError && <FormHelperText error>Email is not valid</FormHelperText>}
-                    <FormControl fullWidth margin="normal">
-                        {rolesArray.map((role, index) => (
-                            <FormControlLabel
-                                key={index}
-                                control={
-                                    <Checkbox
-                                        checked={roles.includes(role)}
-                                        onChange={() => handleRoleChange(role)}
-                                        name={role}
-                                    />
-                                }
-                                label={role}
-                            />
-                        ))}
-                    </FormControl>
+                    <RolesCheckboxGroup
+                        selectedRoles={roles}
+                        handleRoleChange={handleRoleChange}
+                        attemptedRegister={attemptedRegister} />
                     <Button
                         type="submit"
                         fullWidth

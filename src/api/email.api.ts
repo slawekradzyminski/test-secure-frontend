@@ -1,14 +1,8 @@
 import { Email } from "../types";
+import { apiUrl, postRequestOptions } from "./apiCommons";
 import { handleResponse } from "./responseHandler";
 
 export const sendEmail = async (email: Email) => {
-    const requestOptions = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json' },
-        credentials: "include" as RequestCredentials,
-        body: JSON.stringify(email)
-    };
-
-    const response = await fetch(`${process.env.API_URL}/email`, requestOptions);
+    const response = await fetch(`${apiUrl}/email`, postRequestOptions(email));
     return handleResponse(response);
 }

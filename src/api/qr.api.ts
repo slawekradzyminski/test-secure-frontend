@@ -1,3 +1,4 @@
+import { apiUrl, postRequestOptions } from "./apiCommons";
 import { handleImageResponse } from "./responseHandler";
 
 export type CreateQrDto = {
@@ -5,14 +6,7 @@ export type CreateQrDto = {
 }
 
 export const generateQrCode = async (createQrDto: CreateQrDto) => {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: "include" as RequestCredentials,
-        body: JSON.stringify(createQrDto)
-    };
-
-    const response = await fetch(`${process.env.API_URL}/qr/create`, requestOptions);
+    const response = await fetch(`${apiUrl}/qr/create`, postRequestOptions(createQrDto));
     const blob = await handleImageResponse(response);
     const url = URL.createObjectURL(blob);
     return url;

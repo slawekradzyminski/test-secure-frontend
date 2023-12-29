@@ -4,7 +4,7 @@ import { HomePage } from '../home/HomePage';
 import { LoginPage } from '../login/LoginPage';
 import { RegisterPage } from '../register/RegisterPage';
 import { EditUserComponent } from "../edit/EditUserComponent";
-import { EmailComponent } from '../EmailComponent';
+import { EmailComponent } from '../email/EmailComponent';
 import PrivateRouteWrapper from './PrivateRouteWrapper';
 import QrComponent from '../qr/QrComponent';
 import DoctorTypesComponent from '../doctortypes/DoctorTypes';

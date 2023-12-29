@@ -5,11 +5,11 @@ import { store } from '../../_helpers/store';
 import { LoginPage } from './LoginPage';
 import { MemoryRouter } from 'react-router-dom';
 import fetchMock from 'jest-fetch-mock';
-import * as reactRedux from 'react-redux';
+import { setupMockDispatch } from '../../tests/testHelpers';
 
 jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useDispatch: jest.fn(),
+    ...jest.requireActual('react-redux'),
+    useDispatch: jest.fn(),
 }));
 
 describe('LoginPage', () => {
@@ -17,15 +17,7 @@ describe('LoginPage', () => {
     let mockDispatch: jest.Mock;
 
     beforeEach(() => {
-        mockDispatch = jest.fn();
-        (reactRedux.useDispatch as jest.Mock).mockReturnValue(mockDispatch);
-
-        fetchMock.mockIf(req => req.url.startsWith('/users/logout'), async req => {
-            return {
-                status: 200,
-                body: 'ok'
-            };
-        });
+        mockDispatch = setupMockDispatch();
     });
 
     afterEach(() => {
@@ -34,6 +26,7 @@ describe('LoginPage', () => {
     });
 
     test('renders LoginForm', () => {
+        // when
         render(
             <Provider store={store}>
                 <MemoryRouter>
@@ -41,10 +34,13 @@ describe('LoginPage', () => {
                 </MemoryRouter>
             </Provider>
         );
+
+        // then
         expect(screen.getByText('Sign In')).toBeInTheDocument();
     });
 
     test('dispatches logout action on mount', () => {
+        // when
         render(
             <Provider store={store}>
                 <MemoryRouter>
@@ -53,6 +49,7 @@ describe('LoginPage', () => {
             </Provider>
         );
 
+        // then
         expect(mockDispatch).toHaveBeenCalled();
     });
 });

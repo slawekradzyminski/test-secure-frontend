@@ -6,6 +6,7 @@ import EditUserForm from './EditUserForm';
 import EditIcon from '@mui/icons-material/Edit';
 import { CssBaseline, Box, Avatar, Typography } from '@mui/material';
 import ThemedContainer from '../core/ThemedContainer';
+import { EditUser } from '../../types';
 
 function EditUserComponent() {
     const location = useLocation();
@@ -13,7 +14,7 @@ function EditUserComponent() {
     const user = location.state.user;
     const setToast = useContext(ToastContext);
 
-    const saveUser = async (editUser) => {
+    const saveUser = async (editUser: EditUser) => {
         try {
             await userService.update(user.username, editUser);
             setToast({ type: 'success', message: 'Updating user successful!' });

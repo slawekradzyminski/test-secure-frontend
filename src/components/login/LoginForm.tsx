@@ -8,7 +8,6 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme } from '@mui/material/styles';
 import FormHelperText from '@mui/material/FormHelperText';
 import ThemedContainer from '../core/ThemedContainer';
 
@@ -30,8 +29,6 @@ function LoginForm({ onSubmit }) {
         }
         onSubmit({ username, password });
     }, [username, password, onSubmit]);
-
-    const defaultTheme = createTheme();
 
     return (
         <ThemedContainer maxWidth='xs'>
