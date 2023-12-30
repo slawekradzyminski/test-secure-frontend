@@ -1,10 +1,10 @@
 import * as React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import BugReportIcon from '@mui/icons-material/BugReport';
-import { Link } from 'react-router-dom';
 import MenuItem from '@mui/material/MenuItem';
 import { loggedInPages, pagePaths, loggedOutPages } from './navbarConstants';
 import { Menu } from '@mui/material';
@@ -14,6 +14,8 @@ import { RootState } from '../../_reducers';
 const MobileView = () => {
     const loggedIn = useSelector((state: RootState) => state.authentication.loggedIn);
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -22,6 +24,24 @@ const MobileView = () => {
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
+
+    const renderMenuItems = (pages: string[]) => (
+        pages.map((page) => {
+            const active = location.pathname === pagePaths[page];
+            return (
+                <MenuItem 
+                    key={page} 
+                    onClick={() => {
+                        handleCloseNavMenu();
+                        navigate(pagePaths[page]);
+                    }}
+                    sx={{ fontWeight: active ? 'bold' : 'normal' }}
+                >
+                    <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+            );
+        })
+    );
 
     return (
         <>
@@ -54,23 +74,7 @@ const MobileView = () => {
                         display: { xs: 'block', md: 'none' },
                     }}
                 >
-                    {loggedIn ? (
-                        loggedInPages.map((page) => (
-                            <Link to={pagePaths[page]} key={page}>
-                                <MenuItem onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            </Link>
-                        ))
-                    ) : (
-                        loggedOutPages.map((page) => (
-                            <Link to={pagePaths[page]} key={page}>
-                                <MenuItem onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            </Link>
-                        ))
-                    )}
+                    {loggedIn ? renderMenuItems(loggedInPages) : renderMenuItems(loggedOutPages)}
                 </Menu>
             </Box>
             <BugReportIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />

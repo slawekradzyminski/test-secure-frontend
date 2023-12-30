@@ -4,6 +4,7 @@ import RoutesComponent from './RouterComponent';
 import { ToastProvider } from '../common/ToastProvider';
 import ResponsiveAppBar from '../header/ResponsiveAppBar';
 import Footer from './Footer';
+import './styles.css'
 
 function App() {
     return (

@@ -3,13 +3,30 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import BugReportIcon from '@mui/icons-material/BugReport';
-import { Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { loggedInPages, pagePaths, loggedOutPages } from './navbarConstants';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../_reducers';
 
 const DesktopView = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
     const loggedIn = useSelector((state: RootState) => state.authentication.loggedIn);
+
+    const renderButtons = (pages: string[]) => (
+        pages.map((page) => {
+            const active = location.pathname === pagePaths[page];
+            return (
+                <Button
+                    key={page}
+                    sx={{ my: 2, color: 'white', display: 'block', fontWeight: active ? 'bold' : 'normal' }}
+                    onClick={() => navigate(pagePaths[page])}
+                >
+                    {page}
+                </Button>
+            );
+        })
+    );
 
     return (
         <>
@@ -32,29 +49,7 @@ const DesktopView = () => {
                 HOME
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {loggedIn ? (
-                    loggedInPages.map((page) => (
-                        <Button
-                            key={page}
-                            sx={{ my: 2, color: 'white', display: 'block' }}
-                            component={Link}
-                            to={pagePaths[page]}
-                        >
-                            {page}
-                        </Button>
-                    ))
-                ) : (
-                    loggedOutPages.map((page) => (
-                        <Button
-                            key={page}
-                            sx={{ my: 2, color: 'white', display: 'block' }}
-                            component={Link}
-                            to={pagePaths[page]}
-                        >
-                            {page}
-                        </Button>
-                    ))
-                )}
+                {loggedIn ? renderButtons(loggedInPages) : renderButtons(loggedOutPages)}
             </Box>
         </>
     )
