@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import { settings } from './navbarConstants';
+import { settings } from '../navbarConstants';
 import { useNavigate } from 'react-router-dom';
 
 interface UserSettingsMenuProps {

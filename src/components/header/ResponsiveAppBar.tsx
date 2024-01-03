@@ -5,9 +5,9 @@ import Container from '@mui/material/Container';
 import { useSelector } from 'react-redux';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import UserSettingsMenu from './UserSettingsMenu';
-import MobileView from './MobileView';
-import DesktopView from './DesktopView';
+import UserSettingsMenu from './desktop/UserSettingsMenu';
+import MobileView from './mobile/MobileView';
+import DesktopView from './desktop/DesktopView';
 import { RootState } from '../../_reducers';
 
 const ResponsiveAppBar = () => {

@@ -6,11 +6,11 @@ import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import MenuItem from '@mui/material/MenuItem';
-import { loggedInPages, pagePaths, loggedOutPages, openSlots } from './navbarConstants';
+import { loggedInPages, pagePaths, loggedOutPages, openSlots } from '../navbarConstants';
 import { Menu } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../_reducers';
-import { isDoctorOrAdmin } from './rolesHelper';
+import { RootState } from '../../../_reducers';
+import { isDoctorOrAdmin } from '../rolesHelper';
 
 const MobileView = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);

@@ -6,7 +6,7 @@ export const pagePaths = {
     'Open Slots': '/openslots'
 };
 
-export const loggedInPages = ['QR Codes', 'Doctor Types', 'Blog'];
+export const loggedInPages = ['QR Codes', 'Doctor Types'];
 export const openSlots = ['Open Slots']
 export const loggedOutPages = ['Login', 'Register']
 export const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
