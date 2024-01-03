@@ -6,16 +6,19 @@ import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import MenuItem from '@mui/material/MenuItem';
-import { loggedInPages, pagePaths, loggedOutPages } from './navbarConstants';
+import { loggedInPages, pagePaths, loggedOutPages, openSlots } from './navbarConstants';
 import { Menu } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../_reducers';
+import { isDoctorOrAdmin } from './rolesHelper';
 
 const MobileView = () => {
-    const loggedIn = useSelector((state: RootState) => state.authentication.loggedIn);
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const location = useLocation();
     const navigate = useNavigate();
+    const loggedIn = useSelector((state: RootState) => state.authentication.loggedIn);
+    const user = useSelector((state: RootState) => state.authentication.user);
+    const userRoles = user?.roles || [];
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -25,12 +28,12 @@ const MobileView = () => {
         setAnchorElNav(null);
     };
 
-    const renderMenuItems = (pages: string[]) => (
+    const renderButtons = (pages: string[]) => (
         pages.map((page) => {
             const active = location.pathname === pagePaths[page];
             return (
-                <MenuItem 
-                    key={page} 
+                <MenuItem
+                    key={page}
                     onClick={() => {
                         handleCloseNavMenu();
                         navigate(pagePaths[page]);
@@ -74,7 +77,10 @@ const MobileView = () => {
                         display: { xs: 'block', md: 'none' },
                     }}
                 >
-                    {loggedIn ? renderMenuItems(loggedInPages) : renderMenuItems(loggedOutPages)}
+                    {loggedIn ? renderButtons(loggedInPages) : renderButtons(loggedOutPages)}
+                    {loggedIn && isDoctorOrAdmin(userRoles) && (
+                        renderButtons(openSlots)
+                    )}
                 </Menu>
             </Box>
             <BugReportIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
