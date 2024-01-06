@@ -38,8 +38,7 @@ const DesktopView = () => {
             <Typography
                 variant="h6"
                 noWrap
-                component="a"
-                href="/"
+                component="div"
                 sx={{
                     mr: 2,
                     display: { xs: 'none', md: 'flex' },
@@ -48,7 +47,9 @@ const DesktopView = () => {
                     letterSpacing: '.3rem',
                     color: 'inherit',
                     textDecoration: 'none',
+                    cursor: 'pointer'
                 }}
+                onClick={() => navigate('/')}
             >
                 HOME
             </Typography>

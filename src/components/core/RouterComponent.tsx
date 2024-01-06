@@ -8,6 +8,7 @@ import { EmailComponent } from '../email/EmailComponent';
 import PrivateRouteWrapper from './PrivateRouteWrapper';
 import QrComponent from '../qr/QrComponent';
 import DoctorTypesComponent from '../doctortypes/DoctorTypes';
+import SlotComponent from '../slots/SlotComponent';
 
 function RoutesComponent() {
     return (
@@ -38,6 +39,11 @@ function RoutesComponent() {
                 <Route path="/doctortypes" element={
                     <PrivateRouteWrapper>
                         <DoctorTypesComponent />
+                    </PrivateRouteWrapper>
+                } />
+                <Route path="/openslots" element={
+                    <PrivateRouteWrapper>
+                        <SlotComponent />
                     </PrivateRouteWrapper>
                 } />
                 <Route path="*" element={<Navigate to="/" />} />

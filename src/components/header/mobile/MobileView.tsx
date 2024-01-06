@@ -87,8 +87,7 @@ const MobileView = () => {
             <Typography
                 variant="h5"
                 noWrap
-                component="a"
-                href="/"
+                component="div"
                 sx={{
                     mr: 2,
                     display: { xs: 'flex', md: 'none' },
@@ -98,9 +97,10 @@ const MobileView = () => {
                     letterSpacing: '.3rem',
                     color: 'inherit',
                     textDecoration: 'none',
+                    cursor: 'pointer'
                 }}
-            >
-                HOME
+                onClick={() => navigate('/')}
+            > HOME
             </Typography>
         </>
     )

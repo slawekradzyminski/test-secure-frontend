@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RegisterForm from './RegisterForm';
 import { Roles } from '../../types';
@@ -54,9 +54,12 @@ describe('RegisterForm', () => {
 
             // when
             await userEvent.type(input, 'te');
+            await new Promise(resolve => setTimeout(resolve, 0)); // Ensure state updates are flushed
 
             // then
-            expect(screen.getByText(`${field} must be at least 3 characters long`)).toBeInTheDocument();
+            await waitFor(() => {
+                expect(screen.getByText(`${field} must be at least 3 characters long`)).toBeInTheDocument();
+            });
             expect(mockSubmit).not.toHaveBeenCalled();
         });
     });
