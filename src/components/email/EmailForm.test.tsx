@@ -6,7 +6,7 @@ import { sendEmail } from '../../api/email/email.api';
 import { ToastContext } from '../../context/ToastContext';
 import { MemoryRouter } from 'react-router-dom';
 
-jest.mock('../../api/email.api', () => ({
+jest.mock('../../api/email/email.api', () => ({
     sendEmail: jest.fn(),
 }));
 

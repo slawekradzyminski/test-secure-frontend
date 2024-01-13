@@ -1,8 +1,9 @@
-import React from 'react';
-import { Button, ButtonGroup, Box, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Button, ButtonGroup, Box, Typography, InputLabel, FormControl } from '@mui/material';
 import { Navigate } from 'react-big-calendar';
 
-const CalendarToolbar = (toolbar) => {
+const CalendarToolbar = ({ doctorTypes, ...toolbar }) => {
+
     const goToBack = () => {
         toolbar.onNavigate(Navigate.PREVIOUS);
     };

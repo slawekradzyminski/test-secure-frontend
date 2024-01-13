@@ -27,7 +27,7 @@ function RoutesComponent() {
             <Route path="/qr" element={wrapInPrivateRoute(QrComponent)} />
             <Route path="/email" element={wrapInPrivateRoute(EmailComponent)} />
             <Route path="/doctortypes" element={wrapInPrivateRoute(DoctorTypesComponent)} />
-            <Route path="/calendar" element={wrapInPrivateRoute(CalendarPage)} />
+            <Route path="/bookings" element={wrapInPrivateRoute(CalendarPage)} />
             <Route path="/openslots" element={wrapInPrivateRoute(SlotComponent)} />
             <Route path="*" element={<Navigate to="/" />} />
         </Routes>

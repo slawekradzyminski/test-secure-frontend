@@ -2,7 +2,7 @@ import { apiUrl, postRequestOptions } from '../apiCommons';
 import { sendEmail } from './email.api';
 import { handleResponse } from '../responseHandler';
 
-jest.mock('./responseHandler');
+jest.mock('../responseHandler');
 
 describe('sendEmail', () => {
   beforeEach(() => {
