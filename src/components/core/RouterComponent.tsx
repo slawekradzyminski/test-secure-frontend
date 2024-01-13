@@ -9,46 +9,28 @@ import PrivateRouteWrapper from './PrivateRouteWrapper';
 import QrComponent from '../qr/QrComponent';
 import DoctorTypesComponent from '../doctortypes/DoctorTypes';
 import SlotComponent from '../slots/SlotComponent';
+import CalendarPage from '../calendar/CalendarPage';
+
+const wrapInPrivateRoute = (Component: React.ElementType) => {
+    return <PrivateRouteWrapper>
+        {<Component />}
+    </PrivateRouteWrapper>
+}
 
 function RoutesComponent() {
     return (
-        <>
-            <Routes>
-                <Route path="/" element={
-                    <PrivateRouteWrapper>
-                        <HomePage />
-                    </PrivateRouteWrapper>
-                } />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/edit-user" element={
-                    <PrivateRouteWrapper>
-                        <EditUserComponent />
-                    </PrivateRouteWrapper>
-                } />
-                <Route path="/qr" element={
-                    <PrivateRouteWrapper>
-                        <QrComponent />
-                    </PrivateRouteWrapper>
-                } />
-                <Route path="/email" element={
-                    <PrivateRouteWrapper>
-                        <EmailComponent />
-                    </PrivateRouteWrapper>
-                } />
-                <Route path="/doctortypes" element={
-                    <PrivateRouteWrapper>
-                        <DoctorTypesComponent />
-                    </PrivateRouteWrapper>
-                } />
-                <Route path="/openslots" element={
-                    <PrivateRouteWrapper>
-                        <SlotComponent />
-                    </PrivateRouteWrapper>
-                } />
-                <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-        </>
+        <Routes>
+            <Route path="/" element={wrapInPrivateRoute(HomePage)} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/edit-user" element={wrapInPrivateRoute(EditUserComponent)} />
+            <Route path="/qr" element={wrapInPrivateRoute(QrComponent)} />
+            <Route path="/email" element={wrapInPrivateRoute(EmailComponent)} />
+            <Route path="/doctortypes" element={wrapInPrivateRoute(DoctorTypesComponent)} />
+            <Route path="/calendar" element={wrapInPrivateRoute(CalendarPage)} />
+            <Route path="/openslots" element={wrapInPrivateRoute(SlotComponent)} />
+            <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
     );
 }
 

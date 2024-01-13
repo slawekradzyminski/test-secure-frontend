@@ -1,4 +1,4 @@
-import { apiUrl, postRequestOptions } from "../apiCommons";
+import { apiUrl, getRequestOptions, postRequestOptions, putRequestOptions } from "../apiCommons";
 import { handleResponse } from "../responseHandler";
 
 export type CreateSlotRangeDto = {
@@ -7,6 +7,14 @@ export type CreateSlotRangeDto = {
   endAvailability: Date;
   slotDurationMinutes: number;
 };
+
+export type SlotSearchCriteria = {
+    startTime: string;
+    endTime: string;
+    doctorUsername: string;
+    slotStatus: string;
+    doctorTypeId: number;
+  };
 
 const formatCreateSlotRangeDto = (dto: CreateSlotRangeDto) => {
   return {
@@ -22,3 +30,15 @@ export const createSlots = async (createSlotRangeDto: CreateSlotRangeDto) => {
   const response = await fetch(`${apiUrl}/slots`, postRequestOptions(formattedDto));
   return handleResponse(response);
 };
+
+export const getAvailableSlots = async (criteria: SlotSearchCriteria) => {
+    const url = new URL(`${apiUrl}/slots`);
+    Object.keys(criteria).forEach(key => url.searchParams.append(key, criteria[key]));
+    const response = await fetch(url.toString(), getRequestOptions());
+    return handleResponse(response);
+  };
+
+  export const bookSlot = async (slotId: number) => {
+    const response = await fetch(`${apiUrl}/slots/${slotId}/book`, putRequestOptions({}));
+    return handleResponse(response);
+  };

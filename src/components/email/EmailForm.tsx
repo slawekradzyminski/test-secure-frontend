@@ -1,7 +1,7 @@
 import { Box, Button, FormHelperText, TextField, TextareaAutosize } from '@mui/material';
 import { Link } from 'react-router-dom'
 import React, { useState, useContext } from 'react';
-import { sendEmail } from '../../api/email.api';
+import { sendEmail } from '../../api/email/email.api';
 import { ToastContext } from '../../context/ToastContext';
 
 function EmailForm({ to }) {

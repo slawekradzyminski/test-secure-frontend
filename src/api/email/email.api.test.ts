@@ -1,6 +1,6 @@
-import { apiUrl, postRequestOptions } from './apiCommons';
+import { apiUrl, postRequestOptions } from '../apiCommons';
 import { sendEmail } from './email.api';
-import { handleResponse } from './responseHandler';
+import { handleResponse } from '../responseHandler';
 
 jest.mock('./responseHandler');
 

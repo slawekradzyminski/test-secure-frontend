@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EmailForm from './EmailForm';
-import { sendEmail } from '../../api/email.api';
+import { sendEmail } from '../../api/email/email.api';
 import { ToastContext } from '../../context/ToastContext';
 import { MemoryRouter } from 'react-router-dom';
 
