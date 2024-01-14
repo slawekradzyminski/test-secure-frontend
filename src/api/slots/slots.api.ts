@@ -11,9 +11,9 @@ export type CreateSlotRangeDto = {
 export type SlotSearchCriteria = {
     startTime: string;
     endTime: string;
-    doctorUsername: string;
-    slotStatus: string;
-    doctorTypeId: number;
+    doctorUsername?: string;
+    slotStatus?: string;
+    doctorTypeId?: number;
   };
 
 const formatCreateSlotRangeDto = (dto: CreateSlotRangeDto) => {

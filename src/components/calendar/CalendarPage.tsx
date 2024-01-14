@@ -52,7 +52,6 @@ const CalendarPage = () => {
         const criteria: SlotSearchCriteria = {
             startTime: format(startOfViewDate, "yyyy-MM-dd'T'HH:mm:ss"),
             endTime: format(endOfViewDate, "yyyy-MM-dd'T'HH:mm:ss"),
-            doctorUsername: 'doctor',
             slotStatus: 'AVAILABLE',
             doctorTypeId: selectedSpecialty,
         };

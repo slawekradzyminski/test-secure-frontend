@@ -35,14 +35,16 @@ describe('RegisterForm', () => {
         await userEvent.click(registerButton);
 
         // then
-        expect(mockSubmit).toHaveBeenCalledWith({
-            firstName: 'testfirst',
-            lastName: 'testlast',
-            username: 'testuser',
-            password: 'testpass',
-            email: 'test@test.com',
-            roles: rolesArray,
-            doctorTypes: []
+        await waitFor(() => {
+            expect(mockSubmit).toHaveBeenCalledWith({
+                firstName: 'testfirst',
+                lastName: 'testlast',
+                username: 'testuser',
+                password: 'testpass',
+                email: 'test@test.com',
+                roles: rolesArray,
+                doctorTypes: []
+            });
         });
     });
 
