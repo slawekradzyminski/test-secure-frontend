@@ -9,12 +9,12 @@ export type CreateSlotRangeDto = {
 };
 
 export type SlotSearchCriteria = {
-    startTime: string;
-    endTime: string;
-    doctorUsername?: string;
-    slotStatus?: string;
-    doctorTypeId?: number;
-  };
+  startTime: string;
+  endTime: string;
+  doctorUsername?: string;
+  slotStatus?: string;
+  doctorTypeId?: number;
+};
 
 const formatCreateSlotRangeDto = (dto: CreateSlotRangeDto) => {
   return {
@@ -25,6 +25,16 @@ const formatCreateSlotRangeDto = (dto: CreateSlotRangeDto) => {
   };
 };
 
+export const getBookedSlots = async () => {
+  const response = await fetch(`${apiUrl}/slots/booked`, getRequestOptions());
+  return handleResponse(response);
+};
+
+export const cancelBooking = async (slotId: number) => {
+  const response = await fetch(`${apiUrl}/slots/${slotId}/cancel`, putRequestOptions({}));
+  return handleResponse(response);
+};
+
 export const createSlots = async (createSlotRangeDto: CreateSlotRangeDto) => {
   const formattedDto = formatCreateSlotRangeDto(createSlotRangeDto);
   const response = await fetch(`${apiUrl}/slots`, postRequestOptions(formattedDto));
@@ -32,13 +42,13 @@ export const createSlots = async (createSlotRangeDto: CreateSlotRangeDto) => {
 };
 
 export const getAvailableSlots = async (criteria: SlotSearchCriteria) => {
-    const url = new URL(`${apiUrl}/slots`);
-    Object.keys(criteria).forEach(key => url.searchParams.append(key, criteria[key]));
-    const response = await fetch(url.toString(), getRequestOptions());
-    return handleResponse(response);
-  };
+  const url = new URL(`${apiUrl}/slots`);
+  Object.keys(criteria).forEach(key => url.searchParams.append(key, criteria[key]));
+  const response = await fetch(url.toString(), getRequestOptions());
+  return handleResponse(response);
+};
 
-  export const bookSlot = async (slotId: number) => {
-    const response = await fetch(`${apiUrl}/slots/${slotId}/book`, putRequestOptions({}));
-    return handleResponse(response);
-  };
+export const bookSlot = async (slotId: number) => {
+  const response = await fetch(`${apiUrl}/slots/${slotId}/book`, putRequestOptions({}));
+  return handleResponse(response);
+};

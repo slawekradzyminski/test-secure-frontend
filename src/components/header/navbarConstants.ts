@@ -4,10 +4,11 @@ export const pagePaths = {
     'QR Codes': '/qr',
     'Doctor Types': '/doctortypes',
     'Open Slots': '/openslots',
-    'Book appointment': '/bookings'
+    'Book appointment': '/bookings',
+    'Booked Slots': '/bookedslots',
 };
 
 export const loggedInPages = ['QR Codes', 'Doctor Types', 'Book appointment'];
 export const openSlots = ['Open Slots']
 export const loggedOutPages = ['Login', 'Register']
-export const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+export const settings = ['Profile', 'Booked Slots', 'Logout'];

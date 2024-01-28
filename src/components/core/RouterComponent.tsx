@@ -10,6 +10,7 @@ import QrComponent from '../qr/QrComponent';
 import DoctorTypesComponent from '../doctortypes/DoctorTypes';
 import SlotComponent from '../slots/SlotComponent';
 import CalendarPage from '../calendar/CalendarPage';
+import BookedSlotsPage from '../bookedslots/BookedSlotsPage';
 
 const wrapInPrivateRoute = (Component: React.ElementType) => {
     return <PrivateRouteWrapper>
@@ -29,6 +30,7 @@ function RoutesComponent() {
             <Route path="/doctortypes" element={wrapInPrivateRoute(DoctorTypesComponent)} />
             <Route path="/bookings" element={wrapInPrivateRoute(CalendarPage)} />
             <Route path="/openslots" element={wrapInPrivateRoute(SlotComponent)} />
+            <Route path="/bookedslots" element={wrapInPrivateRoute(BookedSlotsPage)} />
             <Route path="*" element={<Navigate to="/" />} />
         </Routes>
     );

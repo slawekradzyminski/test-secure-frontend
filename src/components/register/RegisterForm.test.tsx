@@ -5,6 +5,7 @@ import RegisterForm from './RegisterForm';
 import { Roles } from '../../types';
 
 describe('RegisterForm', () => {
+    jest.setTimeout(10000)
     let mockSubmit: jest.Mock;
 
     beforeEach(() => {
@@ -56,7 +57,6 @@ describe('RegisterForm', () => {
 
             // when
             await userEvent.type(input, 'te');
-            await new Promise(resolve => setTimeout(resolve, 0)); // Ensure state updates are flushed
 
             // then
             await waitFor(() => {

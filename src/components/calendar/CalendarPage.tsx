@@ -13,6 +13,7 @@ import BookingDialog from './BookingDialog';
 import { ToastContext } from '../../context/ToastContext';
 import { fetchDoctorTypes } from '../../api/doctorTypes.api';
 import SpecialtyList from './SpecialtyList';
+import { useNavigate } from 'react-router-dom';
 
 moment.locale('en-gb');
 const localizer = momentLocalizer(moment);
@@ -25,6 +26,7 @@ const CalendarPage = () => {
     const [open, setOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [doctorTypes, setDoctorTypes] = useState([]);
+    const navigate = useNavigate();
     const [selectedSpecialty, setSelectedSpecialty] = useState(null);
 
     useEffect(() => {
@@ -85,6 +87,7 @@ const CalendarPage = () => {
             await bookSlot(selectedEvent.id);
             setToast({ type: 'success', message: 'Booking successful!' });
             setOpen(false);
+            navigate('/bookedslots');
         } catch (error) {
             setToast({ type: 'error', message: 'Failed to book slot!' });
         }
@@ -108,6 +111,8 @@ const CalendarPage = () => {
                     onView={handleViewChange}
                     culture='en-gb'
                     popup
+                    min={new Date(0, 0, 0, 7, 0)}
+                    max={new Date(0, 0, 0, 21, 0)}
                     components={{
                         toolbar: (toolbarProps) => <CalendarToolbar {...toolbarProps} doctorTypes={doctorTypes} />,
                         event: CalendarEvent

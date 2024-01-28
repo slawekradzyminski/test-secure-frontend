@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Box, Typography } from '@mui/material';
+import { Avatar, Dialog, DialogContent, DialogContentText, DialogActions, Button, Box, Typography } from '@mui/material';
 
 interface BookingDialogProps {
     open: boolean;
