@@ -9,14 +9,11 @@ defaults:
     shell: bash
 
 jobs:
-  setup_common: &setup_common
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [18, 20]
-
-  test:
-    <<: *setup_common
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
@@ -27,7 +24,10 @@ jobs:
       - run: npm test
 
   start:
-    <<: *setup_common
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
@@ -39,7 +39,10 @@ jobs:
         run: bash ./run-app.sh
 
   tests_e2e:
-    <<: *setup_common
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
