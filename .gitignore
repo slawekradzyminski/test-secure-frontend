@@ -6,6 +6,7 @@ npm-debug.log*
 allure-results/
 dist/
 
+test-results/
 cypress/screenshots
 
 .idea

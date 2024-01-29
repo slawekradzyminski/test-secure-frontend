@@ -1,0 +1,505 @@
+[
+    {
+        "id": 1,
+        "username": "admin",
+        "email": "admin@email.com",
+        "roles": [
+            "ROLE_ADMIN",
+            "ROLE_CLIENT"
+        ],
+        "firstName": "Slawomir",
+        "lastName": "Radzyminski",
+        "doctorTypes": []
+    },
+    {
+        "id": 2,
+        "username": "client",
+        "email": "client@email.com",
+        "roles": [
+            "ROLE_CLIENT"
+        ],
+        "firstName": "Gosia",
+        "lastName": "Radzyminska",
+        "doctorTypes": []
+    },
+    {
+        "id": 3,
+        "username": "Otolaryngologist",
+        "email": "Otolaryngologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Lacy",
+        "lastName": "Frami",
+        "doctorTypes": [
+            {
+                "id": 5,
+                "doctorType": "Otolaryngologist"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "username": "Pediatrician",
+        "email": "Pediatrician@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Mickey",
+        "lastName": "Dare",
+        "doctorTypes": [
+            {
+                "id": 13,
+                "doctorType": "Pediatrician"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "username": "Sportsmedicinespecialist",
+        "email": "Sportsmedicinespecialist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Felicia",
+        "lastName": "Baumbach",
+        "doctorTypes": [
+            {
+                "id": 2,
+                "doctorType": "Sports medicine specialist"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "username": "Endocrinologist",
+        "email": "Endocrinologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Derrick",
+        "lastName": "Kovacek",
+        "doctorTypes": [
+            {
+                "id": 8,
+                "doctorType": "Endocrinologist"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "username": "Radiologist",
+        "email": "Radiologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Guy",
+        "lastName": "Adams",
+        "doctorTypes": [
+            {
+                "id": 30,
+                "doctorType": "Radiologist"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "username": "Psychiatrist",
+        "email": "Psychiatrist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Geralyn",
+        "lastName": "Stehr",
+        "doctorTypes": [
+            {
+                "id": 6,
+                "doctorType": "Psychiatrist"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "username": "Rheumatologist",
+        "email": "Rheumatologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Efrain",
+        "lastName": "Satterfield",
+        "doctorTypes": [
+            {
+                "id": 28,
+                "doctorType": "Rheumatologist"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "username": "Obstetriciangynecologist",
+        "email": "Obstetriciangynecologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Frank",
+        "lastName": "Schimmel",
+        "doctorTypes": [
+            {
+                "id": 18,
+                "doctorType": "Obstetrician gynecologist"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "username": "Cardiologist",
+        "email": "Cardiologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Hilton",
+        "lastName": "Corwin",
+        "doctorTypes": [
+            {
+                "id": 19,
+                "doctorType": "Cardiologist"
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "username": "Physiotherapist",
+        "email": "Physiotherapist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Rolando",
+        "lastName": "Ondricka",
+        "doctorTypes": [
+            {
+                "id": 3,
+                "doctorType": "Physiotherapist"
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "username": "Dermatologist",
+        "email": "Dermatologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Cristen",
+        "lastName": "Emard",
+        "doctorTypes": [
+            {
+                "id": 9,
+                "doctorType": "Dermatologist"
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "username": "Oncologist",
+        "email": "Oncologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Cristine",
+        "lastName": "Greenholt",
+        "doctorTypes": [
+            {
+                "id": 20,
+                "doctorType": "Oncologist"
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "username": "Pulmonologist",
+        "email": "Pulmonologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Anton",
+        "lastName": "Douglas",
+        "doctorTypes": [
+            {
+                "id": 23,
+                "doctorType": "Pulmonologist"
+            }
+        ]
+    },
+    {
+        "id": 16,
+        "username": "Infectiousdiseasespecialist",
+        "email": "Infectiousdiseasespecialist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Merlene",
+        "lastName": "Harvey",
+        "doctorTypes": [
+            {
+                "id": 21,
+                "doctorType": "Infectious disease specialist"
+            }
+        ]
+    },
+    {
+        "id": 17,
+        "username": "Palliativecarespecialist",
+        "email": "Palliativecarespecialist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Leontine",
+        "lastName": "Ruecker",
+        "doctorTypes": [
+            {
+                "id": 15,
+                "doctorType": "Palliative care specialist"
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "username": "Plasticsurgeon",
+        "email": "Plasticsurgeon@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Kathline",
+        "lastName": "Cronin",
+        "doctorTypes": [
+            {
+                "id": 11,
+                "doctorType": "Plastic surgeon"
+            }
+        ]
+    },
+    {
+        "id": 19,
+        "username": "Geriatrician",
+        "email": "Geriatrician@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Vernon",
+        "lastName": "Cronin",
+        "doctorTypes": [
+            {
+                "id": 14,
+                "doctorType": "Geriatrician"
+            }
+        ]
+    },
+    {
+        "id": 20,
+        "username": "Urologist",
+        "email": "Urologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Devin",
+        "lastName": "McKenzie",
+        "doctorTypes": [
+            {
+                "id": 29,
+                "doctorType": "Urologist"
+            }
+        ]
+    },
+    {
+        "id": 21,
+        "username": "Nephrologist",
+        "email": "Nephrologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Lonnie",
+        "lastName": "Batz",
+        "doctorTypes": [
+            {
+                "id": 17,
+                "doctorType": "Nephrologist"
+            }
+        ]
+    },
+    {
+        "id": 22,
+        "username": "Sleepmedicinespecialist",
+        "email": "Sleepmedicinespecialist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Hal",
+        "lastName": "Jakubowski",
+        "doctorTypes": [
+            {
+                "id": 26,
+                "doctorType": "Sleep medicine specialist"
+            }
+        ]
+    },
+    {
+        "id": 23,
+        "username": "Painmanagementspecialist",
+        "email": "Painmanagementspecialist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Margarita",
+        "lastName": "Gibson",
+        "doctorTypes": [
+            {
+                "id": 7,
+                "doctorType": "Pain management specialist"
+            }
+        ]
+    },
+    {
+        "id": 24,
+        "username": "Anesthesiologist",
+        "email": "Anesthesiologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Mack",
+        "lastName": "Gottlieb",
+        "doctorTypes": [
+            {
+                "id": 10,
+                "doctorType": "Anesthesiologist"
+            }
+        ]
+    },
+    {
+        "id": 25,
+        "username": "Allergistimmunologist",
+        "email": "Allergistimmunologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Glennis",
+        "lastName": "Schneider",
+        "doctorTypes": [
+            {
+                "id": 4,
+                "doctorType": "Allergist immunologist"
+            }
+        ]
+    },
+    {
+        "id": 26,
+        "username": "Ophthalmologist",
+        "email": "Ophthalmologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Javier",
+        "lastName": "Stoltenberg",
+        "doctorTypes": [
+            {
+                "id": 12,
+                "doctorType": "Ophthalmologist"
+            }
+        ]
+    },
+    {
+        "id": 27,
+        "username": "Physicalmedicinerehabilitation",
+        "email": "Physicalmedicinerehabilitation@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Mohammed",
+        "lastName": "Dare",
+        "doctorTypes": [
+            {
+                "id": 27,
+                "doctorType": "Physical medicine rehabilitation"
+            }
+        ]
+    },
+    {
+        "id": 28,
+        "username": "Neurologist",
+        "email": "Neurologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Alejandra",
+        "lastName": "Schinner",
+        "doctorTypes": [
+            {
+                "id": 25,
+                "doctorType": "Neurologist"
+            }
+        ]
+    },
+    {
+        "id": 29,
+        "username": "Surgeon",
+        "email": "Surgeon@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Fern",
+        "lastName": "Cummerata",
+        "doctorTypes": [
+            {
+                "id": 1,
+                "doctorType": "Surgeon"
+            }
+        ]
+    },
+    {
+        "id": 30,
+        "username": "Gastroenterologist",
+        "email": "Gastroenterologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Fumiko",
+        "lastName": "Spinka",
+        "doctorTypes": [
+            {
+                "id": 24,
+                "doctorType": "Gastroenterologist"
+            }
+        ]
+    },
+    {
+        "id": 31,
+        "username": "Orthopedist",
+        "email": "Orthopedist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Adella",
+        "lastName": "Bogan",
+        "doctorTypes": [
+            {
+                "id": 22,
+                "doctorType": "Orthopedist"
+            }
+        ]
+    },
+    {
+        "id": 32,
+        "username": "Pathologist",
+        "email": "Pathologist@email.com",
+        "roles": [
+            "ROLE_DOCTOR"
+        ],
+        "firstName": "Keesha",
+        "lastName": "Mitchell",
+        "doctorTypes": [
+            {
+                "id": 16,
+                "doctorType": "Pathologist"
+            }
+        ]
+    }
+]

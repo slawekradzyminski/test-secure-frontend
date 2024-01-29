@@ -6,6 +6,8 @@ export type User = {
     lastName: string;
     roles: Roles[];
     id?: number;
+    token?: string;
+    password?: string;
     doctorTypes: DoctorType[];
 };
 
