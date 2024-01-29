@@ -25,6 +25,7 @@ const UserSettingsMenu: React.FC<UserSettingsMenuProps> = ({
     const handleClick = (setting: string) => {
         if (setting === 'Logout') {
             navigate('/login')
+            handleCloseUserMenu();
             return;
         }
         handleCloseUserMenu();

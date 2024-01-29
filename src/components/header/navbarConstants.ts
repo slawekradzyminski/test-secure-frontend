@@ -6,9 +6,10 @@ export const pagePaths = {
     'Open Slots': '/openslots',
     'Book appointment': '/bookings',
     'Booked Slots': '/bookedslots',
+    'Doctors': '/doctors'
 };
 
-export const loggedInPages = ['QR Codes', 'Doctor Types', 'Book appointment'];
-export const openSlots = ['Open Slots']
+export const loggedInPages = ['QR Codes', 'Book appointment', 'Doctors'];
+export const openSlots = ['Open Slots', 'Doctor Types']
 export const loggedOutPages = ['Login', 'Register']
 export const settings = ['Profile', 'Booked Slots', 'Logout'];

@@ -16,7 +16,6 @@ test.describe('Login', () => {
     const user = getRandomUser();
     await mockSuccessfulLoginForUser(page, user);
     await mockRefreshForUser(page, user);
-    await mockUsers(page);
     await page.fill('#username', user.username);
     await page.fill('#password', user.password as string);
 
@@ -25,8 +24,6 @@ test.describe('Login', () => {
 
     // then
     await expect(page.locator('h1')).toContainText(user.firstName);
-    const liCount = await page.locator('tbody tr').count();
-    expect(liCount).toBeGreaterThan(10);
   });
 
   test('failed login', async ({ page }) => {

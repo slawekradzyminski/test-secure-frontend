@@ -11,6 +11,7 @@ import DoctorTypesComponent from '../doctortypes/DoctorTypes';
 import SlotComponent from '../slots/SlotComponent';
 import CalendarPage from '../calendar/CalendarPage';
 import BookedSlotsPage from '../bookedslots/BookedSlotsPage';
+import DoctorsPage from '../users/DoctorsPage';
 
 const wrapInPrivateRoute = (Component: React.ElementType) => {
     return <PrivateRouteWrapper>
@@ -22,6 +23,7 @@ function RoutesComponent() {
     return (
         <Routes>
             <Route path="/" element={wrapInPrivateRoute(HomePage)} />
+            <Route path="/doctors" element={wrapInPrivateRoute(DoctorsPage)} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/edit-user" element={wrapInPrivateRoute(EditUserComponent)} />

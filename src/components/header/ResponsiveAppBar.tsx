@@ -9,10 +9,11 @@ import UserSettingsMenu from './UserSettingsMenu';
 import MobileView from './mobile/MobileView';
 import DesktopView from './desktop/DesktopView';
 import { RootState } from '../../_reducers';
+import { useState } from 'react';
 
 const ResponsiveAppBar = () => {
   const loggedIn = useSelector((state: RootState) => state.authentication.loggedIn);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -27,7 +28,7 @@ const ResponsiveAppBar = () => {
 
   return (
     <AppBar position="static" sx={{ marginBottom: '30px' }}>
-    <Container maxWidth="xl">
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
           {isMobile ? <MobileView /> : <DesktopView />}
           {loggedIn && (
