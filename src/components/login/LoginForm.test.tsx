@@ -2,17 +2,20 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoginForm from './LoginForm';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('LoginForm', () => {
     let mockSubmit: jest.Mock;
 
     beforeEach(() => {
         mockSubmit = jest.fn();
+        render(<MemoryRouter>
+            <LoginForm onSubmit={mockSubmit} />
+        </MemoryRouter>)
     });
 
     test('validates inputs and allows form submission', async () => {
         // given
-        render(<LoginForm onSubmit={mockSubmit} />);
         const usernameInput = screen.getByLabelText(/username/i);
         const passwordInput = screen.getByLabelText(/password/i);
         const submitButton = screen.getByText('Sign In');
@@ -28,7 +31,6 @@ describe('LoginForm', () => {
 
     test('shows error when username is less than 3 characters', async () => {
         // given
-        render(<LoginForm onSubmit={mockSubmit} />);
         const usernameInput = screen.getByLabelText(/username/i);
 
         // when
@@ -41,7 +43,6 @@ describe('LoginForm', () => {
 
     test('shows error when password is less than 3 characters', async () => {
         // given
-        render(<LoginForm onSubmit={mockSubmit} />);
         const passwordInput = screen.getByLabelText(/password/i);
 
         // when
@@ -53,9 +54,6 @@ describe('LoginForm', () => {
     });
 
     test('navigates to /register when Sign Up link is clicked', () => {
-        // given
-        render(<LoginForm onSubmit={mockSubmit} />);
-
         // then
         expect(screen.getByText("Don't have an account? Sign Up")).toHaveAttribute('href', '/register')
     });

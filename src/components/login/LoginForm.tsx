@@ -10,8 +10,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
 import ThemedContainer from '../core/ThemedContainer';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm({ onSubmit }) {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [usernameError, setUsernameError] = useState(false);
@@ -29,6 +31,11 @@ function LoginForm({ onSubmit }) {
         }
         onSubmit({ username, password });
     }, [username, password, onSubmit]);
+
+    const handleSignUpClick = (event) => {
+        event.preventDefault();
+        navigate('/register');
+    };
 
     return (
         <ThemedContainer maxWidth='xs'>
@@ -98,7 +105,7 @@ function LoginForm({ onSubmit }) {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="/register" variant="body2">
+                            <Link href="/register" variant="body2" onClick={handleSignUpClick}>
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>
