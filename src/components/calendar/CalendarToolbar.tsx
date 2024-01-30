@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, ButtonGroup, Box, Typography, InputLabel, FormControl } from '@mui/material';
 import { Navigate } from 'react-big-calendar';
 
-const CalendarToolbar = ({ doctorTypes, ...toolbar }) => {
+const CalendarToolbar = ({ specialties, ...toolbar }) => {
 
     const goToBack = () => {
         toolbar.onNavigate(Navigate.PREVIOUS);

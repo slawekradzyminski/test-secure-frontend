@@ -14,7 +14,7 @@ function DoctorsPage() {
         const fetchUsers = async () => {
             const usersFromApi = await userService.getAll();
             const doctorsWithSpecialties = usersFromApi.filter((user: User) =>
-                user.roles.includes(Roles.ROLE_DOCTOR) && user.doctorTypes.length > 0
+                user.roles.includes(Roles.ROLE_DOCTOR) && user.specialties.length > 0
             );
             setUsers(doctorsWithSpecialties);
         };

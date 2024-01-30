@@ -39,7 +39,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, handleDelete }) => {
                         <TableRow key={user.id}>
                             <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
                             <TableCell>
-                                {user.doctorTypes.map(doctorType => doctorType.doctorType).join(', ')}
+                                {user.specialties.map(specialty => specialty.name).join(', ')}
                             </TableCell>
                             <TableCell>
                                 {isAdmin &&

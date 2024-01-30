@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { User } from '../types';
 import { userService } from '../api/user.api';
-import { setDoctorTypes } from '../api/doctorTypes.api';
+import { setSpecialties } from '../api/specialties.api';
 
 export const login = createAsyncThunk<User,
     { username: string; password: string; from: string; navigate: Function, setToast: Function },
@@ -46,13 +46,13 @@ export const logout = createAsyncThunk<void,
         }
     );
 
-export const updateDoctorTypes = createAsyncThunk<User,
+export const updateSpecialties = createAsyncThunk<User,
     { selectedIds: number[], setToast: Function  },
     { rejectValue: string }>(
-        'users/doctortypes',
+        'users/specialties',
         async ( {selectedIds, setToast } , { rejectWithValue }) => {
             try {
-                const user = await setDoctorTypes({ doctorTypeIds: selectedIds });
+                const user = await setSpecialties({ specialtyIds: selectedIds });
                 setToast({ open: true, message: 'Doctor types updated successfully!', type: 'success' });
                 return user;
             } catch (error) {

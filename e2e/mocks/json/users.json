@@ -9,7 +9,7 @@
         ],
         "firstName": "Slawomir",
         "lastName": "Radzyminski",
-        "doctorTypes": []
+        "specialties": []
     },
     {
         "id": 2,
@@ -20,7 +20,7 @@
         ],
         "firstName": "Gosia",
         "lastName": "Radzyminska",
-        "doctorTypes": []
+        "specialties": []
     },
     {
         "id": 3,
@@ -31,10 +31,10 @@
         ],
         "firstName": "Lacy",
         "lastName": "Frami",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 5,
-                "doctorType": "Otolaryngologist"
+                "name": "Otolaryngologist"
             }
         ]
     },
@@ -47,10 +47,10 @@
         ],
         "firstName": "Mickey",
         "lastName": "Dare",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 13,
-                "doctorType": "Pediatrician"
+                "name": "Pediatrician"
             }
         ]
     },
@@ -63,10 +63,10 @@
         ],
         "firstName": "Felicia",
         "lastName": "Baumbach",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 2,
-                "doctorType": "Sports medicine specialist"
+                "name": "Sports medicine specialist"
             }
         ]
     },
@@ -79,10 +79,10 @@
         ],
         "firstName": "Derrick",
         "lastName": "Kovacek",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 8,
-                "doctorType": "Endocrinologist"
+                "name": "Endocrinologist"
             }
         ]
     },
@@ -95,10 +95,10 @@
         ],
         "firstName": "Guy",
         "lastName": "Adams",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 30,
-                "doctorType": "Radiologist"
+                "name": "Radiologist"
             }
         ]
     },
@@ -111,10 +111,10 @@
         ],
         "firstName": "Geralyn",
         "lastName": "Stehr",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 6,
-                "doctorType": "Psychiatrist"
+                "name": "Psychiatrist"
             }
         ]
     },
@@ -127,10 +127,10 @@
         ],
         "firstName": "Efrain",
         "lastName": "Satterfield",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 28,
-                "doctorType": "Rheumatologist"
+                "name": "Rheumatologist"
             }
         ]
     },
@@ -143,10 +143,10 @@
         ],
         "firstName": "Frank",
         "lastName": "Schimmel",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 18,
-                "doctorType": "Obstetrician gynecologist"
+                "name": "Obstetrician gynecologist"
             }
         ]
     },
@@ -159,10 +159,10 @@
         ],
         "firstName": "Hilton",
         "lastName": "Corwin",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 19,
-                "doctorType": "Cardiologist"
+                "name": "Cardiologist"
             }
         ]
     },
@@ -175,10 +175,10 @@
         ],
         "firstName": "Rolando",
         "lastName": "Ondricka",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 3,
-                "doctorType": "Physiotherapist"
+                "name": "Physiotherapist"
             }
         ]
     },
@@ -191,10 +191,10 @@
         ],
         "firstName": "Cristen",
         "lastName": "Emard",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 9,
-                "doctorType": "Dermatologist"
+                "name": "Dermatologist"
             }
         ]
     },
@@ -207,10 +207,10 @@
         ],
         "firstName": "Cristine",
         "lastName": "Greenholt",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 20,
-                "doctorType": "Oncologist"
+                "name": "Oncologist"
             }
         ]
     },
@@ -223,10 +223,10 @@
         ],
         "firstName": "Anton",
         "lastName": "Douglas",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 23,
-                "doctorType": "Pulmonologist"
+                "name": "Pulmonologist"
             }
         ]
     },
@@ -239,10 +239,10 @@
         ],
         "firstName": "Merlene",
         "lastName": "Harvey",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 21,
-                "doctorType": "Infectious disease specialist"
+                "name": "Infectious disease specialist"
             }
         ]
     },
@@ -255,10 +255,10 @@
         ],
         "firstName": "Leontine",
         "lastName": "Ruecker",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 15,
-                "doctorType": "Palliative care specialist"
+                "name": "Palliative care specialist"
             }
         ]
     },
@@ -271,10 +271,10 @@
         ],
         "firstName": "Kathline",
         "lastName": "Cronin",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 11,
-                "doctorType": "Plastic surgeon"
+                "name": "Plastic surgeon"
             }
         ]
     },
@@ -287,10 +287,10 @@
         ],
         "firstName": "Vernon",
         "lastName": "Cronin",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 14,
-                "doctorType": "Geriatrician"
+                "name": "Geriatrician"
             }
         ]
     },
@@ -303,10 +303,10 @@
         ],
         "firstName": "Devin",
         "lastName": "McKenzie",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 29,
-                "doctorType": "Urologist"
+                "name": "Urologist"
             }
         ]
     },
@@ -319,10 +319,10 @@
         ],
         "firstName": "Lonnie",
         "lastName": "Batz",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 17,
-                "doctorType": "Nephrologist"
+                "name": "Nephrologist"
             }
         ]
     },
@@ -335,10 +335,10 @@
         ],
         "firstName": "Hal",
         "lastName": "Jakubowski",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 26,
-                "doctorType": "Sleep medicine specialist"
+                "name": "Sleep medicine specialist"
             }
         ]
     },
@@ -351,10 +351,10 @@
         ],
         "firstName": "Margarita",
         "lastName": "Gibson",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 7,
-                "doctorType": "Pain management specialist"
+                "name": "Pain management specialist"
             }
         ]
     },
@@ -367,10 +367,10 @@
         ],
         "firstName": "Mack",
         "lastName": "Gottlieb",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 10,
-                "doctorType": "Anesthesiologist"
+                "name": "Anesthesiologist"
             }
         ]
     },
@@ -383,10 +383,10 @@
         ],
         "firstName": "Glennis",
         "lastName": "Schneider",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 4,
-                "doctorType": "Allergist immunologist"
+                "name": "Allergist immunologist"
             }
         ]
     },
@@ -399,10 +399,10 @@
         ],
         "firstName": "Javier",
         "lastName": "Stoltenberg",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 12,
-                "doctorType": "Ophthalmologist"
+                "name": "Ophthalmologist"
             }
         ]
     },
@@ -415,10 +415,10 @@
         ],
         "firstName": "Mohammed",
         "lastName": "Dare",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 27,
-                "doctorType": "Physical medicine rehabilitation"
+                "name": "Physical medicine rehabilitation"
             }
         ]
     },
@@ -431,10 +431,10 @@
         ],
         "firstName": "Alejandra",
         "lastName": "Schinner",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 25,
-                "doctorType": "Neurologist"
+                "name": "Neurologist"
             }
         ]
     },
@@ -447,10 +447,10 @@
         ],
         "firstName": "Fern",
         "lastName": "Cummerata",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 1,
-                "doctorType": "Surgeon"
+                "name": "Surgeon"
             }
         ]
     },
@@ -463,10 +463,10 @@
         ],
         "firstName": "Fumiko",
         "lastName": "Spinka",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 24,
-                "doctorType": "Gastroenterologist"
+                "name": "Gastroenterologist"
             }
         ]
     },
@@ -479,10 +479,10 @@
         ],
         "firstName": "Adella",
         "lastName": "Bogan",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 22,
-                "doctorType": "Orthopedist"
+                "name": "Orthopedist"
             }
         ]
     },
@@ -495,10 +495,10 @@
         ],
         "firstName": "Keesha",
         "lastName": "Mitchell",
-        "doctorTypes": [
+        "specialties": [
             {
                 "id": 16,
-                "doctorType": "Pathologist"
+                "name": "Pathologist"
             }
         ]
     }

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from '../types';
-import { login, logout, refresh, updateDoctorTypes } from '../_actions/user.actions';
+import { login, logout, refresh, updateSpecialties } from '../_actions/user.actions';
 
 export type AuthenticationState = {
   loggedIn: boolean;
@@ -32,7 +32,7 @@ const authenticationSlice = createSlice({
         state.user = null;
         state.loggedIn = false;
       })
-      .addCase(updateDoctorTypes.fulfilled, (state, action) => {
+      .addCase(updateSpecialties.fulfilled, (state, action) => {
         state.user = action.payload;
       })
   },

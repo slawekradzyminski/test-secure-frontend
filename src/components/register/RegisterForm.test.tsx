@@ -44,7 +44,7 @@ describe('RegisterForm', () => {
                 password: 'testpass',
                 email: 'test@test.com',
                 roles: rolesArray,
-                doctorTypes: []
+                specialties: []
             });
         });
     });

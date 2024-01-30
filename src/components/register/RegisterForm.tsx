@@ -25,7 +25,7 @@ const RegisterForm: React.FC<Props> = ({ onSubmit }) => {
     const [email, setEmail] = useState('')
     const [roles, setRoles] = useState([])
     const [attemptedRegister, setAttemptedRegister] = useState(false);
-    const doctorTypes = []
+    const specialties = []
 
 
     const [usernameError, setUsernameError] = useState(false);
@@ -75,7 +75,7 @@ const RegisterForm: React.FC<Props> = ({ onSubmit }) => {
             return;
         }
 
-        const user = { firstName, lastName, username, password, roles, email, doctorTypes }
+        const user = { firstName, lastName, username, password, roles, email, specialties }
         onSubmit(user);
     }
 

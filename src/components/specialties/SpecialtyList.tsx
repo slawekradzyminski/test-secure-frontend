@@ -13,8 +13,8 @@ const SpecialtyList = ({ specialties, selectedSpecialties, handleChange }) => (
                         {specialties.map((specialty, index) => (
                             <Grid item xs={6} key={index}>
                                 <FormControlLabel
-                                    control={<Checkbox checked={selectedSpecialties[specialty.doctorType] || false} onChange={handleChange} name={specialty.doctorType} />}
-                                    label={specialty.doctorType}
+                                    control={<Checkbox checked={selectedSpecialties[specialty.name] || false} onChange={handleChange} name={specialty.name} />}
+                                    label={specialty.name}
                                 />
                             </Grid>
                         ))}

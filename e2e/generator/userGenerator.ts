@@ -11,9 +11,9 @@ export const getRandomUser = (): User => {
         token: fakeToken,
         email: faker.internet.email(),
         password: faker.internet.password(),
-        doctorTypes: [{
+        specialties: [{
             id: 0,
-            doctorType: faker.person.jobTitle()
+            name: faker.person.jobTitle()
         }]
     }
 }

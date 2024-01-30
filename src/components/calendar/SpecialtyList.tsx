@@ -32,7 +32,7 @@ const SpecialtyList = ({ specialties, handleChange }) => {
                     </MenuItem>
                     {specialties.map((specialty, index) => (
                         <MenuItem key={index} value={specialty.id}>
-                            {specialty.doctorType}
+                            {specialty.name}
                         </MenuItem>
                     ))}
                 </Select>

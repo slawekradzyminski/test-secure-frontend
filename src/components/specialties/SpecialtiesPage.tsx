@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { fetchDoctorTypes, createDoctorType } from '../../api/doctorTypes.api';
+import { fetchSpecialties, createSpecialty } from '../../api/specialties.api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../_reducers';
 import { ToastContext } from '../../context/ToastContext';
@@ -7,23 +7,23 @@ import SpecialtyList from './SpecialtyList';
 import AddSpecialty from './AddSpecialty';
 import ThemedContainer from '../core/ThemedContainer';
 import { useAppDispatch } from '../../_helpers/store';
-import { updateDoctorTypes } from '../../_actions/user.actions';
+import { updateSpecialties } from '../../_actions/user.actions';
 
-const DoctorTypesComponent = () => {
+const SpecialtiesPage = () => {
     const [selectedSpecialties, setSelectedSpecialties] = useState({});
     const [specialties, setSpecialties] = useState([]);
-    const [newDoctorType, setNewDoctorType] = useState('');
+    const [newSpecialtyName, setNewSpecialtyName] = useState('');
     const setToast = useContext(ToastContext);
     const dispatch = useAppDispatch();
     const user = useSelector((state: RootState) => state.authentication.user);
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await fetchDoctorTypes();
+            const data = await fetchSpecialties();
             setSpecialties(data);
-            if (user && user.doctorTypes) {
-                const userSpecialties = user.doctorTypes
-                    .reduce((acc, curr) => ({ ...acc, [curr.doctorType]: true }), {});
+            if (user && user.specialties) {
+                const userSpecialties = user.specialties
+                    .reduce((acc, curr) => ({ ...acc, [curr.name]: true }), {});
                 setSelectedSpecialties(userSpecialties);
             }
         };
@@ -37,31 +37,31 @@ const DoctorTypesComponent = () => {
 
         const selectedIds = Object.keys(updatedSelectedSpecialties)
             .filter(key => updatedSelectedSpecialties[key])
-            .map(key => specialties.find(specialty => specialty.doctorType === key)?.id)
+            .map(key => specialties.find(specialty => specialty.name === key)?.id)
             .filter(id => id !== undefined);
-        await dispatch(updateDoctorTypes({ selectedIds, setToast }));
+        await dispatch(updateSpecialties({ selectedIds, setToast }));
     };
 
     const handleCreate = async () => {
         try {
-            const response = await createDoctorType({ doctorType: newDoctorType });
-            setNewDoctorType('');
+            const response = await createSpecialty({ name: newSpecialtyName });
+            setNewSpecialtyName('');
 
-            if (!specialties.some(specialty => specialty.doctorType === newDoctorType)) {
-                const newSpecialty = { id: response.id, doctorType: newDoctorType };
+            if (!specialties.some(specialty => specialty.name === newSpecialtyName)) {
+                const newSpecialty = { id: response.id, name: newSpecialtyName };
                 const updatedSpecialties = [...specialties, newSpecialty];
                 setSpecialties(updatedSpecialties);
 
                 const updatedSelectedSpecialties = {
                     ...selectedSpecialties,
-                    [newSpecialty.doctorType]: true
+                    [newSpecialty.name]: true
                 };
                 setSelectedSpecialties(updatedSelectedSpecialties);
                 const selectedIds = Object.keys(updatedSelectedSpecialties)
                     .filter(key => updatedSelectedSpecialties[key])
-                    .map(key => updatedSpecialties.find(specialty => specialty.doctorType === key)?.id)
+                    .map(key => updatedSpecialties.find(specialty => specialty.name === key)?.id)
                     .filter(id => id !== undefined);
-                await dispatch(updateDoctorTypes({ selectedIds, setToast }));
+                await dispatch(updateSpecialties({ selectedIds, setToast }));
 
                 setToast({ open: true, message: 'Doctor type created and applied successfully!', type: 'success' });
             } else {
@@ -80,12 +80,12 @@ const DoctorTypesComponent = () => {
                 handleChange={handleChange}
             />
             <AddSpecialty
-                newDoctorType={newDoctorType}
+                newSpecialtyName={newSpecialtyName}
                 handleCreate={handleCreate}
-                setNewDoctorType={setNewDoctorType}
+                setNewSpecialityName={setNewSpecialtyName}
             />
         </ThemedContainer>
     );
 };
 
-export default DoctorTypesComponent;
+export default SpecialtiesPage;

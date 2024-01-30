@@ -8,12 +8,12 @@ export type User = {
     id?: number;
     token?: string;
     password?: string;
-    doctorTypes: DoctorType[];
+    specialties: Specialty[];
 };
 
-export type DoctorType = {
+export type Specialty = {
     id: number;
-    doctorType: string
+    name: string
 }
 
 export type EditUser = {

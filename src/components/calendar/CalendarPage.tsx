@@ -11,7 +11,7 @@ import CalendarEvent from './CalendarEvent';
 import { bookSlot } from '../../api/slots/slots.api';
 import BookingDialog from './BookingDialog';
 import { ToastContext } from '../../context/ToastContext';
-import { fetchDoctorTypes } from '../../api/doctorTypes.api';
+import { fetchSpecialties } from '../../api/specialties.api';
 import SpecialtyList from './SpecialtyList';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,16 +25,16 @@ const CalendarPage = () => {
     const [currentView, setCurrentView] = useState<View>('month');
     const [open, setOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
-    const [doctorTypes, setDoctorTypes] = useState([]);
+    const [specialties, setSpecialties] = useState([]);
     const navigate = useNavigate();
     const [selectedSpecialty, setSelectedSpecialty] = useState(null);
 
     useEffect(() => {
-        const fetchDoctorTypesData = async () => {
-            const data = await fetchDoctorTypes();
-            setDoctorTypes(data);
+        const fetchSpecialtiesData = async () => {
+            const data = await fetchSpecialties();
+            setSpecialties(data);
         };
-        fetchDoctorTypesData();
+        fetchSpecialtiesData();
     }, []);
 
     useEffect(() => {
@@ -55,7 +55,7 @@ const CalendarPage = () => {
             startTime: format(startOfViewDate, "yyyy-MM-dd'T'HH:mm:ss"),
             endTime: format(endOfViewDate, "yyyy-MM-dd'T'HH:mm:ss"),
             slotStatus: 'AVAILABLE',
-            doctorTypeId: selectedSpecialty,
+            specialtyId: selectedSpecialty,
         };
         const slots = await getAvailableSlots(criteria);
         const events = slots.map(slot => ({
@@ -114,7 +114,7 @@ const CalendarPage = () => {
                     min={new Date(0, 0, 0, 7, 0)}
                     max={new Date(0, 0, 0, 21, 0)}
                     components={{
-                        toolbar: (toolbarProps) => <CalendarToolbar {...toolbarProps} doctorTypes={doctorTypes} />,
+                        toolbar: (toolbarProps) => <CalendarToolbar {...toolbarProps} specialties={specialties} />,
                         event: CalendarEvent
                     }}
                     onSelectEvent={handleEventClick}
@@ -122,7 +122,7 @@ const CalendarPage = () => {
                 />
             ) : (
                 <SpecialtyList
-                    specialties={doctorTypes}
+                    specialties={specialties}
                     handleChange={handleChange}
                 />
             )}

@@ -13,7 +13,7 @@ export type SlotSearchCriteria = {
   endTime: string;
   doctorUsername?: string;
   slotStatus?: string;
-  doctorTypeId?: number;
+  specialtyId?: number;
 };
 
 const formatCreateSlotRangeDto = (dto: CreateSlotRangeDto) => {
