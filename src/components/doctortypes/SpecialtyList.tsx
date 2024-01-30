@@ -1,7 +1,7 @@
 import { Box, FormControl, FormGroup, Grid, FormControlLabel, Checkbox, Button, Typography } from "@mui/material";
 import React from "react";
 
-const SpecialtyList = ({ specialties, selectedSpecialties, handleChange, handleSubmit }) => (
+const SpecialtyList = ({ specialties, selectedSpecialties, handleChange }) => (
     <>
         <Typography variant="h4" align="center" gutterBottom mb={4}>
             Please select your specialties
@@ -20,9 +20,6 @@ const SpecialtyList = ({ specialties, selectedSpecialties, handleChange, handleS
                         ))}
                     </Grid>
                 </FormGroup>
-                <Button variant="contained" color="primary" onClick={handleSubmit}>
-                    Update My Specialties
-                </Button>
             </FormControl>
         </Box>
     </>

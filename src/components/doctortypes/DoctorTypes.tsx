@@ -31,24 +31,42 @@ const DoctorTypesComponent = () => {
         fetchData();
     }, [user]);
 
-    const handleChange = (event) => {
-        setSelectedSpecialties({ ...selectedSpecialties, [event.target.name]: event.target.checked });
-    };
+    const handleChange = async (event) => {
+        const updatedSelectedSpecialties = { ...selectedSpecialties, [event.target.name]: event.target.checked };
+        setSelectedSpecialties(updatedSelectedSpecialties);
 
-    const handleSubmit = async () => {
-        const selectedIds = Object.keys(selectedSpecialties)
-            .filter(key => selectedSpecialties[key])
-            .map(key => specialties.find(specialty => specialty.doctorType === key).id);
-        dispatch(updateDoctorTypes({ selectedIds, setToast }))
+        const selectedIds = Object.keys(updatedSelectedSpecialties)
+            .filter(key => updatedSelectedSpecialties[key])
+            .map(key => specialties.find(specialty => specialty.doctorType === key)?.id)
+            .filter(id => id !== undefined);
+        await dispatch(updateDoctorTypes({ selectedIds, setToast }));
     };
 
     const handleCreate = async () => {
         try {
-            await createDoctorType({ doctorType: newDoctorType });
+            const response = await createDoctorType({ doctorType: newDoctorType });
             setNewDoctorType('');
-            const updatedSpecialties = await fetchDoctorTypes();
-            setSpecialties(updatedSpecialties);
-            setToast({ open: true, message: 'Doctor type created successfully!', type: 'success' });
+
+            if (!specialties.some(specialty => specialty.doctorType === newDoctorType)) {
+                const newSpecialty = { id: response.id, doctorType: newDoctorType };
+                const updatedSpecialties = [...specialties, newSpecialty];
+                setSpecialties(updatedSpecialties);
+
+                const updatedSelectedSpecialties = {
+                    ...selectedSpecialties,
+                    [newSpecialty.doctorType]: true
+                };
+                setSelectedSpecialties(updatedSelectedSpecialties);
+                const selectedIds = Object.keys(updatedSelectedSpecialties)
+                    .filter(key => updatedSelectedSpecialties[key])
+                    .map(key => updatedSpecialties.find(specialty => specialty.doctorType === key)?.id)
+                    .filter(id => id !== undefined);
+                await dispatch(updateDoctorTypes({ selectedIds, setToast }));
+
+                setToast({ open: true, message: 'Doctor type created and applied successfully!', type: 'success' });
+            } else {
+                setToast({ open: true, message: 'Doctor type already exists!', type: 'info' });
+            }
         } catch (error) {
             setToast({ open: true, message: 'Failed to create doctor type!', type: 'error' });
         }
@@ -60,7 +78,6 @@ const DoctorTypesComponent = () => {
                 specialties={specialties}
                 selectedSpecialties={selectedSpecialties}
                 handleChange={handleChange}
-                handleSubmit={handleSubmit}
             />
             <AddSpecialty
                 newDoctorType={newDoctorType}

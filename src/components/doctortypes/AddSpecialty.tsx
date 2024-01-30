@@ -6,7 +6,7 @@ const AddSpecialty = ({ newDoctorType, handleCreate, setNewDoctorType }) => (
         <Typography variant="body1" align="center" gutterBottom>
             Can't find your specialty? Add it!
         </Typography>
-        <Box display="flex" justifyContent="center" mt={1}>
+        <Box display="flex" justifyContent="center" mt={1} style={{ marginTop: '16px' }}>
             <TextField value={newDoctorType} onChange={(e) => setNewDoctorType(e.target.value)} label="New Doctor Type" />
             <Button variant="contained" color="primary" onClick={handleCreate} style={{ marginLeft: '5px' }}>
                 Add
