@@ -4,9 +4,13 @@ logs
 npm-debug.log*
 .DS_Store
 allure-results/
+dist/
+
+test-results/
+cypress/screenshots
 
 .idea
-
+.vscode
 # Runtime data
 pids
 *.pid
