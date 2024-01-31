@@ -6,7 +6,7 @@ import { ToastContext } from '../../context/ToastContext';
 import SpecialtyList from './SpecialtyList';
 import AddSpecialty from './AddSpecialty';
 import ThemedContainer from '../core/ThemedContainer';
-import { useAppDispatch } from '../../_helpers/store';
+import { useAppDispatch } from '../../_reducers/store';
 import { updateSpecialties } from '../../_actions/user.actions';
 
 const SpecialtiesPage = () => {

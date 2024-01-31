@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { login, logout } from '../../_actions/user.actions';
-import { useAppDispatch } from '../../_helpers/store';
+import { useAppDispatch } from '../../_reducers/store';
 import LoginForm from './LoginForm';
 import { ToastContext } from '../../context/ToastContext';
 

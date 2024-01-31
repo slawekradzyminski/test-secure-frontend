@@ -1,10 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { store } from '../../_helpers/store';
+import { store } from '../../_reducers/store';
 import { LoginPage } from './LoginPage';
 import { MemoryRouter } from 'react-router-dom';
-import fetchMock from 'jest-fetch-mock';
 import { setupMockDispatch } from '../../tests/testHelpers';
 
 jest.mock('react-redux', () => ({
@@ -18,11 +17,6 @@ describe('LoginPage', () => {
 
     beforeEach(() => {
         mockDispatch = setupMockDispatch();
-    });
-
-    afterEach(() => {
-        fetchMock.resetMocks();
-        jest.clearAllMocks();
     });
 
     test('renders LoginForm', () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAppDispatch } from '../../_helpers/store';
+import { useAppDispatch } from '../../_reducers/store';
 import { refresh } from '../../_actions/user.actions';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';

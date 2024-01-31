@@ -20,10 +20,6 @@ describe('EmailForm', () => {
         sendEmailMock.mockResolvedValue({});
     });
 
-    afterEach(() => {
-        jest.clearAllMocks();
-    });
-
     test('shows error when subject or message is less than 3 characters', async () => {
         // given
         render(

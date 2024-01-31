@@ -23,10 +23,6 @@ describe('BookedSlotsPage', () => {
         render(<BookedSlotsPage />);
     });
 
-    afterEach(() => {
-        jest.clearAllMocks();
-    });
-
     test('calls cancelBooking when a slot is cancelled', async () => {
         // when
         const cancelButton = await screen.findByText('Cancel');

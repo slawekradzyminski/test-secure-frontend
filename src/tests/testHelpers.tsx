@@ -6,7 +6,7 @@ import React from 'react';
 
 export function setupMockDispatch() {
     const mockDispatch = jest.fn().mockImplementation(() => Promise.resolve());
-    (useDispatch as jest.Mock).mockReturnValue(mockDispatch);
+    (useDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);
     return mockDispatch;
 }
 
