@@ -14,7 +14,7 @@ echo "Waiting for port 8081 to be active..."
 # Use the timeout command to limit the waiting time to 2 minutes
 timeout 2m bash -c '
  # Loop until the port is active or the timeout is reached
- until curl -s -o /dev/null -w "%{http_code}" http://localhost:8081 | grep -q 200; do
+ until echo -n | telnet localhost 8081 > /dev/null 2>&1; do
     echo "Port 8081 is not active yet. Retrying..."
     sleep 5 # Wait for 5 seconds before retrying
  done
