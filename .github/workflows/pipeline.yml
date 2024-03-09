@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - march2024
+      - march2024b
 
 jobs:
   cypress-run:
@@ -17,11 +18,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Run frontend
+        run : ./start_frontend.sh
       - name: Cypress run ${{ matrix.browser }}
-        uses: cypress-io/github-action@v6
-        with:
-          build: npm install
-          start: npm start
-          browser: ${{ matrix.browser }}
-          wait-on: 'http://localhost:8081'
-          spec: cypress/e2e/isolation/*
+        run: npx cypress run --browser ${{ matrix.browser }} --spec "cypress/e2e/isolation/*"
