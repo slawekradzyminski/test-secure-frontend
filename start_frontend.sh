@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Step 1: Install npm dependencies
 echo "Installing npm dependencies..."
 npm install
@@ -11,21 +10,34 @@ npm start & # The ampersand runs the command in the background
 # Step 3: Wait for port 8081 to be active with a 2-minute timeout
 echo "Waiting for port 8081 to be active..."
 
-# Use the timeout command to limit the waiting time to 2 minutes
-timeout 2m bash -c '
- # Loop until the port is active or the timeout is reached
- until echo -n | telnet localhost 8081 > /dev/null 2>&1; do
-    echo "Port 8081 is not active yet. Retrying..."
-    sleep 5 # Wait for 5 seconds before retrying
- done
-'
+# Function to check if port is open
+wait_for_port() {
+  local port=$1
+  local timeout=$2
+  local start_time=$(date +%s)
 
-# Check if the timeout command exited due to a timeout or because the port became active
-if [ $? -eq 124 ]; then
- echo "Timeout reached. Port 8081 did not become active within 2 minutes."
- exit 1
-else
- echo "Port 8081 is active."
+  while :; do
+    (echo > /dev/tcp/localhost/$port) >/dev/null 2>&1
+    local result=$?
+    if [[ $result -eq 0 ]]; then
+      echo "Port $port is active."
+      return 0
+    else
+      local current_time=$(date +%s)
+      local elapsed=$((current_time - start_time))
+
+      if [[ $elapsed -ge $timeout ]]; then
+        echo "Timeout reached. Port $port did not become active within $timeout seconds."
+        return 1
+      fi
+    fi
+    sleep 5
+  done
+}
+
+# Use the wait_for_port function with a 120-second timeout
+if ! wait_for_port 8081 120; then
+  exit 1
 fi
 
 # Step 4: Continue with the rest of the script
