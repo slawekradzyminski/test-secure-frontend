@@ -9,9 +9,6 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     browser: [chrome, firefox, edge]
     container:
       image: cypress/browsers:node-20.11.0-chrome-121.0.6167.184-1-ff-123.0-edge-121.0.2277.128-1
       options: --user 1001
@@ -23,6 +20,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install Docker CLI
+        run: apk add --no-cache docker-cli
       - name: Build Docker Image
         run: docker build -t frontend:latest .
       - name: Run Docker Container
