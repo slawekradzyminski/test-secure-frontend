@@ -21,7 +21,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install Docker CLI
-        run: apk add --no-cache docker-cli
+        run: |
+          apt-get update
+          apt-get install -y docker.io
       - name: Build Docker Image
         run: docker build -t frontend:latest .
       - name: Run Docker Container
