@@ -15,6 +15,11 @@ jobs:
     container:
       image: cypress/browsers:node-20.11.0-chrome-121.0.6167.184-1-ff-123.0-edge-121.0.2277.128-1
       options: --user 1001
+    services:
+      docker:
+        image: docker:stable
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
     steps:
       - name: Checkout
         uses: actions/checkout@v4
