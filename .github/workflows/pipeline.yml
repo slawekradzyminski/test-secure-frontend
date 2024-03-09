@@ -1,0 +1,24 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - march2024
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node-20.11.0-chrome-121.0.6167.184-1-ff-123.0-edge-121.0.2277.128-1
+      options: --user 1001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm install
+          start: npm start
+          browser: chrome
+          wait-on: 'http://localhost:8081'
+          spec: cypress/e2e/isolation/*
