@@ -18,9 +18,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set permissions
-        run: chmod +x start_frontend.sh
-      - name: Run frontend
-        run : ./start_frontend.sh
+      - name: Build Docker Image
+        run: docker build -t frontend:latest .
+      - name: Run Docker Container
+        run: docker run -d -p 8081:8081 frontend:latest
       - name: Cypress run
         run: npx cypress run --browser chrome --spec "cypress/e2e/isolation/*"
