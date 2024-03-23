@@ -19,5 +19,35 @@
         ],
         "firstName": "Gosia",
         "lastName": "Radzyminska"
+    },
+    {
+        "id": 3,
+        "username": "client2",
+        "email": "client2@email.com",
+        "roles": [
+            "ROLE_CLIENT"
+        ],
+        "firstName": "Janina",
+        "lastName": "Radzyminska"
+    },
+    {
+        "id": 4,
+        "username": "adminek",
+        "email": "client3@email.com",
+        "roles": [
+            "ROLE_ADMIN"
+        ],
+        "firstName": "Paweł",
+        "lastName": "Kowalski"
+    },
+    {
+        "id": 5,
+        "username": "karola",
+        "email": "karola@email.com",
+        "roles": [
+            "ROLE_ADMIN"
+        ],
+        "firstName": "Karolina",
+        "lastName": "Nowak"
     }
 ]
