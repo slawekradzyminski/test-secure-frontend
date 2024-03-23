@@ -1,8 +1,12 @@
 /// <reference types="cypress" />
 
+import { getRandomUser } from "../generators/userGenerator"
+
 describe('Home page tests', () => {
     beforeEach(() => {
-        cy.login('admin', 'admin')
+        const user = getRandomUser()
+        cy.register(user)
+        cy.login(user.username, user.password)
     })
 
     it('should display at least one user', () => {

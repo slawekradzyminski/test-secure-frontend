@@ -20,3 +20,11 @@ Cypress.Commands.add('login', (username, password) => {
     })
     cy.visit('http://localhost:8081')
 })
+
+Cypress.Commands.add('register', (user) => {
+    cy.request({
+        url: 'http://localhost:4001/users/signup',
+        method: 'POST',
+        body: user
+    })
+})
