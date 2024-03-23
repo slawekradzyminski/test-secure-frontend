@@ -19,11 +19,25 @@ describe('Home page tests', () => {
     })
 
     it('should correctly display all users', () => {
+        // then
         cy.get('li').should('have.length', users.length)
         cy.get('li').each(($el, i) => {
             expect($el).to.contain.text(`${users[i].firstName} ${users[i].lastName}`);
         })
     })
-    
+
+    it('should correctly delete an user', () => {
+        // given
+        const index = 1
+        const userToDelete = users[index]
+        cy.intercept('DELETE', `**/users/${userToDelete.username}`, { statusCode: 204 })
+
+        // when
+        cy.get('li').eq(index).find('.delete').click()
+
+        // then
+        cy.get('li').should('have.length', users.length - 1)
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).should('not.exist')
+    })
 
 })
