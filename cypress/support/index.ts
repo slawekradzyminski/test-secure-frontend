@@ -10,6 +10,7 @@ declare global {
              */
             login(username: string, password: string): void // rozszerzamy metody widoczne za cy.
             register(user: User): void
+            deleteUser(username: string, token: string): void
         }
     }
 }

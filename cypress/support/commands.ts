@@ -28,3 +28,13 @@ Cypress.Commands.add('register', (user) => {
         body: user
     })
 })
+
+Cypress.Commands.add('deleteUser', (username, token) => {
+    cy.request({
+        url: `http://localhost:4001/users/${username}`,
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+})

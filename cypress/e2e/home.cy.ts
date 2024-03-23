@@ -15,7 +15,7 @@ describe('Home page tests', () => {
     })
 
     afterEach(() => {
-        cy.deleteUser(user.username, token)
+        cy.deleteUser(user.username, token as string)
     })
 
     it('should display at least one user', () => {
