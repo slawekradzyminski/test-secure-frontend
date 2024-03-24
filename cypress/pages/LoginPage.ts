@@ -1,7 +1,11 @@
 export default class LoginPage {
 
+    static selectors = {
+        usernameField: '[name=username]'
+    }
+
     static attemptLogin = (username: string, password: string) => {
-        cy.get('[name=username]').type(username)
+        cy.get(LoginPage.selectors.usernameField).type(username)
         cy.get('[name=password]').type(password)
         LoginPage.clickLogin()
     }
