@@ -1,5 +1,5 @@
 Cypress.Commands.add('login', (username, password) => {
-    // 1. Wysyła request logowania na http://localhost:4001/users/signin
+    // 1. Wysyłamy request logowania na http://localhost:4001/users/signin
     // 2. Zachowuje sobie odpowiedź w localStorage pod kluczem user
     // 3. Ustawia ciastko token ze zwróconym tokenem
     // 4. Dopiero później robimy cy.visit na stronę główną

@@ -1,6 +1,6 @@
 ## Project setup
 
-Fill your crentials in cypress.env.json
+Create a file cypress.env.json with your credentials
 
 ```json
 {
