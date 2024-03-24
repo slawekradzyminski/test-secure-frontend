@@ -9,6 +9,7 @@ Create a file cypress.env.json with your credentials
 }
 ```
 
+
 ## Local run
 
 ```commandline
