@@ -1,3 +1,14 @@
+## Project setup
+
+Fill your crentials in cypress.env.json
+
+```json
+{
+    "login": "FILL_WITH_YOUR_CREDENTIALS",
+    "password": "FILL_WITH_YOUR_CREDENTIALS"
+}
+```
+
 ## Local run
 
 ```commandline
