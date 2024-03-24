@@ -6,8 +6,8 @@ describe('Login page tests', () => {
     })
   
     it('should successfully ', () => {
-        cy.get('[name=username]').type('admin')
-        cy.get('[name=password]').type('admin')
+        cy.get('[name=username]').type(Cypress.env('login'))
+        cy.get('[name=password]').type(Cypress.env('password'))
         cy.get('.btn-primary').click()
 
         cy.get('h1').should('contain.text', 'Slawomir')
