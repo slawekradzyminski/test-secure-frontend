@@ -24,7 +24,7 @@ describe('Home page tests', () => {
         cy.get('li').each(($el, i) => {
             expect($el).to.contain.text(`${users[i].firstName} ${users[i].lastName}`);
         })
-        cy.percySnapshot()
+        cy.percySnapshot('Home page', { widths: [1280] })
     })
 
     it('should correctly delete an user', () => {
