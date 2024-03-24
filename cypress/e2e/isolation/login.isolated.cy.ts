@@ -21,6 +21,8 @@ describe('Login page tests', () => {
             statusCode: 200,
             fixture: 'users.json'
         })
+        cy.get('[name=password]').should('be.visible')
+        cy.percySnapshot()
 
         // when
         cy.get('[name=username]').type(user.username)
