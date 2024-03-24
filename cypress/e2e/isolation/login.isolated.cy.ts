@@ -1,7 +1,9 @@
 /// <reference types="cypress" />
 
-import { getLoginResponseFor } from "../../domain/http/login"
 import { getRandomUser } from "../../generators/userGenerator"
+import { getAllUsersMocks } from "../../mocks/getAllUsersMocks"
+import { loginMocks } from "../../mocks/loginMocks"
+import LoginPage from "../../pages/LoginPage"
 
 describe('Login page tests', () => {
     beforeEach(() => {
@@ -9,52 +11,44 @@ describe('Login page tests', () => {
     })
 
     it('should successfully login', () => {
-        // given
+        // given - przygotowanie testu
         const user = getRandomUser()
-        // 2 pierwsze parametry definiują nam jaki request chcemy zamockować/zastubować
-        // 3 parametr definiuje nam oczekiwaną odpowiedź na zamockowane zapytanie
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 200,
-            body: getLoginResponseFor(user)
-        })
-        cy.intercept('GET', '**/users', {
-            statusCode: 200,
-            fixture: 'users.json'
-        })
-        cy.get('[name=password]').should('be.visible')
-        cy.percySnapshot('Login page', { widths: [1280] })
+        loginMocks.mockSuccessfulLogin(user)
+        getAllUsersMocks.mockUsers()
+        createPercySnapshot()
 
-        // when
-        cy.get('[name=username]').type(user.username)
-        cy.get('[name=password]').type(user.password)
-        cy.get('.btn-primary').click()
+        // when - co testujemy
+        LoginPage.attemptLogin(user.username, user.password)
 
-        // then
+        // then - asercje, sprawdzenia, weryfikacje
         cy.get('h1').should('contain.text', user.firstName)
     })
 
     it('should fail to login', () => {
         // given
         const message = "Invalid username/password supplied"
-        cy.intercept('POST', '**/users/signin', {
-            statusCode: 422,
-            body: {
-                error: "Unprocessable Entity",
-                message: message,
-                path : "/users/signin",
-                status: 422,
-                timestamp : "2024-03-23T13:45:53.051+00:00"
-            }
-        })
+        loginMocks.mockFailedLogin(message)
 
         // when
-        cy.get('[name=username]').type('wrong')
-        cy.get('[name=password]').type('wrong')
-        cy.get('.btn-primary').click()
+        LoginPage.attemptLogin('wrong', 'wrong')
 
         // then
         cy.get('.alert-danger').should('have.text', message)
     })
 
+    it('should open register page', () => {
+        // when
+        LoginPage.clickRegister()
+
+        // then
+        cy.url().should('contain', '/register')
+    })
+
 })
+
+const createPercySnapshot = () => {
+    // to increase visual regression stability
+    cy.get('[name=password]').should('be.visible')
+    cy.percySnapshot('Login page', { widths: [1280] })
+}
 
