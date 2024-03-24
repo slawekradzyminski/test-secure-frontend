@@ -6,6 +6,10 @@ jobs:
   chrome-tests:
     timeout-minutes: 15
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2]
     container:
       image: cypress/browsers:node-20.11.1-chrome-123.0.6312.58-1-ff-124.0-edge-122.0.2365.92-1
       options: --user 1001
@@ -22,14 +26,17 @@ jobs:
       - name: Run Cypress tests
         uses: cypress-io/github-action@v4
         with:
-          command-prefix: 'percy exec -- npx'
+          command-prefix: "percy exec -- npx"
           start: npm start
           wait-on: "http://localhost:8081"
           wait-on-timeout: 120
           browser: chrome
           spec: cypress/e2e/isolation/*
+          record: true
+          parallel: true
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
   firefox-tests:
     timeout-minutes: 15
