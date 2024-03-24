@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import { getLoginResponseFor } from "../../domain/http/login"
-import { getRandomUser } from "../../generators/userGenerator"
+import { getRandomUser, getRandomUserWithFirstName } from "../../generators/userGenerator"
 import users from "../../fixtures/users.json"
 
 describe('Home page tests', () => {
@@ -9,7 +9,7 @@ describe('Home page tests', () => {
         // 1. Zachowuje sobie odpowiedź w localStorage pod kluczem user
         // 2. Ustawia ciastko token ze zwróconym tokenem
 
-        const user = getRandomUser()
+        const user = getRandomUserWithFirstName('Andrzej')
         // 1
         localStorage.setItem('user', JSON.stringify(getLoginResponseFor(user)))
         // 2
