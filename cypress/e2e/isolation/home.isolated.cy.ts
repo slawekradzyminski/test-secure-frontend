@@ -40,4 +40,22 @@ describe('Home page tests', () => {
         cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).should('not.exist')
     })
 
+    it('should not delete an user if window confirm rejected', () => {
+        // given
+        Cypress.on('window:confirm', (confirmationText) => {
+            expect(confirmationText).to.eq('Are you sure you wish to delete this item?')
+            return false
+        })
+        const index = 1
+        const userToDelete = users[index]
+        cy.intercept('DELETE', `**/users/${userToDelete.username}`, { statusCode: 204 })
+
+        // when
+        cy.get('li').eq(index).find('.delete').click()
+
+        // then
+        cy.get('li').should('have.length', users.length)
+        cy.get('li').contains(`${userToDelete.firstName} ${userToDelete.lastName}`).should('exist')
+    })
+
 })
